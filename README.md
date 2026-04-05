@@ -10,7 +10,6 @@
   <em>Render of the Six-Port Receiver without M5 GND plane.</em>
 </p>
 
----
 
 ## Overview
 
@@ -33,7 +32,6 @@
   <em>Block Diagram of the Six-Port Receiver.</em>
 </p>
 
----
 
 ## Chip Specifications
 
@@ -43,7 +41,6 @@
 | Die Area            | 1000 × 1400 µm (1.4 mm²)                                                          |
 | Supply Voltage      | 1.5 V                                                                             |
 
----
 
 ## Makefile Targets
 
@@ -171,7 +168,6 @@ Builds the complete design by first verifying all cells (`verify-all`), then bui
 make all
 ```
 
----
 
 ## Cite This Work
 
@@ -186,7 +182,6 @@ make all
 }
 ```
 
----
 
 ## Acknowledgements
 
@@ -197,5 +192,3 @@ This project is funded by the JKU/SAL [IWS Lab](https://research.jku.at/de/proje
     <img src="https://github.com/iic-jku/klayout-pex-website/raw/main/figures/funding/silicon-austria-labs-logo.svg" alt="Silicon Austria Labs" width="300"/>
   </a>
 </p>
-
----
