@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report-database>
+ <description>Main DRC Run Report at</description>
+ <original-file/>
+ <generator>drc: script='/foss/pdks/ihp-sg13g2/libs.tech/klayout/tech/drc/ihp-sg13g2.drc'</generator>
+ <top-cell>sparx160_top</top-cell>
+ <tags>
+ </tags>
+ <categories>
+  <category>
+   <name>Sdiod.b</name>
+   <description>6.7. Sdiod.b : Min. and max. nSD:block enclosure of ContBar = 0.4 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Sdiod.c</name>
+   <description>6.7. Sdiod.c : Min. and max. SalBlock enclosure of ContBar = 0.45 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Sdiod.d</name>
+   <description>6.7. Sdiod.d : Min. and max. ContBar width inside nBuLay is 0.3 um</description>
+   <categories>
+   </categories>
+  </category>
+  <category>
+   <name>Sdiod.e</name>
+   <description>6.7. Sdiod.e : Min. and max. ContBar length inside nBuLay is 1.0 um</description>
+   <categories>
+   </categories>
+  </category>
+ </categories>
+ <cells>
+  <cell>
+   <name>sparx160_top</name>
+   <variant/>
+   <layout-name/>
+   <references>
+   </references>
+  </cell>
+  <cell>
+   <name>powdet_sbd</name>
+   <variant/>
+   <layout-name>powdet_sbd</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m90 *1 573.755,1099.325</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</name>
+   <variant/>
+   <layout-name>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m90 *1 590.725,1054.175</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</name>
+   <variant/>
+   <layout-name>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m90 *1 586.105,1054.175</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>output_stage</name>
+   <variant/>
+   <layout-name>output_stage</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m90 *1 560.525,1092.11</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</name>
+   <variant/>
+   <layout-name>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m0 *1 585.615,1100.16</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</name>
+   <variant/>
+   <layout-name>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>m45 *1 570.885,1069.13</trans>
+    </ref>
+   </references>
+  </cell>
+  <cell>
+   <name>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</name>
+   <variant/>
+   <layout-name>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</layout-name>
+   <references>
+    <ref>
+     <parent>sparx160_top</parent>
+     <trans>r270 *1 866.54,533.41</trans>
+    </ref>
+   </references>
+  </cell>
+ </cells>
+ <items>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,1.7;0.07,1.86;0.43,1.86;0.43,1.7)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.36;0.07,-0.2;0.43,-0.2;0.43,-0.36)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.2;0.07,2.36;0.43,2.36;0.43,2.2)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.36;0.07,-0.2;0.43,-0.2;0.43,-0.36)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.d'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,1.7;0.07,1.86;0.43,1.86;0.43,1.7)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.36;0.07,-0.2;0.43,-0.2;0.43,-0.36)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.2;0.07,2.36;0.43,2.36;0.43,2.2)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.36;0.07,-0.2;0.43,-0.2;0.43,-0.36)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,2.62;0.07,2.78;0.43,2.78;0.43,2.62)</value>
+   </values>
+  </item>
+  <item>
+   <tags/>
+   <category>'Sdiod.e'</category>
+   <cell>rsil_L2p5_W0p5_P0p18_R50_N1_SSerial_S2_Gnone_G1</cell>
+   <visited>false</visited>
+   <multiplicity>1</multiplicity>
+   <comment/>
+   <image/>
+   <values>
+    <value>polygon: (0.07,-0.28;0.07,-0.12;0.43,-0.12;0.43,-0.28)</value>
+   </values>
+  </item>
+ </items>
+</report-database>
