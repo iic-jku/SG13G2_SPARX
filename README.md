@@ -5,6 +5,7 @@
 ![IHP Open-PDK Render of the Six-Port Receiver](img/sparx160_top_white.png)
 
 ## Overview
+
 - Six-Port
     - Branch Line Coupler (BLC)
         - ToDo
@@ -15,6 +16,8 @@
 - Power Detector (PD)
     - Schottky Barrier Diode (SBD)
         - ToDo
+
+![Block Diagram of the Six-Port Receiver](doc/sparx160_blockdiagram.png)
 
 ## Chip Specifications
 
