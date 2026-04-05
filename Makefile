@@ -166,6 +166,11 @@ magic-verify-cell: ## Verify a specific cell with Magic (usage: make magic-verif
 magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
 	$(MAKE) magic-lvs magic-drc magic-rcx
 .PHONY: magic-verify-top
+
+verify-all: ## Verify all (usage: make verify-all)
+	$(MAKE) klayout-lvs klayout-drc magic-rcx CELL=$(CELL)
+	$(MAKE) klayout-lvs klayout-drc-regular magic-rcx
+.PHONY: verify-all
 # ================================================================================================
 
 
@@ -178,15 +183,17 @@ render-image: ## Render an image from the layout of the TOP macro (usage: make r
 
 
 # Build Targets
-build-top: ## Build TOP cell (Verilog, LEF, LIB, copy GDS, and render image)
-	$(MAKE) verilog
-	$(MAKE) lef
-	$(MAKE) lib
-	$(MAKE) copy-gds
+# layout-six-port: ## Build layout of six-port (usage: make layout-six-port)
+# 	TODO: Dave --> call Python script to generate layout of six-port
+# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/TODO.py $(LAY_DIR)/$(TOP).gds
+# .PHONY: layout-six-port
+
+build-top: ## Build TOP cell (usage: make build-top)
+	$(MAKE) layout-six-port
 	$(MAKE) render-image
 .PHONY: build-top
 
-all: ## Build and verify the the TOP cell
+all: ## Build and verify the TOP cell
 	$(MAKE) verify-all
 	$(MAKE) build-top
 .PHONY: all
