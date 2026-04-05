@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 Leo Moser <leo.moser@pm.me>
+# SPDX-FileCopyrightText: © 2025 Leo Moser, @ 2026 Simon Dorrer
 # SPDX-License-Identifier: Apache-2.0
 
 import os

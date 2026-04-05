@@ -170,8 +170,7 @@ magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
 
 
 # Rendering Target
-render-image: ## Render an image from the layout of the TOP macro
-	rm -rf $(IMG_DIR)/
+render-image: ## Render an image from the layout of the TOP macro (usage: make render-image)
 	mkdir -p $(IMG_DIR)/
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/$(TOP).gds $(IMG_DIR)/$(TOP).png --width 2048 --oversampling 4
 .PHONY: render-image
