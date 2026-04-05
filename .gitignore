@@ -1,0 +1,11 @@
+runs/
+backups/
+__pycache__/
+tb/a.out
+drc_run_*
+lvs_run_*
+*.vcd
+*.raw
+.DS_Store
+*.pyc
+*.ext
