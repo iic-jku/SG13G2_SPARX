@@ -3,11 +3,11 @@
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
 <p align="center">
-  <a href="img/sparx160_top_white.png">
-    <img src="img/sparx160_top_white.png" alt="IHP Open-PDK Render of the Six-Port Receiver" width=70%>
+  <a href="img/sparx160_top_white_wo_M5.png">
+    <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver without M5 GND plane" width=70%>
   </a>
   <br>
-  <em>IHP Open-PDK Render of the Six-Port Receiver</em>
+  <em>Render of the Six-Port Receiver without M5 GND plane.</em>
 </p>
 
 ---
@@ -30,7 +30,7 @@
     <img src="doc/sparx160_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
   </a>
   <br>
-  <em>Block Diagram of the Six-Port Receiver</em>
+  <em>Block Diagram of the Six-Port Receiver.</em>
 </p>
 
 ---
