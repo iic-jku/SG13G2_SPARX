@@ -1,0 +1,171 @@
+* PEX produced on Wed Mar 25 10:38:00 PM CET 2026 using /foss/tools/sak/sak-pex.sh with m=2 and s=1
+* NGSPICE file created from powdet_sbd_pex.ext - technology: ihp-sg13g2
+
+.subckt powdet_sbd_pex vout vref vdd rfin vss
+X0 vss vss vss vss sg13_lv_nmos ad=0.85p pd=5.68u as=35.7912p ps=0.23844m w=2.5u l=0.13u
+X1 a_498_n1155# vss cap_cmim l=10u w=10u
+X2 a_498_n1155# vss cap_cmim l=10u w=10u
+X3 vdd vss cap_cmim l=10u w=10u
+X4 a_498_n1155# vss cap_cmim l=10u w=10u
+X5 vdd vss cap_cmim l=10u w=10u
+X6 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X7 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X8 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X9 vdd vss cap_cmim l=10u w=10u
+X10 a_498_n1155# vss cap_cmim l=10u w=10u
+X11 vdd vss cap_cmim l=10u w=10u
+X12 a_498_n1155# vss cap_cmim l=10u w=10u
+X13 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X14 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X15 vdd vss cap_cmim l=10u w=10u
+X16 vref dw_1038_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X17 a_n30_341# a_498_n1155# vss rsil l=2.5u w=0.5u
+X18 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X19 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X20 vdd vss cap_cmim l=10u w=10u
+X21 vss vss vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0 ps=0 w=2.5u l=0.13u
+X22 a_498_n1155# vss cap_cmim l=10u w=10u
+X23 a_498_n1155# vss cap_cmim l=10u w=10u
+X24 vdd vdd vdd vdd sg13_lv_pmos ad=1.7p pd=10.68u as=33.0572p ps=0.26686m w=5u l=0.13u
+X25 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X26 vout dw_n230_167# vss rppd l=1.5u w=0.5u
+X27 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X28 vdd vss cap_cmim l=10u w=10u
+X29 a_498_n1155# vss cap_cmim l=10u w=10u
+X30 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X31 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X32 a_498_n1155# vss cap_cmim l=10u w=10u
+X33 a_498_n1155# vss cap_cmim l=10u w=10u
+X34 a_498_n1155# vss cap_cmim l=10u w=10u
+X35 a_498_n1155# vss cap_cmim l=10u w=10u
+X36 vss dw_1038_167# vref vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X37 vdd vss cap_cmim l=10u w=10u
+X38 vdd vss cap_cmim l=10u w=10u
+X39 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X40 vdd vss cap_cmim l=10u w=10u
+X41 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X42 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X43 vdd vss cap_cmim l=10u w=10u
+X44 vdd vss cap_cmim l=10u w=10u
+X45 vdd vss cap_cmim l=10u w=10u
+X46 vdd vdd vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0 ps=0 w=5u l=0.13u
+X47 a_498_n1155# vss cap_cmim l=10u w=10u
+X48 a_498_n1155# vss cap_cmim l=10u w=10u
+X49 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X50 vdd vss cap_cmim l=10u w=10u
+X51 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X52 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X53 a_498_n1155# vss cap_cmim l=10u w=10u
+X54 a_498_n1155# vss cap_cmim l=10u w=10u
+X55 a_498_n1155# vss cap_cmim l=10u w=10u
+X56 a_498_n1155# vss cap_cmim l=10u w=10u
+X57 vdd dw_1038_167# vref vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X58 vdd vss cap_cmim l=10u w=10u
+X59 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X60 vdd vss cap_cmim l=10u w=10u
+X61 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X62 vdd vss cap_cmim l=10u w=10u
+X63 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X64 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X65 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X66 vdd vss cap_cmim l=10u w=10u
+X67 vdd vss cap_cmim l=10u w=10u
+X68 vdd vss cap_cmim l=10u w=10u
+X69 vdd vss cap_cmim l=10u w=10u
+X70 dw_1038_167# vref vss rppd l=1.5u w=0.5u
+X71 a_498_n1155# vss cap_cmim l=10u w=10u
+X72 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X73 a_498_n1155# vss cap_cmim l=10u w=10u
+X74 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X75 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X76 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X77 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X78 a_498_n1155# vss cap_cmim l=10u w=10u
+X79 vdd vss cap_cmim l=10u w=10u
+X80 a_498_n1155# vss cap_cmim l=10u w=10u
+X81 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X82 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X83 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X84 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X85 vdd vss cap_cmim l=10u w=10u
+X86 a_498_n1155# vss cap_cmim l=10u w=10u
+X87 vdd vss cap_cmim l=10u w=10u
+X88 a_498_n1155# vss cap_cmim l=10u w=10u
+X89 vdd vss cap_cmim l=10u w=10u
+X90 a_670_n585# a_498_n1155# vss rsil l=2.5u w=0.5u
+X91 a_498_n1155# vss cap_cmim l=10u w=10u
+X92 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X93 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X94 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X95 vdd vss cap_cmim l=10u w=10u
+X96 a_498_n1155# vss cap_cmim l=10u w=10u
+X97 vout dw_n230_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X98 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X99 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X100 vout dw_n230_167# vdd vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X101 rfin a_n30_341# cap_cmim l=10u w=10u
+X102 a_498_n1155# vss cap_cmim l=10u w=10u
+X103 vdd vss cap_cmim l=10u w=10u
+X104 vref dw_1038_167# vss vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X105 a_498_n1155# vss cap_cmim l=10u w=10u
+X106 vdd vss cap_cmim l=10u w=10u
+X107 vdd dw_n230_167# vout vdd sg13_lv_pmos ad=0.95p pd=5.38u as=0.95p ps=5.38u w=5u l=0.13u
+X108 vss dw_n230_167# vout vss sg13_lv_nmos ad=0.475p pd=2.88u as=0.475p ps=2.88u w=2.5u l=0.13u
+X109 a_498_n1155# vss cap_cmim l=10u w=10u
+X110 a_498_n1155# vdd vss rhigh l=2u w=0.5u
+C0 dw_n230_167# rfin 0.06113f
+C1 a_498_n1085# a_n30_341# 0.03542f
+C2 a_670_n585# a_n30_341# 0.39913f
+C3 a_n30_341# a_498_n1155# 0.31353f
+C4 dw_n230_167# a_n30_341# 1.10169f
+C5 a_498_n1085# a_498_n1155# 0.01839f
+C6 a_670_n585# a_498_n1155# 0.05652f
+C7 vdd vout 33.0856f
+C8 a_3690_n1376# vdd 0.06512f
+C9 vref a_498_n1155# 0.18597f
+C10 dw_n230_167# a_498_n1155# 0.1224f
+C11 dw_n230_167# vref 0.59587f
+C12 vout dw_1038_167# 0.30208f
+C13 a_1424_3572# vout 0.04036f
+C14 vdd dw_1038_167# 0.72895f
+C15 a_1424_3572# vdd 0.0126f
+C16 dw_1038_167# a_1044_3572# 0.03652f
+C17 a_1424_3572# a_1044_3572# 0.01274f
+C18 dw_1038_167# rfin 0.02168f
+C19 vout a_498_n1155# 1.10029f
+C20 vout vref 1.94646f
+C21 vout dw_n230_167# 4.33132f
+C22 vdd a_498_n1155# 4.73939f
+C23 a_3690_n1376# a_498_n1155# 0.0141f
+C24 dw_1038_167# a_n30_341# 0.08038f
+C25 vdd vref 2.10944f
+C26 vdd dw_n230_167# 6.31439f
+C27 a_670_n585# dw_1038_167# 0.55185f
+C28 a_670_n1085# a_n30_341# 0.01227f
+C29 rfin a_n30_341# 1.14761f
+C30 a_1044_3572# vref 0.03268f
+C31 a_670_n1085# a_498_n1085# 0.08619f
+C32 dw_1038_167# a_498_n1155# 0.03321f
+C33 a_670_n1085# a_670_n585# 0.01892f
+C34 dw_1038_167# vref 0.40087f
+C35 dw_n230_167# dw_1038_167# 2.59899f
+C36 a_670_n585# rfin 0.02844f
+C37 a_1424_3572# dw_n230_167# 0.03899f
+C38 a_670_n1085# a_498_n1155# 0.01864f
+C39 rfin a_498_n1155# 2.72429f
+C40 rfin vss 1.41634f
+C41 vref vss 2.92346f
+C42 vout vss 30.9192f
+C43 vdd vss 57.4651f
+C44 a_3690_n1376# vss 0.27191f $ **FLOATING
+C45 a_670_n1085# vss 0.26418f $ **FLOATING
+C46 a_498_n1155# vss 54.2142f
+C47 a_498_n1085# vss 0.26046f $ **FLOATING
+C48 a_670_n585# vss 1.0742f
+C49 a_n30_341# vss 5.66024f
+C50 a_1424_3572# vss 0.17551f $ **FLOATING
+C51 a_1044_3572# vss 0.18682f $ **FLOATING
+C52 dw_1038_167# vss 3.65349f
+C53 dw_n230_167# vss 10.4631f
+.ends
+
