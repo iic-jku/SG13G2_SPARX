@@ -127,23 +127,23 @@ klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-reg
 
 # Parasitic Extraction Target
 # klayout-rcx: ## RC-Extraction with KLayout of the CELL cell (usage: make klayout-rcx [CELL=<cellname>] [PEX_MODE=<1|2|3>])
-# 	mkdir -p $(PEX_DIR)
-# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(PEX_DIR) $(LAY_DIR)/$(CELL).gds
+# 	mkdir -p $(RCX_DIR)
+# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(RCX_DIR) $(LAY_DIR)/$(CELL).gds
 # 	# ToDo Klayout PEX
 # 	sleep 4
 # .PHONY: klayout-rcx
 
 magic-rcx: ## RC-Extraction with Magic of the CELL cell (usage: make magic-rcx [CELL=<cellname>] [PEX_MODE=<1|2|3>])
-	mkdir -p $(PEX_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(PEX_DIR) $(LAY_DIR)/$(CELL).gds
-	mv $(PEX_DIR)/$(CELL).pex.spice $(PEX_DIR)/$(CELL)_pex.spice
-	sed -i 's/$(CELL)/$(CELL)_pex/g' $(PEX_DIR)/$(CELL)_pex.spice
-	rm -f $(PEX_DIR)/pex_$(CELL).tcl $(PEX_DIR)/$(CELL).ext
-	@if [ -f $(XSCHEM_DIR)/$(CELL)_pex.sym ]; then \
+	mkdir -p $(RCX_DIR)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(RCX_DIR) $(LAY_DIR)/$(CELL).gds
+	mv $(RCX_DIR)/$(CELL).pex.spice $(RCX_DIR)/$(CELL)_pex.spice
+	sed -i 's/$(CELL)/$(CELL)_pex/g' $(RCX_DIR)/$(CELL)_pex.spice
+	rm -f $(RCX_DIR)/pex_$(CELL).tcl $(RCX_DIR)/$(CELL).ext
+	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
 		echo "Reordering pins in $(CELL)_pex.spice to match $(CELL)_pex.sym..."; \
-		python3 $(PEX_DIR)/reorder_spice_pins.py $(XSCHEM_DIR)/$(CELL)_pex.sym $(PEX_DIR)/$(CELL)_pex.spice; \
+		python3 $(RCX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(RCX_DIR)/$(CELL)_pex.spice; \
 	else \
-		echo "No symbol $(XSCHEM_DIR)/$(CELL)_pex.sym found, skipping pin reorder."; \
+		echo "No symbol $(SCH_DIR)/$(CELL)_pex.sym found, skipping pin reorder."; \
 	fi
 	sleep 4
 .PHONY: magic-rcx
