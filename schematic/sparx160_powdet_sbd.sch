@@ -238,6 +238,7 @@ model=ntap1
 spiceprefix=X
 w=9.62e-6
 l=17.16e-6
+lvs_ignore=short
 }
 C {lab_pin.sym} 1490 -560 3 0 {name=p16 sig_type=std_logic lab=nw}
 C {lab_pin.sym} 1370 -590 2 0 {name=p8 sig_type=std_logic lab=nw}
@@ -248,6 +249,7 @@ model=ptap1
 spiceprefix=X
 w=6.86e-6
 l=16.54e-6
+lvs_ignore=short
 }
 C {lab_pin.sym} 1680 -360 1 0 {name=p13 sig_type=std_logic lab=sub}
 C {lab_pin.sym} 1630 -330 2 0 {name=p15 sig_type=std_logic lab=sub}
