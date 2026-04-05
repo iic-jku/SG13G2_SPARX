@@ -9,3 +9,5 @@ lvs_run_*
 .DS_Store
 *.pyc
 *.ext
+/schematic/simulations
+/testbenches/simulations
