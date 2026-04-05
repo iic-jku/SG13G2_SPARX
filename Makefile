@@ -35,7 +35,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 	@echo ''
 	@echo 'CELL defaults to $(TOP). Override to verify subcells.'
-	@echo 'PEX_MODE defaults to 2 (C-coupled). 1=C-decoupled, 3=full-RC.'
+	@echo 'PEX_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
 # ================================================================================================
@@ -84,7 +84,7 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 # magic-lvs: ## Magic LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
 # 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
 # 	mkdir -p $(LVS_RPT_DIR)
-# 	# ToDo sak-lvs.sh
+# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(LVS_SCH_DIR)/$(CELL).cdl $(LAY_DIR)/$(CELL).gds
 # 	sleep 4
 # .PHONY: magic-lvs
 # ================================================================================================
@@ -109,27 +109,26 @@ klayout-drc: ## KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cel
 klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-regular)
 	mkdir -p $(DRC_RPT_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
-		--path=$(LAY_DIR)/${TOP}.gds \
-		--topcell=${TOP} \
+		--path=$(LAY_DIR)/$(TOP).gds \
+		--topcell=$(TOP) \
 		--run_dir=$(DRC_RPT_DIR) \
 		--mp=32 \
 		--density_thr=32
 	sleep 4
 .PHONY: klayout-drc-regular
 
-# magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
-# 	mkdir -p $(DRC_RPT_DIR)
-# 	# ToDo sak-drc.sh
-# 	sleep 4
-# .PHONY: magic-drc
+magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
+	mkdir -p $(DRC_RPT_DIR)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
+	sleep 4
+.PHONY: magic-drc
 # ================================================================================================
 
 
-# Parasitic Extraction Target
+# Parasitic Extraction Targets
 # klayout-rcx: ## RC-Extraction with KLayout of the CELL cell (usage: make klayout-rcx [CELL=<cellname>] [PEX_MODE=<1|2|3>])
 # 	mkdir -p $(RCX_DIR)
-# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(RCX_DIR) $(LAY_DIR)/$(CELL).gds
-# 	# ToDo Klayout PEX
+# 	# ToDo: KLayout PEX not yet available for IHP SG13G2
 # 	sleep 4
 # .PHONY: klayout-rcx
 
@@ -160,7 +159,7 @@ klayout-verify-top: ## Verify top cell with KLayout (usage: make klayout-verify-
 .PHONY: klayout-verify-top
 
 magic-verify-cell: ## Verify a specific cell with Magic (usage: make magic-verify-cell CELL=<cellname>)
-	$(MAKE) magic-lvs magic-drc magic-rcx CELL=$(CELL) 
+	$(MAKE) magic-lvs magic-drc magic-rcx CELL=$(CELL)
 .PHONY: magic-verify-cell
 
 magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
