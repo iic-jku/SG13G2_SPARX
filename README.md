@@ -2,7 +2,13 @@
 
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
-![IHP Open-PDK Render of the Six-Port Receiver](img/sparx160_top_white.png)
+<p align="center">
+  <a href="img/sparx160_top_white.png">
+    <img src="img/sparx160_top_white.png" alt="IHP Open-PDK Render of the Six-Port Receiver" width=70%>
+  </a>
+  <br>
+  <em>IHP Open-PDK Render of the Six-Port Receiver</em>
+</p>
 
 ## Overview
 
@@ -17,7 +23,13 @@
     - Schottky Barrier Diode (SBD)
         - ToDo
 
-![Block Diagram of the Six-Port Receiver](doc/sparx160_blockdiagram.png)
+<p align="center">
+  <a href="doc/sparx160_blockdiagram.png">
+    <img src="doc/sparx160_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
+  </a>
+  <br>
+  <em>Block Diagram of the Six-Port Receiver</em>
+</p>
 
 ## Chip Specifications
 
