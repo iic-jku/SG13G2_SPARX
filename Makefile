@@ -182,10 +182,9 @@ render-image: ## Render an image from the layout of the TOP macro (usage: make r
 
 
 # Build Targets
-# layout-six-port: ## Build layout of six-port (usage: make layout-six-port)
-# 	TODO: Dave --> call Python script to generate layout of six-port
-# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/TODO.py $(LAY_DIR)/$(TOP).gds
-# .PHONY: layout-six-port
+layout-six-port: ## Build layout of six-port (usage: make layout-six-port)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds
+.PHONY: layout-six-port
 
 build-top: ## Build TOP cell (usage: make build-top)
 	$(MAKE) layout-six-port

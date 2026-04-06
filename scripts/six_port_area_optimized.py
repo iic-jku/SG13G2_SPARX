@@ -8,6 +8,8 @@ import klayout.db as kdb
 
 import make_gds
 
+import argparse
+
 ihp.PDK.activate()
 
 
@@ -2007,7 +2009,19 @@ c.add_ref(ihp.cells.sealring(width=1000, height=1300)).center = c.center
 
 # pd = power_detector_hbt()
 
-gds_filename = "layout/sparx160_top.gds"
+
+
+parser = argparse.ArgumentParser(description="Generate the six-port layout GDS outputs")
+parser.add_argument(
+    "gds_filename",
+    nargs="?",
+    default="layout/sparx160_top.gds",
+    help="Output GDS file for the top-level layout",
+)
+args = parser.parse_args()
+
+gds_filename = Path(args.gds_filename)
+powdet_gds_filename = gds_filename.with_name("sparx160_powdet_sbd.gds")
 
 # c = gf.Component("powdet_sbd")
 # gds_filename = "powdet_sbd.gds"
@@ -2015,7 +2029,7 @@ gds_filename = "layout/sparx160_top.gds"
 
 # create powerdetector
 pd = powdet_sbd()
-pd.write_gds("layout/sparx160_powdet_sbd.gds")
+pd.write_gds(str(powdet_gds_filename))
 
 # PD1 reference, position and route
 pd1_ref = c.add_ref(pd)
@@ -2564,7 +2578,7 @@ c.move((-25, -25))
 
 
 
-c.write_gds(gds_filename)
+c.write_gds(str(gds_filename))
 c.show()
 
 # pd.draw_ports()
