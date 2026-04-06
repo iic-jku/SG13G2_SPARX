@@ -2472,8 +2472,8 @@ kellerer_gds_path = logo_dir / "D_Kellerer.gds"
 iws_png_path = logo_dir / "IWS.png"
 iws_gds_path = logo_dir / "IWS.gds"
 
-helper_png_path = logo_dir / "helper.png"
-helper_gds_path = logo_dir / "helper.gds"
+helper_png_path = logo_dir / "supervisors.png"
+helper_gds_path = logo_dir / "supervisors.gds"
 
 tm1_layer = ihp.tech.LAYER.TopMetal2drawing
 tm1_foreground = f"{tm1_layer[0]}/{tm1_layer[1]}"
