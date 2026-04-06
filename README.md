@@ -56,7 +56,13 @@ make klayout-lvs-netlist CELL=sparx160_powdet_sbd
 make klayout-lvs-netlist EV_PRECISION=5
 ```
 
-Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set.
+Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set in the target `magic-lvs-netlist`.
+
+```sh
+make magic-lvs-netlist
+make magic-lvs-netlist CELL=sparx160_powdet_sbd
+make magic-lvs-netlist EV_PRECISION=5
+```
 
 ### Layout Versus Schematic (LVS)
 

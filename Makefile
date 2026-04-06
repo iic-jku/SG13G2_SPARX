@@ -89,6 +89,19 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 	sleep 4
 .PHONY: klayout-lvs
 
+magic-lvs-netlist: ## Export LVS netlist from Xschem for Magic LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
+	mkdir -p $(LVS_SCH_DIR)
+	-xschem -s -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
+		set spiceprefix 0; \
+		set lvs_netlist 1; \
+		set lvs_ignore 1; \
+		set ev_precision $(EV_PRECISION); \
+		set netlist_dir $(LVS_SCH_DIR); \
+		xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_magic.cdl; \
+		xschem netlist \
+	' $(SCH_DIR)/$(CELL).sch
+.PHONY: magic-lvs-netlist
+
 magic-lvs: ## Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
 	mkdir -p $(LVS_RPT_DIR)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
