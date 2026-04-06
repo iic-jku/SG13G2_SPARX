@@ -1,3 +1,22 @@
+# Makefile for SPARX160: A Programmatically Generated 160-GHz Six-Port Receiver in 130-nm CMOS
+#
+# SPDX-FileCopyrightText: 2026 Simon Dorrer
+# Johannes Kepler University, Department for Integrated Circuits
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# SPDX-License-Identifier: Apache-2.0
+# ========================================================================
+
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 TOP = sparx160_top
@@ -23,7 +42,7 @@ SCH_DIR  	:= schematic
 IMG_DIR     := img
 LVS_SCH_DIR := netlist/schematic
 LVS_LAY_DIR := netlist/layout
-RCX_DIR     := netlist/rcx
+PEX_DIR     := netlist/pex
 LVS_RPT_DIR := verification/lvs
 DRC_RPT_DIR := verification/drc
 
@@ -48,9 +67,10 @@ klayout-lvs-netlist: ## Export LVS netlist from Xschem for KLayout LVS (usage: m
 	xschem -s -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
 		set spiceprefix 0; \
 		set lvs_netlist 1; \
+		set lvs_ignore 0; \
 		set ev_precision $(EV_PRECISION); \
 		set netlist_dir $(LVS_SCH_DIR); \
-		xschem set netlist_name [file tail [file rootname [xschem get current_name]]].cdl; \
+		xschem set netlist_name [file tail [file rootname [xschem get current_name]]]_klayout.cdl; \
 		xschem netlist \
 	' $(SCH_DIR)/$(CELL).sch
 .PHONY: klayout-lvs-netlist
@@ -60,34 +80,20 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 	mkdir -p $(LVS_RPT_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py \
 		--layout=$(LAY_DIR)/$(CELL).gds \
-		--netlist=$(LVS_SCH_DIR)/$(CELL).cdl \
+		--netlist=$(LVS_SCH_DIR)/$(CELL)_klayout.cdl \
 		--topcell=$(CELL) \
 		--run_dir=$(LVS_RPT_DIR) \
 		--run_mode=deep
 	mkdir -p $(LVS_LAY_DIR)
-	mv $(LVS_RPT_DIR)/$(CELL)_extracted.cir $(LVS_LAY_DIR)/$(CELL)_extracted.cir
+	mv $(LVS_RPT_DIR)/$(CELL)_extracted.cir $(LVS_LAY_DIR)/$(CELL)_klayout_extracted.cir
 	sleep 4
 .PHONY: klayout-lvs
 
-# magic-lvs-netlist: ## Export LVS netlist from Xschem for Magic LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
-# 	mkdir -p $(LVS_SCH_DIR)
-# 	xschem -s -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
-# 		set spiceprefix 0; \
-# 		set lvs_netlist 1; \
-# 		# ToDo set lvs_ignore 1; \
-# 		set ev_precision $(EV_PRECISION); \
-# 		set netlist_dir $(LVS_SCH_DIR); \
-# 		xschem set netlist_name [file tail [file rootname [xschem get current_name]]].cdl; \
-# 		xschem netlist \
-# 	' $(SCH_DIR)/$(CELL).sch
-# .PHONY: magic-lvs-netlist
-
-# magic-lvs: ## Magic LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
-# 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
-# 	mkdir -p $(LVS_RPT_DIR)
-# 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(LVS_SCH_DIR)/$(CELL).cdl $(LAY_DIR)/$(CELL).gds
-# 	sleep 4
-# .PHONY: magic-lvs
+magic-lvs: ## Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
+	mkdir -p $(LVS_RPT_DIR)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+	sleep 4
+.PHONY: magic-lvs
 # ================================================================================================
 
 
@@ -98,7 +104,6 @@ klayout-drc: ## KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cel
 		--path=$(LAY_DIR)/$(CELL).gds \
 		--topcell=$(CELL) \
 		--run_dir=$(DRC_RPT_DIR) \
-		--antenna \
 		--no_feol \
 		--no_density \
 		--disable_extra_rules \
@@ -120,56 +125,57 @@ klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-reg
 
 magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
+	rm -f $(DRC_RPT_DIR)/drc_$(CELL).tcl
 	sleep 4
 .PHONY: magic-drc
 # ================================================================================================
 
 
 # Parasitic Extraction Targets
-# klayout-rcx: ## RC-Extraction with KLayout of the CELL cell (usage: make klayout-rcx [CELL=<cellname>] [PEX_MODE=<1|2|3>])
-# 	mkdir -p $(RCX_DIR)
-# 	# ToDo: KLayout PEX not yet available for IHP SG13G2
-# 	sleep 4
-# .PHONY: klayout-rcx
+klayout-pex: ## Parasitic Extraction with KLayout of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+	mkdir -p $(PEX_DIR)
+	echo "KLayout PEX is not yet available for the IHP Open-PDK."
+	sleep 4
+.PHONY: klayout-pex
 
-magic-rcx: ## RC-Extraction with Magic of the CELL cell (usage: make magic-rcx [CELL=<cellname>] [PEX_MODE=<1|2|3>])
-	mkdir -p $(RCX_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(RCX_DIR) $(LAY_DIR)/$(CELL).gds
-	mv $(RCX_DIR)/$(CELL).pex.spice $(RCX_DIR)/$(CELL)_pex.spice
-	sed -i 's/$(CELL)/$(CELL)_pex/g' $(RCX_DIR)/$(CELL)_pex.spice
-	rm -f $(RCX_DIR)/pex_$(CELL).tcl $(RCX_DIR)/$(CELL).ext
+magic-pex: ## Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+	mkdir -p $(PEX_DIR)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(PEX_DIR) $(LAY_DIR)/$(CELL).gds
+	mv $(PEX_DIR)/$(CELL).pex.spice $(PEX_DIR)/$(CELL)_pex.spice
+	sed -i 's/$(CELL)/$(CELL)_pex/g' $(PEX_DIR)/$(CELL)_pex.spice
+	rm -f $(PEX_DIR)/pex_$(CELL).tcl $(PEX_DIR)/$(CELL).ext $(PEX_DIR)/$(CELL)_flat.ext $(PEX_DIR)/$(CELL)_flat.res.ext
 	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
 		echo "Reordering pins in $(CELL)_pex.spice to match $(CELL)_pex.sym..."; \
-		python3 $(RCX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(RCX_DIR)/$(CELL)_pex.spice; \
+		python3 $(PEX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(PEX_DIR)/$(CELL)_pex.spice; \
 	else \
 		echo "No symbol $(SCH_DIR)/$(CELL)_pex.sym found, skipping pin reorder."; \
 	fi
 	sleep 4
-.PHONY: magic-rcx
+.PHONY: magic-pex
 # ================================================================================================
 
 
 # Verify Targets
 klayout-verify-cell: ## Verify a specific cell with KLayout (usage: make klayout-verify-cell CELL=<cellname>)
-	$(MAKE) klayout-lvs klayout-drc klayout-rcx CELL=$(CELL) 
+	$(MAKE) klayout-lvs klayout-drc klayout-pex CELL=$(CELL) 
 .PHONY: klayout-verify-cell
 
 klayout-verify-top: ## Verify top cell with KLayout (usage: make klayout-verify-top)
-	$(MAKE) klayout-lvs klayout-drc-regular klayout-rcx
+	$(MAKE) klayout-lvs klayout-drc-regular klayout-pex
 .PHONY: klayout-verify-top
 
 magic-verify-cell: ## Verify a specific cell with Magic (usage: make magic-verify-cell CELL=<cellname>)
-	$(MAKE) magic-lvs magic-drc magic-rcx CELL=$(CELL)
+	$(MAKE) magic-lvs magic-drc magic-pex CELL=$(CELL)
 .PHONY: magic-verify-cell
 
 magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
-	$(MAKE) magic-lvs magic-drc magic-rcx
+	$(MAKE) magic-lvs magic-drc magic-pex
 .PHONY: magic-verify-top
 
 verify-all: ## Verify all (usage: make verify-all)
-	$(MAKE) klayout-lvs klayout-drc magic-rcx CELL=$(CELL)
-	$(MAKE) klayout-lvs klayout-drc-regular magic-rcx
+	$(MAKE) klayout-lvs klayout-drc magic-pex CELL=$(CELL)
+	$(MAKE) klayout-lvs klayout-drc-regular magic-pex
 .PHONY: verify-all
 # ================================================================================================
 

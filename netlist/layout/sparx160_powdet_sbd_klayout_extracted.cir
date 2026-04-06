@@ -1,0 +1,27 @@
+* Extracted by KLayout with SG13G2 LVS runset on : 06/04/2026 12:57
+
+.SUBCKT sparx160_powdet_sbd rfin \$37.vout
+C$1 rfin \$6 \$1 rfcmim w=0u l=0u A=0p P=0u m=1 wfeed=0u
+R$2 \$I58 \$I51 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+C$3 \$I58 \$I44 cap_cmim w=6.8u l=9u A=61.2p P=31.6u m=2
+R$5 \$I51 \$I37 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
+R$6 \$I51 \$6 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
+D$7 \$6 \$I27 \$1 schottky_nbl1 m=1.0201
+D$8 \$I37 \$I18 \$1 schottky_nbl1 m=1.0201
+R$9 \$I18 \$I60 \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1
+R$10 \$37.vout \$I27 \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1
+M$11 \$I58 \$I58 \$I58 \$I77 sg13_lv_pmos L=0.13u W=10u AS=2.65p AD=2.65p
++ PS=16.06u PD=16.06u rfmode=0
+M$12 \$I58 \$I27 \$37.vout \$I77 sg13_lv_pmos L=0.13u W=100u AS=19p AD=19p
++ PS=107.6u PD=107.6u rfmode=0
+M$22 \$I58 \$I18 \$I60 \$I77 sg13_lv_pmos L=0.13u W=10u AS=1.9p AD=1.9p
++ PS=10.76u PD=10.76u rfmode=0
+R$35 \$I58 \$I77 ntap1 A=15.708p P=104.72u
+M$36 \$I44 \$I44 \$I44 \$1 sg13_lv_nmos L=0.13u W=5u AS=1.325p AD=1.325p
++ PS=8.56u PD=8.56u rfmode=0
+M$37 \$I44 \$I27 \$37.vout \$1 sg13_lv_nmos L=0.13u W=50u AS=9.5p AD=9.5p
++ PS=57.6u PD=57.6u rfmode=0
+M$47 \$I44 \$I18 \$I60 \$1 sg13_lv_nmos L=0.13u W=5u AS=0.95p AD=0.95p PS=5.76u
++ PD=5.76u rfmode=0
+R$60 \$I44 \$1 ptap1 A=13.68p P=91.2u
+.ENDS sparx160_powdet_sbd

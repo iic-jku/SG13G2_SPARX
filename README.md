@@ -56,6 +56,8 @@ make klayout-lvs-netlist CELL=sparx160_powdet_sbd
 make klayout-lvs-netlist EV_PRECISION=5
 ```
 
+Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set.
+
 ### Layout Versus Schematic (LVS)
 
 Exports the schematic netlist from Xschem, then runs LVS. Compares the GDS layout in `layout/` against the schematic netlist in `netlist/schematic/`. Reports are saved to `verification/lvs/`. The extracted layout netlist is moved to `netlist/layout/`.
@@ -67,7 +69,7 @@ make klayout-lvs
 make klayout-lvs CELL=sparx160_powdet_sbd
 ```
 
-**Magic LVS** uses `sak-lvs.sh` (Magic VLSI + Netgen):
+**Magic + Netgen LVS** uses `sak-lvs.sh`:
 
 ```sh
 make magic-lvs
@@ -91,7 +93,7 @@ make klayout-drc CELL=sparx160_powdet_sbd
 make klayout-drc-regular
 ```
 
-**Magic DRC** uses `sak-drc.sh` (Magic VLSI):
+**Magic DRC** uses `sak-drc.sh`:
 
 ```sh
 make magic-drc
@@ -100,7 +102,7 @@ make magic-drc CELL=sparx160_powdet_sbd
 
 ### Parasitic Extraction (PEX)
 
-Runs parasitic extraction on the GDS layout in `layout/`. The extracted SPICE netlist is written to `netlist/rcx/`.
+Runs parasitic extraction on the GDS layout in `layout/`. The extracted SPICE netlist is written to `netlist/pex/`.
 
 The `PEX_MODE` parameter selects the extraction mode:
 - `1` = C-decoupled
@@ -109,12 +111,18 @@ The `PEX_MODE` parameter selects the extraction mode:
 
 If a matching Xschem symbol (`schematic/<CELL>_pex.sym`) exists, the `.subckt` pin order in the extracted SPICE file is automatically reordered to match the symbol's pin positions. This ensures the PEX netlist can be used directly with the corresponding Xschem symbol for simulation.
 
-**Magic PEX** uses `sak-pex.sh` (Magic VLSI):
+**KLayout PEX** is not yet available for the IHP Open-PDK:
 
 ```sh
-make magic-rcx
-make magic-rcx CELL=sparx160_powdet_sbd
-make magic-rcx CELL=sparx160_powdet_sbd PEX_MODE=3
+make klayout-pex
+```
+
+**Magic PEX** uses `sak-pex.sh`:
+
+```sh
+make magic-pex
+make magic-pex CELL=sparx160_powdet_sbd
+make magic-pex CELL=sparx160_powdet_sbd PEX_MODE=3
 ```
 
 ### Verify a Specific Cell
@@ -152,9 +160,25 @@ Renders the top-level GDS layout and saves it in the `img/` folder:
 make render-image
 ```
 
+### Build PDK
+
+Clones and installs the IHP-Open-PDK repository with GDSFactory cells:
+
+```sh
+make build-pdk
+```
+
+### Build Layout
+
+Generates the six-port layout GDS files (`layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds`):
+
+```sh
+make build-layout
+```
+
 ### Build Top Cell
 
-Builds the top-level cell: six-port layout generation and image rendering:
+Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-image`:
 
 ```sh
 make build-top
