@@ -12,12 +12,32 @@ import argparse
 
 ihp.PDK.activate()
 
+parser = argparse.ArgumentParser(description="Generate the six-port layout GDS outputs")
+parser.add_argument(
+    "gds_filename",
+    nargs="?",
+    default="layout/sparx160_top.gds",
+    help="Output GDS file for the top-level layout",
+)
+parser.add_argument(
+    "powdet_gds_filename",
+    nargs="?",
+    default="layout/sparx160_powdet_sbd.gds",
+    help="Output GDS file for the power detector sub-cell",
+)
+args = parser.parse_args()
+
+gds_filename = Path(args.gds_filename)
+powdet_gds_filename = Path(args.powdet_gds_filename)
+top_cell_name = gds_filename.stem
+powdet_cell_name = powdet_gds_filename.stem
+
 
 # flag for filling, makes the design laggy in klayout
 fill = 1
 fill_M5 = 1
 
-c = gf.Component("sparx160_top")
+c = gf.Component(top_cell_name)
 
 @gf.cell
 def fill_cell(layer = ihp.tech.LAYER.Metal5slit, size=(3,3)) -> gf.Component:
@@ -61,396 +81,8 @@ def slit_ground() -> gf.Component:
     return c
 
 @gf.cell
-def power_detector_hbt() -> gf.Component:
-    c = gf.Component("power_detector_hbt")
-    via_TM1_TM2 = c.add_ref(ihp.cells.via_stack(
-        top_layer="TopMetal2",
-        bottom_layer="TopMetal1",
-        vt2_columns=2,
-        vt2_rows=2,
-    ))
-    cmim = ihp.cells.cmim(width=10, length=10)
-    C1_ref = c.add_ref(cmim)
-    C1_ref.connect("T", via_TM1_TM2.ports["bottom"], allow_width_mismatch=True)
-    
-    
-    # via cell from Metal1 to Metal5
-    via_M1_M5 = ihp.cells.via_stack(
-        top_layer="Metal5",
-        bottom_layer="Metal1",
-        vn_columns=6,
-        vn_rows=1,
-    )
-    
-    
-    # via from CMIM C1 to XQ1
-    via_M1_M5.ports["top"].orientation +=90
-    via_M1_M5.ports["bottom"].orientation +=90
-    via_M1_M5_ref = c.add_ref(via_M1_M5)
-    via_M1_M5_ref.connect("top", C1_ref.ports["B"], allow_width_mismatch=True)
-    
-    # npn13G2 cell, to be used for references when this transistor is needed
-    XQx = ihp.cells.npn13G2()
-    
-    
-    XQx.ports["C"].orientation = 270
-    XQ1_ref = c.add_ref(XQx)
-    XQ1_ref.connect("B", via_M1_M5.ports["bottom"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # c.add_ports(XQ1_ref.ports, prefix="XQ1_")
-    
-    via_M1_M2 = ihp.cells.via_stack(
-        top_layer="Metal2",
-        bottom_layer="Metal1",
-        vn_columns=6,
-        vn_rows=1,
-    )
-    
-    via_M1_M2.ports["top"].orientation = 180
-    via_M1_M2_ref = c.add_ref(via_M1_M2)
-    via_M1_M2_ref.connect("bottom", XQ1_ref.ports["C"], allow_width_mismatch=True, allow_layer_mismatch=True)
-
-    
-    XQx.ports["E"].orientation = 180
-    XQx.ports["C"].orientation = 0
-    XQ2_ref = c.add_ref(XQx)
-    XQ2_ref.center = XQ1_ref.center
-    XQ2_ref.xmin = XQ1_ref.xmax +0.31 #min spacing vor pSD 5.10
-    
-    
-    # distance between port centers of the two devices
-    distancex = abs(via_M1_M2_ref.ports["top"].center[0] - XQ2_ref.ports["E"].center[0])
-    
-    route1 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[via_M1_M2_ref.ports["top"]],
-        ports2=[XQ2_ref.ports["E"]],
-        route_width=0.2,    # min width for metal2
-        layer=ihp.tech.LAYER.Metal2drawing,
-        allow_layer_mismatch=True,
-        auto_taper=False,
-        separation=0,
-        start_straight_length=distancex/2-0.1, # half the distance minus half the width
-    )
-    
-    cmim.ports["T"].orientation = 0
-    C2_ref = c.add_ref(cmim)
-    C2_ref.center = C1_ref.center
-    C2_ref.xmin = C1_ref.xmax +0.24 # min spacing according to design rules 5.17
-    
-    
-    connection = c.add_ref(ihp.cells.straight(length=7, cross_section="topmetal1_routing", width=1.64)) # min width TM1
-    connection.connect("e1", C2_ref.ports["T"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    
-    via_M2_TM1 = ihp.cells.via_stack(
-        top_layer="TopMetal1",
-        bottom_layer="Metal2",
-        vn_columns=2,
-        vn_rows=4,
-        vt1_columns=1,
-        vt1_rows=2
-    )   
-    
-    via_M2_TM1.ports["top"].orientation = 90
-    via_M2_TM1.ports["bottom"].orientation = 90
-    via_M2_TM1_ref = c.add_ref(via_M2_TM1)
-    via_M2_TM1_ref.connect("top", connection.ports["e2"], allow_width_mismatch=True, allow_layer_mismatch=True)
-       
-    
-    route2 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[via_M2_TM1_ref.ports["bottom"]],
-        ports2=[XQ2_ref.ports["E"]],
-        layer=ihp.tech.LAYER.Metal2drawing,
-        route_width=0.2,    # min width for metal2
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0, 
-    )
-    
-    
-    XR1 = ihp.cells.rppd(width=0.5, length=1)
-    XR1.ports["e2"].orientation = 180
-    XR1_ref = c.add_ref(XR1)
-    XR1_ref.xmin = XQ2_ref.xmax+0.31 # min spacing according to design rules 5.10
-    XR1_ref.movey((XQ2_ref.ports["C"].center[1] - XR1_ref.ports["e2"].center[1]))
-    
-    route4 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[XQ2_ref.ports["C"]],
-        ports2=[XR1_ref.ports["e2"]],
-        route_width=0.2,    # min width for metal1
-        layer=ihp.tech.LAYER.Metal1drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )    
-    
-    C3_ref = c.add_ref(cmim)
-    C3_ref.center = C1_ref.center
-    C3_ref.ymin = C1_ref.ymax + 0.24 # min spacing according to design rules 5.17
-    
-    cmim.ports["T"].orientation = 0
-    cmim.ports["B"].orientation = 180 # change port direction
-    C4_ref = c.add_ref(cmim)
-    C4_ref.center = C2_ref.center
-    C4_ref.ymin = C2_ref.ymax + 0.24 # min spacing according to design rules 5.17
-    
-    XQx.ports["C"].orientation = 270
-    XQ3_ref = c.add_ref(XQx)
-    XQ3_ref.center = XQ1_ref.center
-    XQ3_ref.ymin = XQ1_ref.ymax + 0.31 # min spacing according to design rules 5.10
-    
-    XQx.ports["C"].orientation = 0
-    XQ4_ref = c.add_ref(XQx)
-    XQ4_ref.center = XQ2_ref.center
-    XQ4_ref.ymin = XQ2_ref.ymax + 0.31 # min spacing according to design rules 5.10
-    
-    route3 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[XQ1_ref.ports["B"]],
-        ports2=[XQ3_ref.ports["B"]],
-        route_width=0.2,    # min width for metal1
-        layer=ihp.tech.LAYER.Metal1drawing,
-        start_straight_length=3,
-        allow_layer_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )   
-    
-    # via for XQ3 to get to M2
-    via_M1_M2.ports["bottom"].orientation = 0
-    via_M1_M2_ref = c.add_ref(via_M1_M2)
-    via_M1_M2_ref.connect("bottom", XQ3_ref.ports["C"], allow_width_mismatch=True, allow_layer_mismatch=True)
-   
-    
-    # distance between port centers of the two devices
-    distancex = abs(via_M1_M2_ref.ports["top"].center[0] - XQ2_ref.ports["E"].center[0])
-    
-    route5 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[via_M1_M2_ref.ports["top"]],
-        ports2=[XQ4_ref.ports["E"]],
-        route_width=0.2,    # min width for metal2
-        layer=ihp.tech.LAYER.Metal2drawing,
-        allow_layer_mismatch=True,
-        auto_taper=False,
-        separation=0,
-        start_straight_length=distancex/2-0.1, # half the distance minus half the width
-    )
-    
-    route6 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[XQ2_ref.ports["B"]],
-        ports2=[XQ4_ref.ports["B"]],
-        route_width=0.2,    # min width for metal1
-        layer=ihp.tech.LAYER.Metal1drawing,
-        start_straight_length=3,
-        allow_layer_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    ) 
-    
-    connection = c.add_ref(ihp.cells.straight(length=7, cross_section="topmetal1_routing", width=1.64)) # min width TM1
-    connection.connect("e1", C4_ref.ports["T"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    
-    via_M2_TM1.ports["top"].orientation = 270
-    via_M2_TM1.ports["bottom"].orientation = 270
-    via_M2_TM1_ref = c.add_ref(via_M2_TM1)
-    via_M2_TM1_ref.connect("top", connection.ports["e2"], allow_width_mismatch=True, allow_layer_mismatch=True)
-       
-    
-    route7 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[via_M2_TM1_ref.ports["bottom"]],
-        ports2=[XQ4_ref.ports["E"]],
-        layer=ihp.tech.LAYER.Metal2drawing,
-        route_width=0.2,    # min width for metal2
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0, 
-    )
-    
-    XR3 = ihp.cells.rppd(width=0.5, length=1)
-    XR3.ports["e1"].orientation = 180
-    XR3_ref = c.add_ref(XR1)
-    XR3_ref.xmin = XQ4_ref.xmax+0.31 # min spacing according to design rules 5.10
-    XR3_ref.movey((XQ4_ref.ports["C"].center[1] - XR3_ref.ports["e1"].center[1]))
-    
-    route8 = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[XQ4_ref.ports["C"]],
-        ports2=[XR3_ref.ports["e1"]],
-        route_width=0.2,    # min width for metal1
-        layer=ihp.tech.LAYER.Metal1drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )    
-    
-    via_M1_M5_ref = c.add_ref(via_M1_M5)
-    via_M1_M5_ref.connect("bottom", XQ3_ref.ports["B"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    
-    
-    # create capasitor array for caps 5 and 6
-    C5_6 = gf.Component("C5_6")
-    bottom_row = C5_6.add_ref(gf.components.array(component=cmim, columns=6, rows=1, column_pitch= 0.24 + 11.2))
-    top_row = C5_6.add_ref(gf.components.array(component=cmim, columns=4, rows=1, column_pitch= 0.24 + 11.2))
-    top_row.ymin = bottom_row.ymax + 0.24 # min spacing according to design rules 5.17
-    C5_6.add_ports(bottom_row.ports, prefix="BR_")
-    C5_6.add_ports(top_row.ports, prefix="TR_")
-    
-    # orient the outer most port of top and bottom row to look inward to make a horizontal connection between each cap
-    C5_6.ports["BR_T_1_1"].orientation = 0
-    C5_6.ports["TR_T_1_1"].orientation = 0
-    C5_6.ports["BR_B_1_1"].orientation = 0
-    C5_6.ports["TR_B_1_1"].orientation = 0
-    C5_6.ports["BR_T_1_6"].orientation = 180
-    C5_6.ports["TR_T_1_4"].orientation = 180
-    C5_6.ports["BR_B_1_6"].orientation = 180
-    C5_6.ports["TR_B_1_4"].orientation = 180
-        
-    C5_6_connection_T = gf.routing.route_bundle_electrical(
-        component=C5_6,
-        ports1=[C5_6.ports["BR_T_1_6"], C5_6.ports["TR_T_1_4"]],
-        ports2=[C5_6.ports["BR_T_1_1"], C5_6.ports["TR_T_1_1"]],
-        route_width=2,    # min width for metal1
-        layer=ihp.tech.LAYER.TopMetal1drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    C5_6_connection_B = gf.routing.route_bundle_electrical(
-        component=C5_6,
-        ports1=[C5_6.ports["BR_B_1_6"], C5_6.ports["TR_B_1_4"]],
-        ports2=[C5_6.ports["BR_B_1_1"], C5_6.ports["TR_B_1_1"]],
-        route_width=2,    # min width for metal1
-        layer=ihp.tech.LAYER.Metal5drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    # orient top row ports to face downwards to connect to bottom row ports
-    ihp.cells.utils.change_port_orientation(C5_6, ["TR_T_1_1", "TR_T_1_2", "TR_T_1_3", "TR_T_1_4"], 270)
-    ihp.cells.utils.change_port_orientation(C5_6, ["TR_B_1_1", "TR_B_1_2", "TR_B_1_3", "TR_B_1_4"], 270)
-    
-    # orient bottom row ports to face upwards to connect to top row ports
-    ihp.cells.utils.change_port_orientation(C5_6, ["BR_T_1_1", "BR_T_1_2", "BR_T_1_3", "BR_T_1_4"], 90)
-    ihp.cells.utils.change_port_orientation(C5_6, ["BR_B_1_1", "BR_B_1_2", "BR_B_1_3", "BR_B_1_4"], 90)
-    
-    C5_6_connection_top = gf.routing.route_bundle_electrical(
-        component=C5_6,
-        ports1=[C5_6.ports["BR_T_1_1"], C5_6.ports["BR_T_1_2"], C5_6.ports["BR_T_1_3"], C5_6.ports["BR_T_1_4"]],
-        ports2=[C5_6.ports["TR_T_1_1"], C5_6.ports["TR_T_1_2"], C5_6.ports["TR_T_1_3"], C5_6.ports["TR_T_1_4"]],
-        route_width=2,    # adjust for thicker connections
-        layer=ihp.tech.LAYER.TopMetal1drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    C5_6_connection_bottom = gf.routing.route_bundle_electrical(
-        component=C5_6,
-        ports1=[C5_6.ports["BR_B_1_1"], C5_6.ports["BR_B_1_2"], C5_6.ports["BR_B_1_3"], C5_6.ports["BR_B_1_4"]],
-        ports2=[C5_6.ports["TR_B_1_1"], C5_6.ports["TR_B_1_2"], C5_6.ports["TR_B_1_3"], C5_6.ports["TR_B_1_4"]],
-        route_width=2,    # adjust for thicker connections
-        layer=ihp.tech.LAYER.Metal5drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    # orient top row ports to face upwards to connect the ground plates to the other caps
-    ihp.cells.utils.change_port_orientation(C5_6, ["TR_B_1_1", "TR_B_1_2", "TR_B_1_3", "TR_B_1_4", "BR_B_1_6"], 90)
-    
-    # reference the array as C5
-    C5_ref = c.add_ref(C5_6)
-    C5_ref.xmax = C2_ref.xmax
-    C5_ref.ymax = C2_ref.ymax 
-    
-    
-    # reference the array as C6
-    C6_ref = c.add_ref(C5_6)
-    C6_ref.mirror_y()
-    C6_ref.xmax = C4_ref.xmax
-    C6_ref.ymin = C4_ref.ymin
-    
-    C5_6_connection_ground = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[C5_ref.ports["TR_B_1_1"], C5_ref.ports["TR_B_1_2"], C5_ref.ports["TR_B_1_3"], C5_ref.ports["TR_B_1_4"], C5_ref.ports["BR_B_1_6"]],
-        ports2=[C6_ref.ports["TR_B_1_1"], C6_ref.ports["TR_B_1_2"], C6_ref.ports["TR_B_1_3"], C6_ref.ports["TR_B_1_4"], C6_ref.ports["BR_B_1_6"]],
-        route_width=2,    # adjust for thicker connections
-        layer=ihp.tech.LAYER.Metal5drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    C4_6_connection_ground = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[C4_ref.ports["B"]],
-        ports2=[C6_ref.ports["TR_B_1_1"]],
-        route_width=2,    # adjust for thicker connections
-        layer=ihp.tech.LAYER.Metal5drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    via_M2_M5 = ihp.cells.via_stack(
-        top_layer="Metal5",
-        bottom_layer="Metal2",
-        vn_columns=2,
-        vn_rows=4,
-    )
-    
-    # connect XQ3 Emitter to Ground
-    via_M2_M5_ref = c.add_ref(via_M2_M5)
-    via_M2_M5_ref.connect("bottom", XQ3_ref.ports["E"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    
-    
-    # connect XQ1 Emitter to Ground
-    via_M2_M5.ports["bottom"].orientation = 0
-    via_M2_M5_ref = c.add_ref(via_M2_M5)
-    via_M2_M5_ref.center = (C6_ref.ports["TR_B_1_4"].center[0], XQ1_ref.ports["E"].center[1])
-    
-    route = gf.routing.route_bundle_electrical(
-        component=c,
-        ports1=[via_M2_M5_ref.ports["bottom"]],
-        ports2=[XQ1_ref.ports["E"]],
-        route_width=1,    # min width for metal2 0.2
-        layer=ihp.tech.LAYER.Metal2drawing,
-        allow_layer_mismatch=True,
-        allow_width_mismatch=True,
-        auto_taper=False,
-        separation=0,
-    )
-    
-    
-    # c.add_ports(via_M2_M5_ref.ports, prefix="via_")
-    # c.add_ports(C4_ref.ports, prefix="C4_")
-    # c.add_ports(C5_ref.ports, prefix="C5_")
-    # c.add_ports(C6_ref.ports, prefix="C6_")
-    
-    
-   
-       
-    return c
-
-@gf.cell
 def powdet_sbd() -> gf.Component:
-    c = gf.Component("powdet_sbd")
+    c = gf.Component(powdet_cell_name)
     
     # via from rfin on TM2 to C1 on TM1
     via_TM1_TM2 = ihp.cells.via_stack(
@@ -2001,41 +1633,18 @@ pd4_center=(-137.165-5.225, -445)
 
 c.add_ref(ihp.cells.sealring(width=1000, height=1300)).center = c.center
 
-
-
-
 # c.flatten()  # flatten the cell to reduce the number of references and speed up rendering
 # c.draw_ports()
 
-# pd = power_detector_hbt()
-
-
-
-parser = argparse.ArgumentParser(description="Generate the six-port layout GDS outputs")
-parser.add_argument(
-    "gds_filename",
-    nargs="?",
-    default="layout/sparx160_top.gds",
-    help="Output GDS file for the top-level layout",
-)
-args = parser.parse_args()
-
-gds_filename = Path(args.gds_filename)
-powdet_gds_filename = gds_filename.with_name("sparx160_powdet_sbd.gds")
-
-# c = gf.Component("powdet_sbd")
-# gds_filename = "powdet_sbd.gds"
-
-
 # create powerdetector
 pd = powdet_sbd()
+pd.locked = False
+pd.name = powdet_cell_name
 pd.write_gds(str(powdet_gds_filename))
 
 # PD1 reference, position and route
 pd1_ref = c.add_ref(pd)
 pd1_ref.center = pd1_center
-
-
 
 # vdd connection of pd1 to probe top
 route_pd1_vdd = gf.routing.route_bundle_electrical(
@@ -2544,7 +2153,6 @@ kellerer = c.add_ref(gf.import_gds(str(kellerer_gds_path), cellname="Name_D"))
 
 iws = c.add_ref(gf.import_gds(str(iws_gds_path), cellname="Logo_IWS"))
 
-
 kellerer.rotate(-90)
 
 kellerer.move((-690, 430))
@@ -2574,15 +2182,8 @@ c.xmin = 0
 c.ymin = 0
 c.move((-25, -25))
 
-
-
-
-
 c.write_gds(str(gds_filename))
 c.show()
 
 # pd.draw_ports()
 # pd.show()
-
-
-

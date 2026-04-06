@@ -1,6 +1,7 @@
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 TOP = sparx160_top
+POWDET = sparx160_powdet_sbd
 
 .DEFAULT_GOAL := help
 
@@ -189,7 +190,7 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 .PHONY: build-pdk
 
 build-layout: ## Build layout of six-port (usage: make build-layout)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
 .PHONY: build-layout
 
 build-top: ## Build TOP cell (usage: make build-top)
