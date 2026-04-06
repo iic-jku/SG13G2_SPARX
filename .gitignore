@@ -12,3 +12,4 @@ lvs_run_*
 /schematic/simulations
 /testbenches/simulations
 /IHP
+/build
