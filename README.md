@@ -44,12 +44,15 @@
 
 ## Makefile Targets
 
-## ToDos
+### ToDos
 - [ ] KLayout LVS --> CMIM issues (@klayoutmatthias)
 - [x] KLayout DRC
-- [ ] Magic LVS --> https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/lvs/sparx160_powdet_sbd.lvs.out
+- [ ] Magic LVS --> @simi1505 / @davkel99: https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/lvs/sparx160_powdet_sbd.lvs.out
 - [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/drc/sparx160_powdet_sbd.magic.drc.rpt
 - [ ] Magic PEX --> missing SBDs (@RTimothyEdwards)
+- [ ] Change DBU from 5nm to 1nm in code: @davkel99
+- [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
+- [ ] Top-level Six-Port simulation in Xschem: @simi1505
 
 ### Export LVS Netlist
 
