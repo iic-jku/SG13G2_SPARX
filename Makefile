@@ -154,21 +154,47 @@ magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>
 
 
 # Parasitic Extraction Targets
-klayout-pex: ## Parasitic Extraction with KLayout of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+klayout-pex: ## Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
-	echo "KLayout PEX is not yet available for the IHP Open-PDK."
+	PDK_UNDERSCORED=$$(echo $$PDK | sed -e 's/-/_/g'); \
+	case $(PEX_MODE) in \
+		1) echo "WARNING: KPEX does not support C-decoupled (C) mode yet, using C-coupled (CC) mode instead."; KPEX_MODE=CC ;; \
+		2) KPEX_MODE=CC ;; \
+		3) KPEX_MODE=RC ;; \
+		*) echo "Invalid PEX_MODE: $(PEX_MODE). Use 1, 2, or 3."; exit 1;; \
+	esac; \
+	kpex \
+	--pdk $$PDK_UNDERSCORED \
+	--cell $(CELL) \
+	--schematic $(SCH_DIR)/$(CELL).sch \
+	--gds $(LAY_DIR)/$(CELL).gds \
+	--magic \
+	--magic_mode $$KPEX_MODE \
+	--out_dir $(NET_PEX_DIR) \
+	--out_spice $(NET_PEX_DIR)/$(CELL)_klayout_pex.spice
+#	--2.5D
+#	--mode $$KPEX_MODE
+	sed -i 's/$(CELL)_flat/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_klayout_pex.spice
+	rm -rf $(NET_PEX_DIR)/$(CELL)__$(CELL)
+	rm -f $(CELL)_flat.nodes $(CELL)_flat.sim
+	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
+		echo "Reordering pins in $(CELL)_klayout_pex.spice to match $(CELL)_pex.sym..."; \
+		python3 $(NET_PEX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(NET_PEX_DIR)/$(CELL)_klayout_pex.spice; \
+	else \
+		echo "No symbol $(SCH_DIR)/$(CELL)_pex.sym found, skipping pin reorder."; \
+	fi
 	sleep 4
 .PHONY: klayout-pex
 
 magic-pex: ## Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL).gds
-	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_pex.spice
-	sed -i 's/$(CELL)/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_pex.spice
+	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
+	sed -i 's/$(CELL)/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	rm -f $(NET_PEX_DIR)/pex_$(CELL).tcl $(NET_PEX_DIR)/$(CELL).ext $(NET_PEX_DIR)/$(CELL)_flat.ext $(NET_PEX_DIR)/$(CELL)_flat.res.ext
 	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
-		echo "Reordering pins in $(CELL)_pex.spice to match $(CELL)_pex.sym..."; \
-		python3 $(NET_PEX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(NET_PEX_DIR)/$(CELL)_pex.spice; \
+		echo "Reordering pins in $(CELL)_magic_pex.spice to match $(CELL)_pex.sym..."; \
+		python3 $(NET_PEX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(NET_PEX_DIR)/$(CELL)_magic_pex.spice; \
 	else \
 		echo "No symbol $(SCH_DIR)/$(CELL)_pex.sym found, skipping pin reorder."; \
 	fi

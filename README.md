@@ -43,12 +43,14 @@
 
 
 ## ToDos
-- [ ] KLayout LVS --> CMIM issues (@klayoutmatthias)
+- [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [x] KLayout DRC
+- [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
 - [ ] Magic LVS --> @simi1505 / @davkel99: https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/lvs/sparx160_powdet_sbd.lvs.out
 - [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/drc/sparx160_powdet_sbd.magic.drc.rpt
 - [ ] Magic PEX --> missing SBDs (@RTimothyEdwards)
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
+- [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Top-level Six-Port simulation in Xschem: @simi1505
 
@@ -98,7 +100,7 @@ make magic-lvs CELL=sparx160_powdet_sbd
 
 Runs DRC on the GDS layout in `layout/`. Reports are saved to `verification/drc/`.
 
-**KLayout DRC** uses `run_drc.py` from the IHP Open-PDK:
+**KLayout DRC** uses `run_drc.py` from the IHP Open-PDK with relaxed rules (FEOL, density checks, and extra rules disabled):
 
 ```sh
 make klayout-drc
@@ -127,12 +129,18 @@ The `PEX_MODE` parameter selects the extraction mode:
 - `2` = C-coupled
 - `3` = full-RC (default)
 
+> **Note:** For `klayout-pex`, `PEX_MODE=1` (C-decoupled) is not yet supported by kpex and automatically falls back to `PEX_MODE=2` (CC) with a warning.
+
+The `.subckt` name in the extracted SPICE file is automatically renamed from `<CELL>_flat` (kpex) or `<CELL>` (Magic) to `<CELL>_pex`.
+
 If a matching Xschem symbol (`schematic/<CELL>_pex.sym`) exists, the `.subckt` pin order in the extracted SPICE file is automatically reordered to match the symbol's pin positions. This ensures the PEX netlist can be used directly with the corresponding Xschem symbol for simulation.
 
-**KLayout PEX** is not yet available for the IHP Open-PDK:
+**KLayout PEX** uses `kpex` with the Magic extraction engine currently (2.5D engine is work in progress):
 
 ```sh
 make klayout-pex
+make klayout-pex CELL=sparx160_powdet_sbd
+make klayout-pex CELL=sparx160_powdet_sbd PEX_MODE=3
 ```
 
 **Magic PEX** uses `sak-pex.sh`:
