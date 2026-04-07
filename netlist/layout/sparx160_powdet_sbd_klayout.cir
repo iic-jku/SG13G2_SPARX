@@ -1,12 +1,12 @@
-* Extracted by KLayout with SG13G2 LVS runset on : 07/04/2026 10:45
+* Extracted by KLayout with SG13G2 LVS runset on : 07/04/2026 13:31
 
 .SUBCKT sparx160_powdet_sbd vout vref vss vdd rfin
-C$1 rfin \$14 \$1 rfcmim w=0u l=0u A=0p P=0u m=1 wfeed=0u
+C$1 rfin \$11 \$1 rfcmim w=0u l=0u A=0p P=0u m=1 wfeed=0u
 R$2 vdd \$I73 \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
 C$3 vdd vss cap_cmim w=6.8u l=9u A=61.2p P=31.6u m=2
 R$5 \$I73 \$I37 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
-R$6 \$I73 \$14 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
-D$7 \$14 \$I27 \$1 schottky_nbl1 m=1
+R$6 \$I73 \$11 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
+D$7 \$11 \$I27 \$1 schottky_nbl1 m=1
 D$8 \$I37 \$I18 \$1 schottky_nbl1 m=1
 R$9 \$I18 vref \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1
 R$10 vout \$I27 \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1

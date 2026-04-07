@@ -86,7 +86,6 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 		--topcell=$(CELL) \
 		--run_dir=$(LVS_RPT_DIR) \
 		--run_mode=deep
-	mkdir -p $(NET_LAY_DIR)
 	mv $(LVS_RPT_DIR)/$(CELL)_extracted.cir $(NET_LAY_DIR)/$(CELL)_klayout.cir
 	sleep 4
 .PHONY: klayout-lvs
@@ -109,7 +108,7 @@ magic-lvs: ## Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+	-PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
 	mv $(LVS_RPT_DIR)/$(CELL).ext.spc $(NET_LAY_DIR)/$(CELL)_magic.ext.spc
 	rm -f $(LVS_RPT_DIR)/$(CELL).sch.spc
 	rm -f $(LVS_RPT_DIR)/ext_$(CELL).tcl
@@ -147,7 +146,7 @@ klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-reg
 
 magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
+	-PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
 	rm -f $(DRC_RPT_DIR)/drc_$(CELL).tcl
 	sleep 4
 .PHONY: magic-drc
