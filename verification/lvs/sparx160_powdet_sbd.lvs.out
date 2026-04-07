@@ -1,70 +1,88 @@
 
-Cell cap_cmim (1) disconnected node: top
-Cell cap_cmim (1) disconnected node: bottom
+Circuit 1 cell cap_cmim and Circuit 2 cell cap_cmim are black boxes.
+Warning: Equate pins:  cell cap_cmim is a placeholder, treated as a black box.
 Warning: Equate pins:  cell cap_cmim is a placeholder, treated as a black box.
 
 Subcircuit pins:
 Circuit 1: cap_cmim                        |Circuit 2: cap_cmim                        
 -------------------------------------------|-------------------------------------------
-(no matching pin)                          |top                                        
-(no matching pin)                          |top                                        
-(no matching pin)                          |bottom                                     
-(no matching pin)                          |bottom                                     
-1                                          |(no matching pin)                          
-2                                          |(no matching pin)                          
+1                                          |1                                          
+2                                          |2                                          
 ---------------------------------------------------------------------------------------
 Cell pin lists are equivalent.
 Device classes cap_cmim and cap_cmim are equivalent.
 
-Cell sg13_lv_pmos (1) disconnected node: drain
-Cell sg13_lv_pmos (1) disconnected node: gate
-Cell sg13_lv_pmos (1) disconnected node: source
-Cell sg13_lv_pmos (1) disconnected node: bulk
+Circuit 1 cell sg13_lv_pmos and Circuit 2 cell sg13_lv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_lv_pmos is a placeholder, treated as a black box.
 Warning: Equate pins:  cell sg13_lv_pmos is a placeholder, treated as a black box.
 
 Subcircuit pins:
 Circuit 1: sg13_lv_pmos                    |Circuit 2: sg13_lv_pmos                    
 -------------------------------------------|-------------------------------------------
-(no matching pin)                          |drain                                      
-(no matching pin)                          |drain                                      
-(no matching pin)                          |gate                                       
-(no matching pin)                          |gate                                       
-(no matching pin)                          |source                                     
-(no matching pin)                          |source                                     
-(no matching pin)                          |bulk                                       
-(no matching pin)                          |bulk                                       
-1                                          |(no matching pin)                          
-2                                          |(no matching pin)                          
-3                                          |(no matching pin)                          
-4                                          |(no matching pin)                          
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
 ---------------------------------------------------------------------------------------
 Cell pin lists are equivalent.
 Device classes sg13_lv_pmos and sg13_lv_pmos are equivalent.
 
-Cell sg13_lv_nmos (1) disconnected node: drain
-Cell sg13_lv_nmos (1) disconnected node: gate
-Cell sg13_lv_nmos (1) disconnected node: source
-Cell sg13_lv_nmos (1) disconnected node: bulk
+Circuit 1 cell rppd and Circuit 2 cell rppd are black boxes.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rppd                            |Circuit 2: rppd                            
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rppd and rppd are equivalent.
+
+Circuit 1 cell sg13_lv_nmos and Circuit 2 cell sg13_lv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_lv_nmos is a placeholder, treated as a black box.
 Warning: Equate pins:  cell sg13_lv_nmos is a placeholder, treated as a black box.
 
 Subcircuit pins:
 Circuit 1: sg13_lv_nmos                    |Circuit 2: sg13_lv_nmos                    
 -------------------------------------------|-------------------------------------------
-(no matching pin)                          |drain                                      
-(no matching pin)                          |drain                                      
-(no matching pin)                          |gate                                       
-(no matching pin)                          |gate                                       
-(no matching pin)                          |source                                     
-(no matching pin)                          |source                                     
-(no matching pin)                          |bulk                                       
-(no matching pin)                          |bulk                                       
-1                                          |(no matching pin)                          
-2                                          |(no matching pin)                          
-3                                          |(no matching pin)                          
-4                                          |(no matching pin)                          
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
 ---------------------------------------------------------------------------------------
 Cell pin lists are equivalent.
 Device classes sg13_lv_nmos and sg13_lv_nmos are equivalent.
+
+Circuit 1 cell rhigh and Circuit 2 cell rhigh are black boxes.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rhigh                           |Circuit 2: rhigh                           
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rhigh and rhigh are equivalent.
+
+Circuit 1 cell rsil and Circuit 2 cell rsil are black boxes.
+Warning: Equate pins:  cell rsil is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rsil is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rsil                            |Circuit 2: rsil                            
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rsil and rsil are equivalent.
 Flattening unmatched subcell C2 in circuit sparx160_powdet_sbd (0)(1 instance)
 Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__7cb987b1 in circuit sparx160_powdet_sbd (0)(2 instances)
 Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(13 instances)
@@ -88,257 +106,182 @@ Flattening unmatched subcell rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2
 
 Class sparx160_powdet_sbd (0):  Merged 100 parallel devices.
 Class sparx160_powdet_sbd (1):  Merged 1 parallel devices.
-Class sparx160_powdet_sbd (1):  Merged 1 series devices.
 Subcircuit summary:
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 -------------------------------------------|-------------------------------------------
 cap_cmim (61->3)                           |cap_cmim (61->3)                           
-rhigh (1)                                  |(no matching element)                      
-rsil (2)                                   |(no matching element)                      
+rhigh (1)                                  |rhigh (1)                                  
+rsil (2)                                   |rsil (2)                                   
 sg13_lv_pmos (24->3)                       |sg13_lv_pmos (3)                           
-rppd (2)                                   |(no matching element)                      
+rppd (2)                                   |rppd (2)                                   
 sg13_lv_nmos (24->3)                       |sg13_lv_nmos (3)                           
-(no matching element)                      |sub (7->6)                                 
-Number of devices: 14 **Mismatch**         |Number of devices: 15 **Mismatch**         
-Number of nets: 40 **Mismatch**            |Number of nets: 41 **Mismatch**            
+(no matching element)                      |schottky_nbl1 (2)                          
+Number of devices: 14 **Mismatch**         |Number of devices: 16 **Mismatch**         
+Number of nets: 10 **Mismatch**            |Number of nets: 12 **Mismatch**            
 ---------------------------------------------------------------------------------------
 NET mismatches: Class fragments follow (with fanout counts):
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 
 ---------------------------------------------------------------------------------------
 Net: rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_ |Net: bias1                                 
-  cap_cmim/1 = 1                           |  sub/(end_a|end_b) = 3                    
-  rhigh/(1|2) = 1                          |  cap_cmim/top = 1                         
-  rsil/(1|2) = 2                           |                                           
+  cap_cmim/1 = 1                           |  rsil/(1|2) = 2                           
+  rhigh/(1|2) = 1                          |  cap_cmim/1 = 1                           
+  rsil/(1|2) = 2                           |  rhigh/(1|2) = 1                          
                                            |                                           
 Net: vss                                   |Net: vss                                   
-  cap_cmim/2 = 2                           |  cap_cmim/bottom = 2                      
-  rhigh/3 = 1                              |  sg13_lv_nmos/(drain|source) = 4          
-  rsil/3 = 2                               |  sg13_lv_nmos/gate = 1                    
+  cap_cmim/2 = 2                           |  cap_cmim/2 = 2                           
+  sg13_lv_nmos/(1|3) = 4                   |  sg13_lv_nmos/(1|3) = 4                   
+  sg13_lv_nmos/2 = 1                       |  sg13_lv_nmos/2 = 1                       
   rppd/3 = 2                               |                                           
-  sg13_lv_nmos/(1|3) = 4                   |                                           
+  rhigh/3 = 1                              |                                           
   sg13_lv_nmos/4 = 3                       |                                           
-  sg13_lv_nmos/2 = 1                       |                                           
+  rsil/3 = 2                               |                                           
                                            |                                           
-Net: vdd                                   |Net: vdd                                   
-  rhigh/(1|2) = 1                          |  sg13_lv_pmos/(drain|source) = 4          
-  sg13_lv_pmos/(1|3) = 4                   |  cap_cmim/top = 1                         
-  sg13_lv_pmos/4 = 3                       |  sub/(end_a|end_b) = 1                    
-  sg13_lv_pmos/2 = 1                       |  sg13_lv_pmos/gate = 1                    
-  cap_cmim/1 = 1                           |                                           
-                                           |                                           
-Net: schottky_W1_L0p3_N1_N1_1/a_0_0#       |Net: rfin_int                              
-  rsil/(1|2) = 1                           |  sub/(end_a|end_b) = 2                    
-  cap_cmim/2 = 1                           |  cap_cmim/bottom = 1                      
-                                           |                                           
-Net: schottky_W1_L0p3_N1_N1_0/dw_n110_n84# |Net: nw                                    
-  sg13_lv_pmos/2 = 1                       |  sg13_lv_pmos/bulk = 3                    
-  rppd/(1|2) = 1                           |                                           
-  sg13_lv_nmos/2 = 1                       |                                           
-                                           |                                           
-Net: schottky_W1_L0p3_N1_N1_1/dw_n110_n84# |Net: sub                                   
-  sg13_lv_pmos/2 = 1                       |  sg13_lv_nmos/bulk = 3                    
-  rppd/(1|2) = 1                           |                                           
-  sg13_lv_nmos/2 = 1                       |                                           
-                                           |                                           
-Net: vout                                  |Net: vout                                  
-  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(drain|source) = 1          
-  rppd/(1|2) = 1                           |  sg13_lv_nmos/(drain|source) = 1          
-  sg13_lv_nmos/(1|3) = 1                   |  sub/(end_a|end_b) = 1                    
-                                           |                                           
-Net: vref                                  |Net: vref                                  
-  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(drain|source) = 1          
-  rppd/(1|2) = 1                           |  sg13_lv_nmos/(drain|source) = 1          
-  sg13_lv_nmos/(1|3) = 1                   |  sub/(end_a|end_b) = 1                    
-                                           |                                           
-Net: schottky_W1_L0p3_N1_N1_0/a_0_0#       |Net: dummy_13                              
-  rsil/(1|2) = 1                           |  cap_cmim/proxy1 = 1                      
+Net: schottky_W1_L0p3_N1_N1_0/a_0_0#       |Net: bias2                                 
+  rsil/(1|2) = 1                           |  sg13_lv_pmos/2 = 1                       
+                                           |  sg13_lv_nmos/2 = 1                       
+                                           |  schottky_nbl1/2 = 1                      
+                                           |  rppd/(1|2) = 1                           
                                            |                                           
 Net: rfin                                  |Net: rfin                                  
-  cap_cmim/1 = 1                           |  cap_cmim/top = 1                         
+  cap_cmim/1 = 1                           |  cap_cmim/1 = 1                           
                                            |                                           
-Net: /C2_0//array_gdsfactorypcomponentspco |Net: dummy_17                              
-  cap_cmim/proxytop = 1                    |  cap_cmim/proxy1 = 1                      
+(no matching net)                          |Net: bb_int                                
+                                           |  schottky_nbl1/2 = 1                      
+                                           |  sg13_lv_pmos/2 = 1                       
+                                           |  sg13_lv_nmos/2 = 1                       
+                                           |  rppd/(1|2) = 1                           
                                            |                                           
-Net: /cmim_W10_L10_Gnone_G1_0/dummy_3      |Net: dummy_15                              
-  cap_cmim/proxytop = 1                    |  cap_cmim/proxy1 = 1                      
+(no matching net)                          |Net: vdd                                   
+                                           |  sg13_lv_pmos/(1|3) = 4                   
+                                           |  cap_cmim/1 = 1                           
+                                           |  rhigh/(1|2) = 1                          
+                                           |  sg13_lv_pmos/2 = 1                       
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Net: vref                                  |Net: vref                                  
+  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(1|3) = 1                   
+  rppd/(1|2) = 1                           |  rppd/(1|2) = 1                           
+  sg13_lv_nmos/(1|3) = 1                   |  sg13_lv_nmos/(1|3) = 1                   
                                            |                                           
-Net: /C3_0//array_gdsfactorypcomponentspco |Net: dummy_14                              
-  cap_cmim/proxytop = 1                    |  cap_cmim/proxy2 = 1                      
+Net: vout                                  |Net: vout                                  
+  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(1|3) = 1                   
+  rppd/(1|2) = 1                           |  rppd/(1|2) = 1                           
+  sg13_lv_nmos/(1|3) = 1                   |  sg13_lv_nmos/(1|3) = 1                   
                                            |                                           
-Net: /C2_0//array_gdsfactorypcomponentspco |Net: dummy_16                              
-  cap_cmim/proxybottom = 1                 |  cap_cmim/proxy2 = 1                      
+Net: schottky_W1_L0p3_N1_N1_1/dw_n110_n84# |Net: nw                                    
+  sg13_lv_pmos/2 = 1                       |  sg13_lv_pmos/4 = 3                       
+  rppd/(1|2) = 1                           |                                           
+  sg13_lv_nmos/2 = 1                       |                                           
                                            |                                           
-Net: /cmim_W10_L10_Gnone_G1_0/dummy_4      |Net: dummy_18                              
-  cap_cmim/proxybottom = 1                 |  cap_cmim/proxy2 = 1                      
-                                           |                                           
-Net: /C3_0//array_gdsfactorypcomponentspco |Net: dummy_21                              
-  cap_cmim/proxybottom = 1                 |  sg13_lv_pmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_25                              
-  sg13_lv_pmos/proxydrain = 1              |  sg13_lv_pmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_29                              
-  sg13_lv_pmos/proxydrain = 1              |  sg13_lv_pmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_22                              
-  sg13_lv_pmos/proxydrain = 1              |  sg13_lv_pmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_26                              
-  sg13_lv_pmos/proxygate = 1               |  sg13_lv_pmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_30                              
-  sg13_lv_pmos/proxygate = 1               |  sg13_lv_pmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_23                              
-  sg13_lv_pmos/proxygate = 1               |  sg13_lv_pmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_27                              
-  sg13_lv_pmos/proxysource = 1             |  sg13_lv_pmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_31                              
-  sg13_lv_pmos/proxysource = 1             |  sg13_lv_pmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_24                              
-  sg13_lv_pmos/proxysource = 1             |  sg13_lv_pmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_28                              
-  sg13_lv_pmos/proxybulk = 1               |  sg13_lv_pmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_32                              
-  sg13_lv_pmos/proxybulk = 1               |  sg13_lv_pmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//pmos_W120_L0p13_N24_ |Net: dummy_33                              
-  sg13_lv_pmos/proxybulk = 1               |  sg13_lv_nmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_37                              
-  sg13_lv_nmos/proxydrain = 1              |  sg13_lv_nmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_41                              
-  sg13_lv_nmos/proxydrain = 1              |  sg13_lv_nmos/proxy1 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_34                              
-  sg13_lv_nmos/proxydrain = 1              |  sg13_lv_nmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_38                              
-  sg13_lv_nmos/proxygate = 1               |  sg13_lv_nmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_42                              
-  sg13_lv_nmos/proxygate = 1               |  sg13_lv_nmos/proxy2 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_35                              
-  sg13_lv_nmos/proxygate = 1               |  sg13_lv_nmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_39                              
-  sg13_lv_nmos/proxysource = 1             |  sg13_lv_nmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_43                              
-  sg13_lv_nmos/proxysource = 1             |  sg13_lv_nmos/proxy3 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_36                              
-  sg13_lv_nmos/proxysource = 1             |  sg13_lv_nmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_40                              
-  sg13_lv_nmos/proxybulk = 1               |  sg13_lv_nmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: dummy_44                              
-  sg13_lv_nmos/proxybulk = 1               |  sg13_lv_nmos/proxy4 = 1                  
-                                           |                                           
-Net: /output_stage_0//nmos_W60_L0p13_N24_G |Net: bb_int                                
-  sg13_lv_nmos/proxybulk = 1               |  sub/(end_a|end_b) = 2                    
-                                           |  sg13_lv_pmos/gate = 1                    
-                                           |  sg13_lv_nmos/gate = 1                    
-                                           |                                           
-(no matching net)                          |Net: bias2                                 
-                                           |  sg13_lv_pmos/gate = 1                    
-                                           |  sg13_lv_nmos/gate = 1                    
-                                           |  sub/(end_a|end_b) = 2                    
+Net: schottky_W1_L0p3_N1_N1_0/dw_n110_n84# |Net: rfin_int                              
+  sg13_lv_pmos/2 = 1                       |  rsil/(1|2) = 1                           
+  rppd/(1|2) = 1                           |  schottky_nbl1/1 = 1                      
+  sg13_lv_nmos/2 = 1                       |  cap_cmim/2 = 1                           
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Net: schottky_W1_L0p3_N1_N1_1/a_0_0#       |Net: net1                                  
+  rsil/(1|2) = 1                           |  rsil/(1|2) = 1                           
+  cap_cmim/2 = 1                           |  schottky_nbl1/1 = 1                      
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Net: vdd                                   |Net: sub                                   
+  rhigh/(1|2) = 1                          |  rsil/3 = 2                               
+  sg13_lv_pmos/(1|3) = 4                   |  schottky_nbl1/3 = 2                      
+  sg13_lv_pmos/4 = 3                       |  sg13_lv_nmos/4 = 3                       
+  sg13_lv_pmos/2 = 1                       |  rppd/3 = 2                               
+  cap_cmim/1 = 1                           |  rhigh/3 = 1                              
 ---------------------------------------------------------------------------------------
 DEVICE mismatches: Class fragments follow (with node fanout counts):
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 
 ---------------------------------------------------------------------------------------
-Instance: rhigh_L2_W0p5_B0_P0p18_N1_SSeria |Instance: sub:1                            
-  (1,2) = (10,4)                           |  (end_a,end_b) = (4,3)                    
-  3 = 15                                   |                                           
+(no matching instance)                     |Instance: schottky_nbl1:D1                 
+                                           |  1 = 3                                    
+                                           |  2 = 4                                    
+                                           |  3 = 10                                   
                                            |                                           
-Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: sub:1                            
-  (1,2) = (4,2)                            |  (end_a,end_b) = (4,3)                    
-  3 = 15                                   |                                           
-                                           |                                           
-Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: sub:2                            
-  (1,2) = (4,1)                            |  (end_a,end_b) = (4,3)                    
-  3 = 15                                   |                                           
-                                           |                                           
-Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: sub:2                            
-  (1,2) = (3,3)                            |  (end_a,end_b) = (4,4)                    
-  3 = 15                                   |                                           
-                                           |                                           
-Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: sub:3                            
-  (1,2) = (3,3)                            |  (end_a,end_b) = (7,4)                    
-  3 = 15                                   |                                           
-                                           |                                           
-(no matching instance)                     |Instance: sub:4                            
-                                           |  (end_a,end_b) = (4,3)                    
-                                           |                                           
+(no matching instance)                     |Instance: schottky_nbl1:D2                 
+                                           |  1 = 2                                    
+                                           |  2 = 4                                    
+                                           |  3 = 10                                   
 ---------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:5_dummy             
-  (1,3) = (15,15)                          |  proxy1 = 1                               
-  2 = 15                                   |  proxy2 = 1                               
-  4 = 15                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,7)                   
-  proxysource = 1                          |  gate = 7                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M5_dummy            
+  (1,3) = (15,15)                          |  (1,3) = (7,7)                            
+  2 = 15                                   |  2 = 7                                    
+  4 = 15                                   |  4 = 10                                   
                                            |                                           
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:3                   
-  (1,3) = (15,3)                           |  proxy1 = 1                               
-  2 = 3                                    |  proxy2 = 1                               
-  4 = 15                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,3)                   
-  proxysource = 1                          |  gate = 4                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M3                  
+  (1,3) = (15,3)                           |  (1,3) = (7,3)                            
+  2 = 3                                    |  2 = 4                                    
+  4 = 15                                   |  4 = 10                                   
                                            |                                           
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:1                   
-  (1,3) = (15,3)                           |  proxy1 = 1                               
-  2 = 3                                    |  proxy2 = 1                               
-  4 = 15                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,3)                   
-  proxysource = 1                          |  gate = 4                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M1                  
+  (1,3) = (15,3)                           |  (1,3) = (7,3)                            
+  2 = 3                                    |  2 = 4                                    
+  4 = 15                                   |  4 = 10                                   
 ---------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:6_dummy             
-  (1,3) = (10,10)                          |  proxy1 = 1                               
-  2 = 10                                   |  proxy2 = 1                               
-  4 = 10                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,7)                   
-  proxysource = 1                          |  gate = 7                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: rppd:R4                          
+  (1,2) = (3,3)                            |  (1,2) = (4,3)                            
+  3 = 15                                   |  3 = 10                                   
                                            |                                           
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:4                   
-  (1,3) = (10,3)                           |  proxy1 = 1                               
-  2 = 3                                    |  proxy2 = 1                               
-  4 = 10                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,3)                   
-  proxysource = 1                          |  gate = 4                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: rppd:R2                          
+  (1,2) = (3,3)                            |  (1,2) = (4,3)                            
+  3 = 15                                   |  3 = 10                                   
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M6_dummy            
+  (1,3) = (10,10)                          |  (1,3) = (7,7)                            
+  2 = 10                                   |  2 = 7                                    
+  4 = 10                                   |  4 = 3                                    
                                            |                                           
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:2                   
-  (1,3) = (10,3)                           |  proxy1 = 1                               
-  2 = 3                                    |  proxy2 = 1                               
-  4 = 10                                   |  proxy3 = 1                               
-  proxydrain = 1                           |  proxy4 = 1                               
-  proxygate = 1                            |  (drain,source) = (7,3)                   
-  proxysource = 1                          |  gate = 4                                 
-  proxybulk = 1                            |  bulk = 3                                 
+Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M4                  
+  (1,3) = (10,3)                           |  (1,3) = (7,3)                            
+  2 = 3                                    |  2 = 4                                    
+  4 = 10                                   |  4 = 3                                    
+                                           |                                           
+Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M2                  
+  (1,3) = (10,3)                           |  (1,3) = (7,3)                            
+  2 = 3                                    |  2 = 4                                    
+  4 = 10                                   |  4 = 3                                    
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: rsil:R5                          
+  (1,2) = (4,1)                            |  (1,2) = (4,2)                            
+  3 = 15                                   |  3 = 10                                   
+                                           |                                           
+Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: rsil:R1                          
+  (1,2) = (4,2)                            |  (1,2) = (4,3)                            
+  3 = 15                                   |  3 = 10                                   
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Instance: rhigh_L2_W0p5_B0_P0p18_N1_SSeria |Instance: rhigh:R3                         
+  (1,2) = (10,4)                           |  (1,2) = (7,4)                            
+  3 = 15                                   |  3 = 10                                   
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Instance: C2_0//array_gdsfactorypcomponent |Instance: cap_cmim:C1                      
+  1 = 4                                    |  1 = 1                                    
+  2 = 15                                   |  2 = 3                                    
+                                           |                                           
+Instance: cmim_W10_L10_Gnone_G1_0/cap_cmim |Instance: cap_cmim:C3                      
+  1 = 1                                    |  1 = 7                                    
+  2 = 2                                    |  2 = 7                                    
+                                           |                                           
+Instance: C3_0//array_gdsfactorypcomponent |Instance: cap_cmim:C2                      
+  1 = 10                                   |  1 = 4                                    
+  2 = 15                                   |  2 = 7                                    
 ---------------------------------------------------------------------------------------
 Netlists do not match.
 Port matching may fail to disambiguate symmetries.
@@ -347,15 +290,12 @@ Subcircuit pins:
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 -------------------------------------------|-------------------------------------------
 vss                                        |(no pin, node is bb_int)                   
-vdd                                        |(no pin, node is bias2)                    
-vout                                       |(no pin, node is nw)                       
-vref                                       |(no pin, node is sub)                      
-rfin                                       |(no pin, node is dummy_15)                 
-(no pin, node is /output_stage_0//nmos_W60 |vout                                       
-(no pin, node is /output_stage_0//nmos_W60 |vref                                       
-(no pin, node is /output_stage_0//nmos_W60 |vdd                                        
-(no pin, node is /output_stage_0//nmos_W60 |rfin                                       
-(no pin, node is /output_stage_0//nmos_W60 |vss                                        
+rfin                                       |rfin                                       
+vref                                       |vref                                       
+vout                                       |vout                                       
+vdd                                        |(no pin, node is sub)                      
+(no pin, node is rfin)                     |vdd                                        
+(no pin, node is rfin)                     |vss                                        
 ---------------------------------------------------------------------------------------
 Cell pin lists for sparx160_powdet_sbd and sparx160_powdet_sbd altered to match.
 Device classes sparx160_powdet_sbd and sparx160_powdet_sbd are equivalent.

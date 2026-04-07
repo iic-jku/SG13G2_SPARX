@@ -70,7 +70,7 @@ make klayout-lvs-netlist EV_PRECISION=5
 ```
 
 Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set in the target `magic-lvs-netlist`.
-Note that KLayout works with CDL netlists and Magic works with SPICE netlists. On the other hand, the target `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 0`, `set lvs_netlist 1`, `set top_is_subckt 1` and `set lvs_ignore 0`. However, the target `magic-lvs-netlist` uses the Xschem commands `set spiceprefix 0`, `set lvs_netlist 0`, `set top_is_subckt 1` and `set lvs_ignore 1`.
+Note that KLayout works with CDL netlists and Magic works with SPICE netlists. On the other hand, the target `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 1`, `set top_is_subckt 1` and `set lvs_ignore 0`. However, the target `magic-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 0`, `set top_is_subckt 1` and `set lvs_ignore 1`.
 
 ```sh
 make magic-lvs-netlist

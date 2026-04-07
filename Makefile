@@ -64,8 +64,8 @@ help: ## Show this help message
 # LVS Targets
 klayout-lvs-netlist: ## Export LVS netlist from Xschem for KLayout LVS (usage: make klayout-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
 	mkdir -p $(NET_SCH_DIR)
-	xschem -s -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
-		set spiceprefix 0; \
+	xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
+		set spiceprefix 1; \
 		set lvs_netlist 1; \
 		set top_is_subckt 1; \
 		set lvs_ignore 0; \
@@ -92,8 +92,8 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 
 magic-lvs-netlist: ## Export LVS netlist from Xschem for Magic LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
 	mkdir -p $(NET_SCH_DIR)
-	-xschem -s -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
-		set spiceprefix 0; \
+	-xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
+		set spiceprefix 1; \
 		set lvs_netlist 0; \
 		set top_is_subckt 1; \
 		set lvs_ignore 1; \
