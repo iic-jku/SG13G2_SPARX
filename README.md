@@ -42,9 +42,7 @@
 | Supply Voltage      | 1.5 V                                                                             |
 
 
-## Makefile Targets
-
-### ToDos
+## ToDos
 - [ ] KLayout LVS --> CMIM issues (@klayoutmatthias)
 - [x] KLayout DRC
 - [ ] Magic LVS --> @simi1505 / @davkel99: https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/lvs/sparx160_powdet_sbd.lvs.out
@@ -53,6 +51,9 @@
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Top-level Six-Port simulation in Xschem: @simi1505
+
+
+## Makefile Targets
 
 ### Export LVS Netlist
 
