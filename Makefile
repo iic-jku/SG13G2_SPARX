@@ -244,6 +244,7 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 
 build-layout: ## Build layout of six-port (usage: make build-layout)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
+	rm -rf build/
 .PHONY: build-layout
 
 build-top: ## Build TOP cell (usage: make build-top)
