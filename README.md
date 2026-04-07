@@ -57,21 +57,23 @@
 
 ## Makefile Targets
 
-### Export LVS Netlist
+### Export Schematic Netlist for LVS
 
-Exports the LVS netlist from Xschem and places it in `netlist/schematic/`.
+Exports the schematic netlist for LVS from Xschem and places it in `netlist/schematic/`.
 
 The `EV_PRECISION` parameter sets the number of significant digits used by Xschem's `ev` function when calculating device properties (default: 5). Increase this to avoid LVS mismatches caused by floating-point rounding differences between Xschem and KLayout (see [xschem#465](https://github.com/StefanSchippers/xschem/issues/465)).
 
+Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set in the target `magic-lvs-netlist`.
+Note that KLayout works with CDL netlists and Magic works with SPICE netlists. On the other hand, the target `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 1`, `set top_is_subckt 1` and `set lvs_ignore 0`. However, the target `magic-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 0`, `set top_is_subckt 1` and `set lvs_ignore 1`.
+
+To extract a CDL schematic netlist for KLayout LVS, use the following target:
 ```sh
 make klayout-lvs-netlist
 make klayout-lvs-netlist CELL=sparx160_powdet_sbd
 make klayout-lvs-netlist EV_PRECISION=5
 ```
 
-Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set in the target `magic-lvs-netlist`.
-Note that KLayout works with CDL netlists and Magic works with SPICE netlists. On the other hand, the target `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 1`, `set top_is_subckt 1` and `set lvs_ignore 0`. However, the target `magic-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 0`, `set top_is_subckt 1` and `set lvs_ignore 1`.
-
+To extract a SPICE schematic netlist for Magic + Netgen LVS, use the following target:
 ```sh
 make magic-lvs-netlist
 make magic-lvs-netlist CELL=sparx160_powdet_sbd

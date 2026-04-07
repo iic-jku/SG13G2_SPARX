@@ -62,7 +62,7 @@ help: ## Show this help message
 
 
 # LVS Targets
-klayout-lvs-netlist: ## Export LVS netlist from Xschem for KLayout LVS (usage: make klayout-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
+klayout-lvs-netlist: ## Export CDL schematic netlist from Xschem for KLayout LVS (usage: make klayout-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
 	mkdir -p $(NET_SCH_DIR)
 	xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
 		set spiceprefix 1; \
@@ -76,7 +76,7 @@ klayout-lvs-netlist: ## Export LVS netlist from Xschem for KLayout LVS (usage: m
 	' $(SCH_DIR)/$(CELL).sch
 .PHONY: klayout-lvs-netlist
 
-klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cellname>])
+klayout-lvs: ## Run KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cellname>])
 	$(MAKE) klayout-lvs-netlist CELL=$(CELL)
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
@@ -90,7 +90,7 @@ klayout-lvs: ## KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=<cel
 	sleep 4
 .PHONY: klayout-lvs
 
-magic-lvs-netlist: ## Export LVS netlist from Xschem for Magic LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
+magic-lvs-netlist: ## Export SPICE schematic netlist from Xschem for Magic + Netgen LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
 	mkdir -p $(NET_SCH_DIR)
 	-xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
 		set spiceprefix 1; \
@@ -104,7 +104,7 @@ magic-lvs-netlist: ## Export LVS netlist from Xschem for Magic LVS (usage: make 
 	' $(SCH_DIR)/$(CELL).sch
 .PHONY: magic-lvs-netlist
 
-magic-lvs: ## Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
+magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<cellname>])
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
@@ -119,7 +119,7 @@ magic-lvs: ## Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CELL=<
 
 
 # DRC Targets
-klayout-drc: ## KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cellname>])
+klayout-drc: ## Run KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
 		--path=$(LAY_DIR)/$(CELL).gds \
@@ -133,7 +133,7 @@ klayout-drc: ## KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cel
 	sleep 4
 .PHONY: klayout-drc
 
-klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-regular)
+klayout-drc-regular: ## Run regular DRC of the TOP cell (usage: make klayout-drc-regular)
 	mkdir -p $(DRC_RPT_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
 		--path=$(LAY_DIR)/$(TOP).gds \
@@ -144,7 +144,7 @@ klayout-drc-regular: ## Regular DRC of the TOP cell (usage: make klayout-drc-reg
 	sleep 4
 .PHONY: klayout-drc-regular
 
-magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
+magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
 	-PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
 	rm -f $(DRC_RPT_DIR)/drc_$(CELL).tcl
@@ -154,7 +154,7 @@ magic-drc: ## Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>
 
 
 # Parasitic Extraction Targets
-klayout-pex: ## Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
 	PDK_UNDERSCORED=$$(echo $$PDK | sed -e 's/-/_/g'); \
 	case $(PEX_MODE) in \
@@ -186,7 +186,7 @@ klayout-pex: ## Parasitic Extraction with KPEX of the CELL cell (usage: make kla
 	sleep 4
 .PHONY: klayout-pex
 
-magic-pex: ## Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL).gds
 	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
