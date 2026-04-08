@@ -112,6 +112,10 @@ Xarray_gdsfactorypcomponentspcontainersparray_component__061cf64d_0 vss straight
 + straight_L58p6_CSFcross_section_Mgdsfactorypcross_secti_8fc70cec_4/m6_0_n400# array_gdsfactorypcomponentspcontainersparray_component__061cf64d
 .ends
 
+.subckt schottky_W1_L0p3_N1_N1 a_n460_n476# dw_n110_n84# a_0_0#
+X0 a_0_0# dw_n110_n84# a_n460_n476# schottky_nbl1 l=1.2u w=2.655u
+.ends
+
 .subckt rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1 sub a_0_n86# a_0_400#
 X0 a_0_400# a_0_n86# sub rhigh l=2u w=0.5u
 .ends
@@ -354,6 +358,10 @@ X0 a_0_500# a_0_n70# sub rsil l=2.5u w=0.5u
 
 .subckt sparx160_powdet_sbd vout vref vss vdd rfin
 XC2_0 rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0/a_0_400# vss C2
+Xschottky_W1_L0p3_N1_N1_0 vss schottky_W1_L0p3_N1_N1_0/dw_n110_n84# schottky_W1_L0p3_N1_N1_0/a_0_0#
++ schottky_W1_L0p3_N1_N1
+Xschottky_W1_L0p3_N1_N1_1 vss schottky_W1_L0p3_N1_N1_1/dw_n110_n84# schottky_W1_L0p3_N1_N1_1/a_0_0#
++ schottky_W1_L0p3_N1_N1
 Xrhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0 vss vdd rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0/a_0_400#
 + rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1
 Xrsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1_0 vss schottky_W1_L0p3_N1_N1_1/a_0_0#
