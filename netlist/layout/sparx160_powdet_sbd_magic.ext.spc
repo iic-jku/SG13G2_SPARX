@@ -188,8 +188,8 @@ X23 a_1522_0# a_986_n36# a_808_0# straight_L2p15_CSgatpoly_routing_W0p13_N2_9/su
 
 .subckt output_stage nmos_W60_L0p13_N24_Gpsub_G2_0/a_2338_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_1114_0#
 + nmos_W60_L0p13_N24_Gpsub_G2_0/a_298_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_2338_0#
-+ pmos_W120_L0p13_N24_Gnwell_G2_0/a_706_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_1292_n36#
-+ pmos_W120_L0p13_N24_Gnwell_G2_0/a_0_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_2440_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_1318_0#
++ pmos_W120_L0p13_N24_Gnwell_G2_0/a_706_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_0_0#
++ nmos_W60_L0p13_N24_Gpsub_G2_0/a_2440_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_1318_0#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_2440_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_502_0#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_1522_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_986_n36#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_1726_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_910_0#
@@ -201,7 +201,7 @@ X23 a_1522_0# a_986_n36# a_808_0# straight_L2p15_CSgatpoly_routing_W0p13_N2_9/su
 + nmos_W60_L0p13_N24_Gpsub_G2_0/a_1726_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_910_0# nmos_W60_L0p13_N24_Gpsub_G2_0/a_94_0#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_2134_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_68_n36#
 + vref pmos_W120_L0p13_N24_Gnwell_G2_0/a_1318_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_502_0#
-+ sub
++ nmos_W60_L0p13_N24_Gpsub_G2_0/a_1292_n36# sub
 Xpmos_W120_L0p13_N24_Gnwell_G2_0 pmos_W120_L0p13_N24_Gnwell_G2_0/a_2338_0# vout pmos_W120_L0p13_N24_Gnwell_G2_0/a_1114_0#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_298_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_1292_n36#
 + pmos_W120_L0p13_N24_Gnwell_G2_0/a_2440_0# pmos_W120_L0p13_N24_Gnwell_G2_0/a_1318_0#
@@ -366,9 +366,9 @@ Xrhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0 vss vdd rhigh_L2_W0p5_B0_P0p18_
 + rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1
 Xrsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1_0 vss schottky_W1_L0p3_N1_N1_1/a_0_0#
 + rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0/a_0_400# rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1
-Xoutput_stage_0 vss vss vss vdd vdd schottky_W1_L0p3_N1_N1_0/dw_n110_n84# vdd vss
-+ vss vdd vss vdd schottky_W1_L0p3_N1_N1_1/dw_n110_n84# vdd vdd vdd vss vss schottky_W1_L0p3_N1_N1_0/dw_n110_n84#
-+ vss vss vout vdd vdd vdd vss vss vss vss vdd vdd vref vdd vdd vss output_stage
+Xoutput_stage_0 vss vss vss vdd vdd vdd vss vss vdd vss vdd schottky_W1_L0p3_N1_N1_1/dw_n110_n84#
++ vdd vdd vdd vss vss schottky_W1_L0p3_N1_N1_0/dw_n110_n84# vss vss vout vdd vdd vdd
++ vss vss vss vss vdd vdd vref vdd vdd schottky_W1_L0p3_N1_N1_0/dw_n110_n84# vss output_stage
 XC3_0 vdd vss C3
 Xcmim_W6p8_L9_Gnone_G1_0 vdd vss cmim_W6p8_L9_Gnone_G1
 Xcmim_W6p8_L9_Gnone_G1_1 vdd vss cmim_W6p8_L9_Gnone_G1
