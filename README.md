@@ -44,7 +44,6 @@ SPARX stands for Six-Port Automated Receiver. The whole layout is generated in P
 ## ToDos
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX/blob/main/verification/drc/sparx_powdet_sbd.magic.drc.rpt
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
