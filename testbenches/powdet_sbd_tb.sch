@@ -54,7 +54,8 @@ value="
 "}
 C {devices/code_shown.sym} 0 -1100 0 0 {name=NGSPICE only_toplevel=true 
 value="
-.include ../../verification/pex/powdet_sbd_pex.spice
+.include ../../netlist/pex/sparx160_powdet_sbd_magic_pex.spice
+* .include ../../netlist/pex/sparx160_powdet_sbd_klayout_pex.spice
 .temp 27
 .option method=gear
 .save all
@@ -135,6 +136,7 @@ C {vcvs.sym} 1580 -570 0 0 {name=E1 value=1}
 C {spice_probe.sym} 1580 -660 0 0 {name=p10 attrs=""}
 C {devices/lab_pin.sym} 1580 -660 0 1 {name=p11 sig_type=std_logic lab=out}
 C {noconn.sym} 1580 -630 0 0 {name=l3}
-C {sparx160_powdet_sbd.sym} 1070 -690 0 0 {name=x1}
-C {sparx160_powdet_sbd_pex.sym} 1360 -850 0 0 {name=x2
+C {sparx160_powdet_sbd.sym} 1070 -690 0 0 {name=x1
+}
+C {sparx160_powdet_sbd_pex.sym} 1350 -920 0 0 {name=x2
 spice_ignore=true}
