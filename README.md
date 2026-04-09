@@ -44,11 +44,8 @@
 
 ## ToDos
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
-- [x] KLayout DRC
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] Magic LVS --> @simi1505 / @davkel99: https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/lvs/sparx160_powdet_sbd.lvs.out
 - [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/drc/sparx160_powdet_sbd.magic.drc.rpt
-- [ ] Magic PEX --> missing SBDs (@RTimothyEdwards)
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
