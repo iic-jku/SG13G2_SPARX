@@ -20,6 +20,18 @@ ihp.PDK.activate()
 # CLI parameters
 # ============================================================
 parser = argparse.ArgumentParser(description="Six-port receiver GDS generator")
+parser.add_argument(
+    "gds_filename",
+    nargs="?",
+    default=None,
+    help="Output GDS file for the top-level layout",
+)
+parser.add_argument(
+    "powdet_gds_filename",
+    nargs="?",
+    default=None,
+    help="Output GDS file for the power detector sub-cell",
+)
 parser.add_argument("--frequency", type=float, default=160e9, help="Design frequency in Hz (default: 160e9)")
 parser.add_argument("--no-fill", action="store_true", help="Disable metal fill (faster for layout preview)")
 parser.add_argument("--no-fill-m5", action="store_true", help="Disable Metal5 ground fill")
@@ -2318,10 +2330,17 @@ no_fill_bottom_right.ymin = probe_bottom.ymin - NOFILL_SIDE_OFFSET
 print(c.xsize, c.ysize)
 
 freq_ghz = int(FREQUENCY / 1e9)
-gds_filename = f"Six-Port/RFFE6027_{freq_ghz}GHz.gds"
+if args.gds_filename:
+    gds_filename = args.gds_filename
+else:
+    gds_filename = f"Six-Port/RFFE6027_{freq_ghz}GHz.gds"
 
+if args.powdet_gds_filename:
+    powdet_gds_filename = args.powdet_gds_filename
+else:
+    powdet_gds_filename = f"Six-Port/powdet_sbd_{freq_ghz}GHz.gds"
 
-pd.write_gds("Six-Port/powdet_sbd.gds")
+pd.write_gds(powdet_gds_filename)
 
 # ============================================================
 # Power detector instances and routing

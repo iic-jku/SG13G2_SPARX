@@ -12,7 +12,7 @@
 
 
 ## Overview
-SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make all FREQ=77e9`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz under one minute is demonstrated.
+SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make build-flex-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz under one minute is demonstrated.
 
 https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 <p align="center">
@@ -55,7 +55,6 @@ https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
-- [ ] Add new SPARX Python script with improved frequency scaling by @hpretl: @simi1505
 - [ ] Top-level Six-Port simulation in Xschem: @simi1505
 
 
@@ -200,27 +199,34 @@ Clones and installs the IHP-Open-PDK repository with GDSFactory cells:
 make build-pdk
 ```
 
-### Build Layout
+### Build Area-Optimized Layout
 
-Generates the six-port layout GDS files (`layout/sparx_top.gds` and `layout/sparx_powdet_sbd.gds`):
+Generates the area-optimized six-port layout GDS files (`layout/sparx_top.gds` and `layout/sparx_powdet_sbd.gds`) at the fixed 160 GHz design frequency:
 
 ```sh
-make build-layout
-make build-layout FREQ=77e9
+make build-opt-layout
 ```
 
-The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
+### Build Frequency-Scalable Layout
+
+Generates the frequency-scalable six-port layout GDS files (e.g. `layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx77_powdet_sbd.gds` for 77 GHz):
+
+```sh
+make build-flex-layout
+make build-flex-layout FREQ=77
+make build-flex-layout FREQ=77 NO_FILL=1
+make build-flex-layout FREQ=77 NO_FILL_M5=1
+```
+
+The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL=1` disables metal fill (faster for layout preview). `NO_FILL_M5=1` disables only the Metal5 ground fill.
 
 ### Build Top Cell
 
-Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-image`:
+Builds the top-level cell by running `build-pdk`, `build-opt-layout`, and `render-image`:
 
 ```sh
 make build-top
-make build-top FREQ=77e9
 ```
-
-The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
 
 ### Build All
 
@@ -228,10 +234,7 @@ Builds the complete design by first verifying all cells (`verify-all`), then bui
 
 ```sh
 make all
-make all FREQ=77e9
 ```
-
-The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
 
 ## Cite This Work
 

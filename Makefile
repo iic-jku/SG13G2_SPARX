@@ -36,9 +36,14 @@ EXT_MODE ?= 3
 # Override with: make lvs-netlist EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
-# Design frequency in Hz (default: 160 GHz)
-# Override with: make build-layout FREQ=<frequency_in_Hz>
-FREQ ?= 160e9
+# Design frequency in GHz (default: 160)
+# Override with: make build-flex-layout FREQ=<frequency_in_GHz>
+FREQ ?= 160
+
+# Metal fill options for build-flex-layout (0 = fill enabled, 1 = fill disabled)
+# Override with: make build-flex-layout NO_FILL=1 NO_FILL_M5=1
+NO_FILL ?= 0
+NO_FILL_M5 ?= 0
 
 # Folder structure
 LAY_DIR 	:= layout
@@ -53,14 +58,16 @@ DRC_RPT_DIR := verification/drc
 
 # Help Target
 help: ## Show this help message
-	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<Hz>]'
+	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<GHz>]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 	@echo ''
 	@echo 'CELL defaults to $(TOP). Override to verify subcells.'
 	@echo 'EXT_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
-	@echo 'FREQ defaults to 160e9 (160 GHz). Override for build-layout.'
+	@echo 'FREQ defaults to 160 (GHz). Override for build-flex-layout.'
+	@echo 'NO_FILL defaults to 0 (fill enabled). Set to 1 to disable metal fill.'
+	@echo 'NO_FILL_M5 defaults to 0 (M5 fill enabled). Set to 1 to disable M5 ground fill.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
 # ================================================================================================
@@ -226,8 +233,8 @@ magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
 .PHONY: magic-verify-top
 
 verify-all: ## Verify all (usage: make verify-all)
-	$(MAKE) klayout-lvs klayout-drc magic-pex CELL=$(CELL)
-	$(MAKE) klayout-lvs klayout-drc-regular magic-pex
+	$(MAKE) magic-lvs magic-drc magic-pex CELL=$(CELL)
+	$(MAKE) magic-lvs klayout-drc-regular magic-pex
 .PHONY: verify-all
 # ================================================================================================
 
@@ -247,19 +254,28 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 	cd IHP && pip install .
 .PHONY: build-pdk
 
-build-layout: ## Build layout of six-port (usage: make build-layout [FREQ=<frequency_in_Hz>])
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds --freq $(FREQ)
+build-opt-layout: ## Build layout of six-port (usage: make build-opt-layout)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
 	rm -rf build/
-.PHONY: build-layout
+.PHONY: build-opt-layout
 
-build-top: ## Build TOP cell (usage: make build-top [FREQ=<frequency_in_Hz>])
+build-flex-layout: ## Build frequency-scalable layout of six-port (usage: make build-flex-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_flex.py \
+		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx$(FREQ)_powdet_sbd.gds \
+		--frequency $(FREQ)e9 \
+		$(if $(filter 1,$(NO_FILL)),--no-fill) \
+		$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5)
+	rm -rf build/
+.PHONY: build-flex-layout
+
+build-top: ## Build TOP cell (usage: make build-top)
 	$(MAKE) build-pdk
-	$(MAKE) build-layout FREQ=$(FREQ)
+	$(MAKE) build-opt-layout
 	$(MAKE) render-image
 .PHONY: build-top
 
-all: ## Build and verify the TOP cell (usage: make all [FREQ=<frequency_in_Hz>])
+all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) verify-all
-	$(MAKE) build-top FREQ=$(FREQ)
+	$(MAKE) build-top
 .PHONY: all
 # ================================================================================================
