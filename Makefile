@@ -92,7 +92,7 @@ klayout-lvs: ## Run KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=
 
 magic-lvs-netlist: ## Export SPICE schematic netlist from Xschem for Magic + Netgen LVS (usage: make magic-lvs-netlist [CELL=<cellname>] [EV_PRECISION=<digits>])
 	mkdir -p $(NET_SCH_DIR)
-	-xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
+	xschem -s -r -x -q --rcfile $(SCH_DIR)/xschemrc --command ' \
 		set spiceprefix 1; \
 		set lvs_netlist 0; \
 		set top_is_subckt 1; \

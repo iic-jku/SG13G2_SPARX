@@ -69,7 +69,7 @@ N 1040 -640 1040 -630 {lab=vdd}
 N 210 -640 210 -600 {lab=vdd}
 N 1220 -640 1220 -590 {lab=vdd}
 N 1320 -640 1320 -620 {lab=vdd}
-N 1380 -590 1430 -590 {lab=nw}
+N 1320 -590 1370 -590 {lab=nw}
 N 1220 -540 1220 -360 {lab=vdd}
 N 1490 -640 1490 -620 {lab=vdd}
 N 1320 -640 1490 -640 {lab=vdd}
@@ -88,35 +88,14 @@ N 160 -280 590 -280 {lab=vss}
 N 1520 -330 1520 -280 {lab=vss}
 N 1580 -300 1580 -280 {lab=vss}
 N 1680 -300 1680 -280 {lab=vss}
-N 1580 -330 1650 -330 {lab=sub}
+N 1580 -330 1630 -330 {lab=sub}
 N 1040 -330 1090 -330 {lab=sub}
 N 810 -370 860 -370 {lab=sub}
-N 500 -420 500 -240 {lab=sub}
+N 500 -420 500 -370 {lab=sub}
 N 1220 -360 1390 -360 {lab=vdd}
 N 1390 -300 1390 -280 {lab=vss}
 N 1390 -280 1520 -280 {lab=vss}
 N 1220 -280 1390 -280 {lab=vss}
-N 1680 -380 1680 -360 {lab=sub}
-N 1490 -560 1490 -540 {lab=nw}
-N 1430 -590 1430 -540 {lab=nw}
-N 1430 -540 1490 -540 {lab=nw}
-N 1650 -380 1650 -330 {lab=sub}
-N 1650 -380 1680 -380 {lab=sub}
-N 860 -680 860 -490 {lab=nw}
-N 1090 -680 1380 -680 {lab=nw}
-N 1380 -680 1380 -590 {lab=nw}
-N 1320 -590 1380 -590 {lab=nw}
-N 1090 -680 1090 -600 {lab=nw}
-N 860 -680 1090 -680 {lab=nw}
-N 1090 -240 1650 -240 {lab=sub}
-N 1650 -330 1650 -240 {lab=sub}
-N 680 -540 730 -540 {lab=sub}
-N 680 -540 680 -240 {lab=sub}
-N 500 -240 680 -240 {lab=sub}
-N 860 -370 860 -240 {lab=sub}
-N 680 -240 860 -240 {lab=sub}
-N 1090 -330 1090 -240 {lab=sub}
-N 860 -240 1090 -240 {lab=sub}
 C {ipin.sym} 160 -430 0 0 {name=p2 lab=rfin}
 C {opin.sym} 1550 -430 0 0 {name=p3 lab=vout}
 C {iopin.sym} 160 -280 0 1 {name=p4 lab=vss}
@@ -231,7 +210,7 @@ spiceprefix=X
 b=0
 m=1
 }
-C {lab_wire.sym} 940 -600 0 0 {name=p11 sig_type=std_logic lab=bias2}
+C {lab_wire.sym} 860 -600 0 0 {name=p11 sig_type=std_logic lab=bias2}
 C {sg13_lv_nmos.sym} 1560 -330 0 0 {name=M5_dummy
 l=0.13u
 w=5u
@@ -261,7 +240,10 @@ w=9.62e-6
 l=17.16e-6
 lvs_ignore=short
 }
-C {lab_pin.sym} 1490 -540 3 0 {name=p16 sig_type=std_logic lab=nw lvs_ignore=open}
+C {lab_pin.sym} 1490 -560 3 0 {name=p16 sig_type=std_logic lab=nw}
+C {lab_pin.sym} 1370 -590 2 0 {name=p8 sig_type=std_logic lab=nw}
+C {lab_pin.sym} 1090 -600 2 0 {name=p10 sig_type=std_logic lab=nw}
+C {lab_pin.sym} 860 -490 2 0 {name=p14 sig_type=std_logic lab=nw}
 C {ptap1_ring.sym} 1680 -330 2 1 {name=Rptap
 model=ptap1
 spiceprefix=X
@@ -269,7 +251,13 @@ w=6.86e-6
 l=16.54e-6
 lvs_ignore=short
 }
-C {lab_pin.sym} 1680 -380 1 0 {name=p13 sig_type=std_logic lab=sub lvs_ignore=open}
+C {lab_pin.sym} 1680 -360 1 0 {name=p13 sig_type=std_logic lab=sub}
+C {lab_pin.sym} 1630 -330 2 0 {name=p15 sig_type=std_logic lab=sub}
+C {lab_pin.sym} 1090 -330 2 0 {name=p17 sig_type=std_logic lab=sub}
+C {lab_pin.sym} 860 -370 2 0 {name=p18 sig_type=std_logic lab=sub}
+C {lab_pin.sym} 500 -370 3 0 {name=p19 sig_type=std_logic lab=sub
+}
+C {lab_pin.sym} 730 -540 3 0 {name=p1 sig_type=std_logic lab=sub}
 C {cap_cmim.sym} 1390 -330 0 0 {name=C4
 model=cap_cmim
 w=6.8e-6

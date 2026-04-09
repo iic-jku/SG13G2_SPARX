@@ -132,161 +132,26 @@ sg13_lv_pmos (24->3)                       |sg13_lv_pmos (3)
 rppd (2)                                   |rppd (2)                                   
 sg13_lv_nmos (24->3)                       |sg13_lv_nmos (3)                           
 Number of devices: 16                      |Number of devices: 16                      
-Number of nets: 10 **Mismatch**            |Number of nets: 12 **Mismatch**            
+Number of nets: 10 **Mismatch**            |Number of nets: 11 **Mismatch**            
 ---------------------------------------------------------------------------------------
 NET mismatches: Class fragments follow (with fanout counts):
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 
 ---------------------------------------------------------------------------------------
 Net: vss                                   |Net: vss                                   
+  schottky_nbl1/3 = 2                      |  schottky_nbl1/3 = 2                      
   cap_cmim/2 = 2                           |  cap_cmim/2 = 2                           
   sg13_lv_nmos/(1|3) = 4                   |  sg13_lv_nmos/(1|3) = 4                   
+  sg13_lv_nmos/4 = 3                       |  sg13_lv_nmos/4 = 3                       
   sg13_lv_nmos/2 = 1                       |  sg13_lv_nmos/2 = 1                       
+  rhigh/3 = 1                              |                                           
   rsil/3 = 2                               |                                           
   rppd/3 = 2                               |                                           
-  schottky_nbl1/3 = 2                      |                                           
-  sg13_lv_nmos/4 = 3                       |                                           
-  rhigh/3 = 1                              |                                           
                                            |                                           
-Net: schottky_W1_L0p3_N1_N1_1/a_0_0#       |Net: nw                                    
-  schottky_nbl1/1 = 1                      |  sg13_lv_pmos/4 = 3                       
-  rsil/(1|2) = 1                           |                                           
-  cap_cmim/2 = 1                           |                                           
-                                           |                                           
-Net: vout                                  |Net: vout                                  
-  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(1|3) = 1                   
-  sg13_lv_nmos/(1|3) = 1                   |  sg13_lv_nmos/(1|3) = 1                   
-  rppd/(1|2) = 1                           |  rppd/(1|2) = 1                           
-                                           |                                           
-Net: vref                                  |Net: vref                                  
-  sg13_lv_pmos/(1|3) = 1                   |  sg13_lv_pmos/(1|3) = 1                   
-  sg13_lv_nmos/(1|3) = 1                   |  sg13_lv_nmos/(1|3) = 1                   
-  rppd/(1|2) = 1                           |  rppd/(1|2) = 1                           
-                                           |                                           
-(no matching net)                          |Net: rfin_int                              
-                                           |  rsil/(1|2) = 1                           
-                                           |  schottky_nbl1/1 = 1                      
-                                           |  cap_cmim/2 = 1                           
-                                           |                                           
-(no matching net)                          |Net: vdd                                   
-                                           |  sg13_lv_pmos/(1|3) = 4                   
-                                           |  cap_cmim/1 = 1                           
-                                           |  rhigh/(1|2) = 1                          
-                                           |  sg13_lv_pmos/2 = 1                       
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Net: vdd                                   |Net: sub                                   
-  rhigh/(1|2) = 1                          |  rsil/3 = 2                               
-  sg13_lv_pmos/(1|3) = 4                   |  schottky_nbl1/3 = 2                      
-  sg13_lv_pmos/4 = 3                       |  sg13_lv_nmos/4 = 3                       
-  sg13_lv_pmos/2 = 1                       |  rppd/3 = 2                               
-  cap_cmim/1 = 1                           |  rhigh/3 = 1                              
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Net: schottky_W1_L0p3_N1_N1_0/a_0_0#       |Net: net1                                  
-  schottky_nbl1/1 = 1                      |  schottky_nbl1/1 = 1                      
-  rsil/(1|2) = 1                           |  rsil/(1|2) = 1                           
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Net: schottky_W1_L0p3_N1_N1_1/dw_n110_n84# |Net: bias2                                 
-  schottky_nbl1/2 = 1                      |  sg13_lv_pmos/2 = 1                       
-  sg13_lv_pmos/2 = 1                       |  sg13_lv_nmos/2 = 1                       
-  rppd/(1|2) = 1                           |  schottky_nbl1/2 = 1                      
-  sg13_lv_nmos/2 = 1                       |  rppd/(1|2) = 1                           
-                                           |                                           
-Net: schottky_W1_L0p3_N1_N1_0/dw_n110_n84# |Net: bb_int                                
-  schottky_nbl1/2 = 1                      |  schottky_nbl1/2 = 1                      
-  sg13_lv_pmos/2 = 1                       |  sg13_lv_pmos/2 = 1                       
-  rppd/(1|2) = 1                           |  sg13_lv_nmos/2 = 1                       
-  sg13_lv_nmos/2 = 1                       |  rppd/(1|2) = 1                           
-                                           |                                           
-Net: rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_ |Net: bias1                                 
-  cap_cmim/1 = 1                           |  rsil/(1|2) = 2                           
-  rhigh/(1|2) = 1                          |  cap_cmim/1 = 1                           
-  rsil/(1|2) = 2                           |  rhigh/(1|2) = 1                          
----------------------------------------------------------------------------------------
-DEVICE mismatches: Class fragments follow (with node fanout counts):
-Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
-
----------------------------------------------------------------------------------------
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M5_dummy            
-  (1,3) = (17,17)                          |  (1,3) = (7,7)                            
-  2 = 17                                   |  2 = 7                                    
-  4 = 17                                   |  4 = 10                                   
-                                           |                                           
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M3                  
-  (1,3) = (17,3)                           |  (1,3) = (7,3)                            
-  2 = 4                                    |  2 = 4                                    
-  4 = 17                                   |  4 = 10                                   
-                                           |                                           
-Instance: output_stage_0//nmos_W60_L0p13_N |Instance: sg13_lv_nmos:M1                  
-  (1,3) = (17,3)                           |  (1,3) = (7,3)                            
-  2 = 4                                    |  2 = 4                                    
-  4 = 17                                   |  4 = 10                                   
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: rppd:R4                          
-  (1,2) = (4,3)                            |  (1,2) = (4,3)                            
-  3 = 17                                   |  3 = 10                                   
-                                           |                                           
-Instance: output_stage_0//rppd_L1p5_W0p5_B |Instance: rppd:R2                          
-  (1,2) = (4,3)                            |  (1,2) = (4,3)                            
-  3 = 17                                   |  3 = 10                                   
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M6_dummy            
-  (1,3) = (10,10)                          |  (1,3) = (7,7)                            
-  2 = 10                                   |  2 = 7                                    
-  4 = 10                                   |  4 = 3                                    
-                                           |                                           
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M4                  
-  (1,3) = (10,3)                           |  (1,3) = (7,3)                            
-  2 = 4                                    |  2 = 4                                    
-  4 = 10                                   |  4 = 3                                    
-                                           |                                           
-Instance: output_stage_0//pmos_W120_L0p13_ |Instance: sg13_lv_pmos:M2                  
-  (1,3) = (10,3)                           |  (1,3) = (7,3)                            
-  2 = 4                                    |  2 = 4                                    
-  4 = 10                                   |  4 = 3                                    
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: rsil:R5                          
-  (1,2) = (4,2)                            |  (1,2) = (4,2)                            
-  3 = 17                                   |  3 = 10                                   
-                                           |                                           
-Instance: rsil_L2p5_W0p5_P0p18_R24p9_N1_SS |Instance: rsil:R1                          
-  (1,2) = (4,3)                            |  (1,2) = (4,3)                            
-  3 = 17                                   |  3 = 10                                   
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: rhigh_L2_W0p5_B0_P0p18_N1_SSeria |Instance: rhigh:R3                         
-  (1,2) = (10,4)                           |  (1,2) = (7,4)                            
-  3 = 17                                   |  3 = 10                                   
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: schottky_W1_L0p3_N1_N1_1/schottk |Instance: schottky_nbl1:D2                 
-  1 = 3                                    |  1 = 2                                    
-  2 = 4                                    |  2 = 4                                    
-  3 = 17                                   |  3 = 10                                   
-                                           |                                           
-Instance: schottky_W1_L0p3_N1_N1_0/schottk |Instance: schottky_nbl1:D1                 
-  1 = 2                                    |  1 = 3                                    
-  2 = 4                                    |  2 = 4                                    
-  3 = 17                                   |  3 = 10                                   
----------------------------------------------------------------------------------------
-
----------------------------------------------------------------------------------------
-Instance: C3_0//array_gdsfactorypcomponent |Instance: cap_cmim:C3                      
-  1 = 10                                   |  1 = 7                                    
-  2 = 17                                   |  2 = 7                                    
+(no matching net)                          |Net: sub                                   
+                                           |  rsil/3 = 2                               
+                                           |  rppd/3 = 2                               
+                                           |  rhigh/3 = 1                              
 ---------------------------------------------------------------------------------------
 Netlists do not match.
 Port matching may fail to disambiguate symmetries.
@@ -294,14 +159,12 @@ Port matching may fail to disambiguate symmetries.
 Subcircuit pins:
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 -------------------------------------------|-------------------------------------------
-vss                                        |(no pin, node is rfin_int)                 
-vout                                       |vref **Mismatch**                          
-vref                                       |(no pin, node is nw)                       
+vss                                        |(no pin, node is sub)                      
 rfin                                       |rfin                                       
-vdd                                        |(no pin, node is sub)                      
-(no pin, node is vref)                     |vout                                       
-(no pin, node is vref)                     |vdd                                        
-(no pin, node is vref)                     |vss                                        
+vdd                                        |vdd                                        
+vref                                       |vref                                       
+vout                                       |vout                                       
+(no pin, node is vss)                      |vss                                        
 ---------------------------------------------------------------------------------------
 Cell pin lists for sparx160_powdet_sbd and sparx160_powdet_sbd altered to match.
 Device classes sparx160_powdet_sbd and sparx160_powdet_sbd are equivalent.

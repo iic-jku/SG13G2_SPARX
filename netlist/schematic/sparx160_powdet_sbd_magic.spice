@@ -2,20 +2,20 @@
 .subckt sparx160_powdet_sbd vout vref vdd rfin vss
 *.PININFO rfin:I vout:O vss:B vdd:I vref:O
 XR1 bias1 rfin_int sub rsil w=0.5e-6 l=2.5e-6 m=1 b=0
-XD1 rfin_int bb_int sub schottky_nbl1 Nx=1 Ny=1
+XD1 rfin_int bb_int vss schottky_nbl1 Nx=1 Ny=1
 XC2 bias1 vss cap_cmim w=10e-6 l=10e-6 m=30
-XM2 vout bb_int vdd nw sg13_lv_pmos w=100u l=0.13u ng=20
-XM1 vout bb_int vss sub sg13_lv_nmos w=50u l=0.13u ng=20
+XM2 vout bb_int vdd vdd sg13_lv_pmos w=100u l=0.13u ng=20
+XM1 vout bb_int vss vss sg13_lv_nmos w=50u l=0.13u ng=20
 XR2 vout bb_int sub rppd w=0.5e-6 l=1.5e-6 m=1 b=0
-XM4 vref bias2 vdd nw sg13_lv_pmos w=10u l=0.13u ng=2
-XM3 vref bias2 vss sub sg13_lv_nmos w=5u l=0.13u ng=2
+XM4 vref bias2 vdd vdd sg13_lv_pmos w=10u l=0.13u ng=2
+XM3 vref bias2 vss vss sg13_lv_nmos w=5u l=0.13u ng=2
 XC3 vdd vss cap_cmim w=10e-6 l=10e-6 m=28
-XD2 net1 bias2 sub schottky_nbl1 Nx=1 Ny=1
+XD2 net1 bias2 vss schottky_nbl1 Nx=1 Ny=1
 XR3 bias1 vdd sub rhigh w=0.5e-6 l=2e-6 m=1 b=0
 XR4 vref bias2 sub rppd w=0.5e-6 l=1.5e-6 m=1 b=0
 XR5 net1 bias1 sub rsil w=0.5e-6 l=2.5e-6 m=1 b=0
-XM5_dummy vss vss vss sub sg13_lv_nmos w=5u l=0.13u ng=2
-XM6_dummy vdd vdd vdd nw sg13_lv_pmos w=10u l=0.13u ng=2
+XM5_dummy vss vss vss vss sg13_lv_nmos w=5u l=0.13u ng=2
+XM6_dummy vdd vdd vdd vdd sg13_lv_pmos w=10u l=0.13u ng=2
 XC1 rfin rfin_int cap_cmim w=10e-6 l=10e-6
 XC4 vdd vss cap_cmim w=6.8e-6 l=9e-6 m=2
 .ends
