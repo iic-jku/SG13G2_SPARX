@@ -122,12 +122,12 @@ make magic-drc CELL=sparx_powdet_sbd
 
 Runs parasitic extraction on the GDS layout in `layout/`. The extracted SPICE netlist is written to `netlist/pex/`.
 
-The `PEX_MODE` parameter selects the extraction mode:
+The `EXT_MODE` parameter selects the extraction mode:
 - `1` = C-decoupled
 - `2` = C-coupled
 - `3` = full-RC (default)
 
-> **Note:** For `klayout-pex`, `PEX_MODE=1` (C-decoupled) is not yet supported by kpex and automatically falls back to `PEX_MODE=2` (CC) with a warning.
+> **Note:** For `klayout-pex`, `EXT_MODE=1` (C-decoupled) is not yet supported by kpex and automatically falls back to `EXT_MODE=2` (CC) with a warning.
 
 The `.subckt` name in the extracted SPICE file is automatically renamed from `<CELL>_flat` (kpex) or `<CELL>` (Magic) to `<CELL>_pex`.
 
@@ -138,7 +138,7 @@ If a matching Xschem symbol (`schematic/<CELL>_pex.sym`) exists, the `.subckt` p
 ```sh
 make klayout-pex
 make klayout-pex CELL=sparx_powdet_sbd
-make klayout-pex CELL=sparx_powdet_sbd PEX_MODE=3
+make klayout-pex CELL=sparx_powdet_sbd EXT_MODE=3
 ```
 
 **Magic PEX** uses `sak-pex.sh`:
@@ -146,7 +146,7 @@ make klayout-pex CELL=sparx_powdet_sbd PEX_MODE=3
 ```sh
 make magic-pex
 make magic-pex CELL=sparx_powdet_sbd
-make magic-pex CELL=sparx_powdet_sbd PEX_MODE=3
+make magic-pex CELL=sparx_powdet_sbd EXT_MODE=3
 ```
 
 ### Verify a Specific Cell

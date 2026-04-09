@@ -29,8 +29,8 @@ POWDET = sparx_powdet_sbd
 CELL ?= $(TOP)
 
 # PEX mode (1 = C-decoupled, 2 = C-coupled, 3 = full-RC)
-# Override with: make pex PEX_MODE=<1|2|3>
-PEX_MODE ?= 3
+# Override with: make pex EXT_MODE=<1|2|3>
+EXT_MODE ?= 3
 
 # Floating-point precision (significant digits) for xschem's ev function
 # Override with: make lvs-netlist EV_PRECISION=<digits>
@@ -53,13 +53,13 @@ DRC_RPT_DIR := verification/drc
 
 # Help Target
 help: ## Show this help message
-	@echo 'Usage: make <target> [CELL=<cellname>] [PEX_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<Hz>]'
+	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<Hz>]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 	@echo ''
 	@echo 'CELL defaults to $(TOP). Override to verify subcells.'
-	@echo 'PEX_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
+	@echo 'EXT_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
 	@echo 'FREQ defaults to 160e9 (160 GHz). Override for build-layout.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
@@ -159,14 +159,14 @@ magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<celln
 
 
 # Parasitic Extraction Targets
-klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [EXT_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
 	PDK_UNDERSCORED=$$(echo $$PDK | sed -e 's/-/_/g'); \
-	case $(PEX_MODE) in \
+	case $(EXT_MODE) in \
 		1) echo "WARNING: KPEX does not support C-decoupled (C) mode yet, using C-coupled (CC) mode instead."; KPEX_MODE=CC ;; \
 		2) KPEX_MODE=CC ;; \
 		3) KPEX_MODE=RC ;; \
-		*) echo "Invalid PEX_MODE: $(PEX_MODE). Use 1, 2, or 3."; exit 1;; \
+		*) echo "Invalid EXT_MODE: $(EXT_MODE). Use 1, 2, or 3."; exit 1;; \
 	esac; \
 	kpex \
 	--pdk $$PDK_UNDERSCORED \
@@ -191,9 +191,9 @@ klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make
 	sleep 4
 .PHONY: klayout-pex
 
-magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [PEX_MODE=<1|2|3>])
+magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [EXT_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(PEX_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL).gds
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(EXT_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL).gds
 	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	sed -i 's/$(CELL)/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	rm -f $(NET_PEX_DIR)/pex_$(CELL).tcl $(NET_PEX_DIR)/$(CELL).ext $(NET_PEX_DIR)/$(CELL)_flat.ext $(NET_PEX_DIR)/$(CELL)_flat.res.ext
