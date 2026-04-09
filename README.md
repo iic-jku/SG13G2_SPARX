@@ -7,7 +7,7 @@
     <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver for 160GHz without M5 GND plane" width=70%>
   </a>
   <br>
-  <em>Render of the Six-Port Receiver without M5 GND plane.</em>
+  <em>Render of the Six-Port Receiver for 160GHz without M5 GND plane.</em>
 </p>
 
 
