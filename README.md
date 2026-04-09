@@ -14,10 +14,9 @@
 ## Overview
 SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make all FREQ=77e9`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz under one minute is demonstrated.
 
-https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
-
 <p align="center">
-  <em>Generation of six-port receivers from 60 GHz to 300 GHz under one minute.</em>
+  https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
+  <em>Generation of Six-Port Receivers from 60 GHz to 300 GHz.</em>
 </p>
 
 
