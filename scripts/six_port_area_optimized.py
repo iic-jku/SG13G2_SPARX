@@ -16,14 +16,20 @@ parser = argparse.ArgumentParser(description="Generate the six-port layout GDS o
 parser.add_argument(
     "gds_filename",
     nargs="?",
-    default="layout/sparx160_top.gds",
+    default="layout/sparx_top.gds",
     help="Output GDS file for the top-level layout",
 )
 parser.add_argument(
     "powdet_gds_filename",
     nargs="?",
-    default="layout/sparx160_powdet_sbd.gds",
+    default="layout/sparx_powdet_sbd.gds",
     help="Output GDS file for the power detector sub-cell",
+)
+parser.add_argument(
+    "--freq",
+    type=float,
+    default=160e9,
+    help="Design frequency in Hz (default: 160e9)",
 )
 args = parser.parse_args()
 
@@ -1328,7 +1334,7 @@ def powdet_sbd() -> gf.Component:
 
 e_r = 4.1  # relative permittivity
 Z0 = 50  # characteristic impedance
-f = 160e9  # frequency
+f = args.freq  # frequency
 
 
 # signal and ground layers

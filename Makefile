@@ -36,6 +36,10 @@ PEX_MODE ?= 3
 # Override with: make lvs-netlist EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
+# Design frequency in Hz (default: 160 GHz)
+# Override with: make build-layout FREQ=<frequency_in_Hz>
+FREQ ?= 160e9
+
 # Folder structure
 LAY_DIR 	:= layout
 SCH_DIR  	:= schematic
@@ -49,13 +53,14 @@ DRC_RPT_DIR := verification/drc
 
 # Help Target
 help: ## Show this help message
-	@echo 'Usage: make <target> [CELL=<cellname>] [PEX_MODE=<1|2|3>] [EV_PRECISION=<digits>]'
+	@echo 'Usage: make <target> [CELL=<cellname>] [PEX_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<Hz>]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 	@echo ''
 	@echo 'CELL defaults to $(TOP). Override to verify subcells.'
 	@echo 'PEX_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
+	@echo 'FREQ defaults to 160e9 (160 GHz). Override for build-layout.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
 # ================================================================================================
@@ -242,19 +247,19 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 	cd IHP && pip install .
 .PHONY: build-pdk
 
-build-layout: ## Build layout of six-port (usage: make build-layout)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
+build-layout: ## Build layout of six-port (usage: make build-layout [FREQ=<frequency_in_Hz>])
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds --freq $(FREQ)
 	rm -rf build/
 .PHONY: build-layout
 
-build-top: ## Build TOP cell (usage: make build-top)
+build-top: ## Build TOP cell (usage: make build-top [FREQ=<frequency_in_Hz>])
 	$(MAKE) build-pdk
-	$(MAKE) build-layout
+	$(MAKE) build-layout FREQ=$(FREQ)
 	$(MAKE) render-image
 .PHONY: build-top
 
-all: ## Build and verify the TOP cell (usage: make all)
+all: ## Build and verify the TOP cell (usage: make all [FREQ=<frequency_in_Hz>])
 	$(MAKE) verify-all
-	$(MAKE) build-top
+	$(MAKE) build-top FREQ=$(FREQ)
 .PHONY: all
 # ================================================================================================

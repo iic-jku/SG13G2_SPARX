@@ -49,6 +49,7 @@
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
+- [ ] Add new SPARX Python script with improved frequency scaling by @hpretl: @simi1505
 - [ ] Top-level Six-Port simulation in Xschem: @simi1505
 
 
@@ -199,7 +200,10 @@ Generates the six-port layout GDS files (`layout/sparx_top.gds` and `layout/spar
 
 ```sh
 make build-layout
+make build-layout FREQ=77e9
 ```
+
+The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
 
 ### Build Top Cell
 
@@ -207,7 +211,10 @@ Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-im
 
 ```sh
 make build-top
+make build-top FREQ=77e9
 ```
+
+The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
 
 ### Build All
 
@@ -215,8 +222,10 @@ Builds the complete design by first verifying all cells (`verify-all`), then bui
 
 ```sh
 make all
+make all FREQ=77e9
 ```
 
+The `FREQ` parameter sets the design frequency in Hz (default: 160 GHz = `160e9`).
 
 ## Cite This Work
 
