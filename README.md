@@ -12,7 +12,16 @@
 
 
 ## Overview
-SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make all FREQ=77e9`. A video which demonstrates the generation of six-port receivers from 60 GHz to 300 GHz within one minute can be seen [here](https://github.com/iic-jku/SG13G2_SPARX/raw/main/doc/sparx_gen_60ghz_to_300ghz.mp4).
+SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make all FREQ=77e9`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz under one minute is demonstrated.
+
+https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
+
+<p align="center">
+  <em>Generation of six-port receivers from 60 GHz to 300 GHz under one minute.</em>
+</p>
+
+
+## Block Diagramm
 - Six-Port
   - Branch Line Coupler (BLC)
   - Wilkinson Divider
@@ -21,7 +30,15 @@ SPARX stands for Six-Port Automated Receiver. The whole layout is generated in P
   - Schottky Barrier Diode (SBD)
 - Metal Stack
   - TopMetal2 (TM2): RF traces
-  - Metal5 (M5): GND plance
+  - Metal5 (M5): GND plane
+
+<p align="center">
+  <a href="doc/sparx_blockdiagram.png">
+    <img src="doc/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
+  </a>
+  <br>
+  <em>Block Diagram of the Six-Port Receiver.</em>
+</p>
 
 
 ## Chip Specifications
