@@ -25,12 +25,6 @@ parser.add_argument(
     default="layout/sparx_powdet_sbd.gds",
     help="Output GDS file for the power detector sub-cell",
 )
-parser.add_argument(
-    "--freq",
-    type=float,
-    default=160e9,
-    help="Design frequency in Hz (default: 160e9)",
-)
 args = parser.parse_args()
 
 gds_filename = Path(args.gds_filename)
@@ -1332,9 +1326,9 @@ def powdet_sbd() -> gf.Component:
 # ----------------------------------------------------
 # define design parameters
 
-e_r = 4.1  # relative permittivity
-Z0 = 50  # characteristic impedance
-f = args.freq  # frequency
+e_r = 4.1   # relative permittivity
+Z0 = 50     # characteristic impedance
+f = 160e9   # frequency
 
 
 # signal and ground layers
