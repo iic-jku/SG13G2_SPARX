@@ -31,6 +31,14 @@ SPARX stands for Six-Port Automated Receiver. The whole layout is generated in P
   <em>Block Diagram of the Six-Port Receiver.</em>
 </p>
 
+<p align="center">
+  <video src="doc/sparx_gen_60ghz_to_300ghz.mp4" alt="SPARX generation from 60 GHz to 300 GHz" width="70%" controls>
+    Your browser does not support the video tag.
+  </video>
+  <br>
+  <em>SPARX generation from 60 GHz to 300 GHz.</em>
+</p>
+
 
 ## Chip Specifications
 
