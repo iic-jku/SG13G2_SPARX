@@ -132,41 +132,40 @@ sg13_lv_pmos (24->3)                       |sg13_lv_pmos (3)
 rppd (2)                                   |rppd (2)                                   
 sg13_lv_nmos (24->3)                       |sg13_lv_nmos (3)                           
 Number of devices: 16                      |Number of devices: 16                      
-Number of nets: 10 **Mismatch**            |Number of nets: 11 **Mismatch**            
+Number of nets: 10                         |Number of nets: 10                         
 ---------------------------------------------------------------------------------------
-NET mismatches: Class fragments follow (with fanout counts):
-Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
-
----------------------------------------------------------------------------------------
-Net: vss                                   |Net: vss                                   
-  schottky_nbl1/3 = 2                      |  schottky_nbl1/3 = 2                      
-  cap_cmim/2 = 2                           |  cap_cmim/2 = 2                           
-  sg13_lv_nmos/(1|3) = 4                   |  sg13_lv_nmos/(1|3) = 4                   
-  sg13_lv_nmos/4 = 3                       |  sg13_lv_nmos/4 = 3                       
-  sg13_lv_nmos/2 = 1                       |  sg13_lv_nmos/2 = 1                       
-  rhigh/3 = 1                              |                                           
-  rsil/3 = 2                               |                                           
-  rppd/3 = 2                               |                                           
-                                           |                                           
-(no matching net)                          |Net: sub                                   
-                                           |  rsil/3 = 2                               
-                                           |  rppd/3 = 2                               
-                                           |  rhigh/3 = 1                              
----------------------------------------------------------------------------------------
-Netlists do not match.
-Port matching may fail to disambiguate symmetries.
+Netlists match uniquely with property errors.
+schottky_W1_L0p3_N1_N1_1/schottky_nbl1:0 vs. schottky_nbl1:D1:
+Property w in circuit1 has no matching property in circuit2
+schottky_W1_L0p3_N1_N1_1/schottky_nbl1:0 vs. schottky_nbl1:D1:
+Property l in circuit1 has no matching property in circuit2
+schottky_W1_L0p3_N1_N1_1/schottky_nbl1:0 vs. schottky_nbl1:D1:
+Property Ny in circuit2 has no matching property in circuit1
+schottky_W1_L0p3_N1_N1_1/schottky_nbl1:0 vs. schottky_nbl1:D1:
+Property Nx in circuit2 has no matching property in circuit1
+schottky_W1_L0p3_N1_N1_0/schottky_nbl1:0 vs. schottky_nbl1:D2:
+Property w in circuit1 has no matching property in circuit2
+schottky_W1_L0p3_N1_N1_0/schottky_nbl1:0 vs. schottky_nbl1:D2:
+Property l in circuit1 has no matching property in circuit2
+schottky_W1_L0p3_N1_N1_0/schottky_nbl1:0 vs. schottky_nbl1:D2:
+Property Ny in circuit2 has no matching property in circuit1
+schottky_W1_L0p3_N1_N1_0/schottky_nbl1:0 vs. schottky_nbl1:D2:
+Property Nx in circuit2 has no matching property in circuit1
 
 Subcircuit pins:
 Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
 -------------------------------------------|-------------------------------------------
-vss                                        |(no pin, node is sub)                      
 rfin                                       |rfin                                       
 vdd                                        |vdd                                        
 vref                                       |vref                                       
 vout                                       |vout                                       
-(no pin, node is vss)                      |vss                                        
+vss                                        |vss                                        
 ---------------------------------------------------------------------------------------
-Cell pin lists for sparx160_powdet_sbd and sparx160_powdet_sbd altered to match.
+Cell pin lists are equivalent.
 Device classes sparx160_powdet_sbd and sparx160_powdet_sbd are equivalent.
 
-Final result: Top level cell failed pin matching.
+Final result: Circuits match uniquely.
+Property errors were found.
+
+The following cells had property errors:
+ sparx160_powdet_sbd
