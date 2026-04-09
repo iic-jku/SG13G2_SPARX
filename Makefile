@@ -1,4 +1,4 @@
-# Makefile for SPARX160: A Programmatically Generated 160-GHz Six-Port Receiver in 130-nm CMOS
+# Makefile for SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS
 #
 # SPDX-FileCopyrightText: 2026 Simon Dorrer
 # Johannes Kepler University, Department for Integrated Circuits
@@ -19,8 +19,8 @@
 
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-TOP = sparx160_top
-POWDET = sparx160_powdet_sbd
+TOP = sparx_top
+POWDET = sparx_powdet_sbd
 
 .DEFAULT_GOAL := help
 

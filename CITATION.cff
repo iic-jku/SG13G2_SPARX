@@ -10,7 +10,7 @@ authors:
 - family-names: Pretl
   given-names: Harald
   orcid: https://orcid.org/0000-0003-1519-076X
-title: "GitHub Repository for SPARX160: A Programmatically Generated 160-GHz Six-Port Receiver in 130-nm CMOS"
+title: "GitHub Repository for SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS"
 date-released: 2026
 url: https://github.com/iic-jku/SG13G2_SPARX160
 identifiers:

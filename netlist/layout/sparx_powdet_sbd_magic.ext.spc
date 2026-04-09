@@ -1,4 +1,4 @@
-* NGSPICE file created from sparx160_powdet_sbd.ext - technology: ihp-sg13g2
+* NGSPICE file created from sparx_powdet_sbd.ext - technology: ihp-sg13g2
 
 .subckt cmim_W10_L10_Gnone_G1 c1_0_0# m5_n120_n120#
 X0 c1_0_0# m5_n120_n120# cap_cmim l=10u w=10u
@@ -356,7 +356,7 @@ X0 c1_0_0# m5_n120_n120# cap_cmim l=9u w=6.8u
 X0 a_0_500# a_0_n70# sub rsil l=2.5u w=0.5u
 .ends
 
-.subckt sparx160_powdet_sbd vout vref vss vdd rfin
+.subckt sparx_powdet_sbd vout vref vss vdd rfin
 XC2_0 rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1_0/a_0_400# vss C2
 Xschottky_W1_L0p3_N1_N1_0 vss schottky_W1_L0p3_N1_N1_0/dw_n110_n84# schottky_W1_L0p3_N1_N1_0/a_0_0#
 + schottky_W1_L0p3_N1_N1

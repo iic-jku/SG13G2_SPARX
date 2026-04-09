@@ -1,10 +1,10 @@
-# SPARX160: A Programmatically Generated 160-GHz Six-Port Receiver in 130-nm CMOS
+# SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS
 
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
 <p align="center">
   <a href="img/sparx160_top_white_wo_M5.png">
-    <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver without M5 GND plane" width=70%>
+    <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver for 160GHz without M5 GND plane" width=70%>
   </a>
   <br>
   <em>Render of the Six-Port Receiver without M5 GND plane.</em>
@@ -25,8 +25,8 @@
         - ToDo
 
 <p align="center">
-  <a href="doc/sparx160_blockdiagram.png">
-    <img src="doc/sparx160_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
+  <a href="doc/sparx_blockdiagram.png">
+    <img src="doc/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
   </a>
   <br>
   <em>Block Diagram of the Six-Port Receiver.</em>
@@ -45,7 +45,7 @@
 ## ToDos
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX160/blob/main/verification/drc/sparx160_powdet_sbd.magic.drc.rpt
+- [ ] Magic DRC --> `obs` metal layers (@RTimothyEdwards): https://github.com/iic-jku/SG13G2_SPARX/blob/main/verification/drc/sparx_powdet_sbd.magic.drc.rpt
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
@@ -66,14 +66,14 @@ Note that KLayout works with CDL netlists and Magic works with SPICE netlists. O
 To extract a CDL schematic netlist for KLayout LVS, use the following target:
 ```sh
 make klayout-lvs-netlist
-make klayout-lvs-netlist CELL=sparx160_powdet_sbd
+make klayout-lvs-netlist CELL=sparx_powdet_sbd
 make klayout-lvs-netlist EV_PRECISION=5
 ```
 
 To extract a SPICE schematic netlist for Magic + Netgen LVS, use the following target:
 ```sh
 make magic-lvs-netlist
-make magic-lvs-netlist CELL=sparx160_powdet_sbd
+make magic-lvs-netlist CELL=sparx_powdet_sbd
 make magic-lvs-netlist EV_PRECISION=5
 ```
 
@@ -85,14 +85,14 @@ Exports the schematic netlist from Xschem, then runs LVS. Compares the GDS layou
 
 ```sh
 make klayout-lvs
-make klayout-lvs CELL=sparx160_powdet_sbd
+make klayout-lvs CELL=sparx_powdet_sbd
 ```
 
 **Magic + Netgen LVS** uses `sak-lvs.sh`:
 
 ```sh
 make magic-lvs
-make magic-lvs CELL=sparx160_powdet_sbd
+make magic-lvs CELL=sparx_powdet_sbd
 ```
 
 ### Design Rule Check (DRC)
@@ -103,7 +103,7 @@ Runs DRC on the GDS layout in `layout/`. Reports are saved to `verification/drc/
 
 ```sh
 make klayout-drc
-make klayout-drc CELL=sparx160_powdet_sbd
+make klayout-drc CELL=sparx_powdet_sbd
 ```
 
 **KLayout DRC (regular)** runs the full DRC rule set on the top-level cell:
@@ -116,7 +116,7 @@ make klayout-drc-regular
 
 ```sh
 make magic-drc
-make magic-drc CELL=sparx160_powdet_sbd
+make magic-drc CELL=sparx_powdet_sbd
 ```
 
 ### Parasitic Extraction (PEX)
@@ -138,16 +138,16 @@ If a matching Xschem symbol (`schematic/<CELL>_pex.sym`) exists, the `.subckt` p
 
 ```sh
 make klayout-pex
-make klayout-pex CELL=sparx160_powdet_sbd
-make klayout-pex CELL=sparx160_powdet_sbd PEX_MODE=3
+make klayout-pex CELL=sparx_powdet_sbd
+make klayout-pex CELL=sparx_powdet_sbd PEX_MODE=3
 ```
 
 **Magic PEX** uses `sak-pex.sh`:
 
 ```sh
 make magic-pex
-make magic-pex CELL=sparx160_powdet_sbd
-make magic-pex CELL=sparx160_powdet_sbd PEX_MODE=3
+make magic-pex CELL=sparx_powdet_sbd
+make magic-pex CELL=sparx_powdet_sbd PEX_MODE=3
 ```
 
 ### Verify a Specific Cell
@@ -155,8 +155,8 @@ make magic-pex CELL=sparx160_powdet_sbd PEX_MODE=3
 Runs LVS, DRC, and PEX for a specific cell:
 
 ```sh
-make klayout-verify-cell CELL=sparx160_powdet_sbd
-make magic-verify-cell CELL=sparx160_powdet_sbd
+make klayout-verify-cell CELL=sparx_powdet_sbd
+make magic-verify-cell CELL=sparx_powdet_sbd
 ```
 
 ### Verify Top Cell
@@ -174,7 +174,7 @@ Runs verification for a specific cell and the top cell (KLayout LVS + DRC, Magic
 
 ```sh
 make verify-all
-make verify-all CELL=sparx160_powdet_sbd
+make verify-all CELL=sparx_powdet_sbd
 ```
 
 ### Render Layout of the Design
@@ -195,7 +195,7 @@ make build-pdk
 
 ### Build Layout
 
-Generates the six-port layout GDS files (`layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds`):
+Generates the six-port layout GDS files (`layout/sparx_top.gds` and `layout/sparx_powdet_sbd.gds`):
 
 ```sh
 make build-layout
@@ -221,11 +221,11 @@ make all
 ## Cite This Work
 
 ```
-@software{2026_SPARX160,
+@software{2026_SPARX,
 	author = {Kellerer-Pirklbauer, David and Dorrer, Simon and Pretl, Harald},
 	month = April,
-	title = {{GitHub Repository for SPARX160: A Programmatically Generated 160-GHz Six-Port Receiver in 130-nm CMOS}},
-	url = {https://github.com/iic-jku/SG13G2_SPARX160},
+	title = {{GitHub Repository for SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS}},
+	url = {https://github.com/iic-jku/SG13G2_SPARX},
 	doi = {ToDo},
 	year = {2026}
 }

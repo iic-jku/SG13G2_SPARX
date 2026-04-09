@@ -133,4 +133,4 @@ C {vcvs.sym} 1280 -560 0 0 {name=E1 value=1}
 C {devices/lab_pin.sym} 1280 -670 0 1 {name=p2 sig_type=std_logic lab=out}
 C {spice_probe.sym} 1280 -670 0 0 {name=p10 attrs=""}
 C {noconn.sym} 1280 -670 0 0 {name=l3}
-C {sparx160_powdet_sbd.sym} 710 -690 0 0 {name=x1}
+C {sparx_powdet_sbd.sym} 710 -690 0 0 {name=x1}

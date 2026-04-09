@@ -97,32 +97,32 @@ Circuit 1: rsil                            |Circuit 2: rsil
 ---------------------------------------------------------------------------------------
 Cell pin lists are equivalent.
 Device classes rsil and rsil are equivalent.
-Flattening unmatched subcell C2 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__7cb987b1 in circuit sparx160_powdet_sbd (0)(2 instances)
-Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(13 instances)
-Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__061cf64d in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(18 instances)
-Flattening unmatched subcell schottky_W1_L0p3_N1_N1 in circuit sparx160_powdet_sbd (0)(2 instances)
-Flattening unmatched subcell rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell output_stage in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell pmos_W120_L0p13_N24_Gnwell_G2 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1 in circuit sparx160_powdet_sbd (0)(2 instances)
-Flattening unmatched subcell nmos_W60_L0p13_N24_Gpsub_G2 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell C3 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__3e7d8b3e in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(8 instances)
-Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__e54567cf in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(15 instances)
-Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__89c70ba2 in circuit sparx160_powdet_sbd (0)(1 instance)
-Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx160_powdet_sbd (0)(5 instances)
-Flattening unmatched subcell cmim_W6p8_L9_Gnone_G1 in circuit sparx160_powdet_sbd (0)(2 instances)
-Flattening unmatched subcell rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2 in circuit sparx160_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell C2 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__7cb987b1 in circuit sparx_powdet_sbd (0)(2 instances)
+Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx_powdet_sbd (0)(13 instances)
+Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__061cf64d in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx_powdet_sbd (0)(18 instances)
+Flattening unmatched subcell schottky_W1_L0p3_N1_N1 in circuit sparx_powdet_sbd (0)(2 instances)
+Flattening unmatched subcell rhigh_L2_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$1 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell output_stage in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell pmos_W120_L0p13_N24_Gnwell_G2 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell rppd_L1p5_W0p5_B0_P0p18_N1_SSerial_S2_Gnone_G1 in circuit sparx_powdet_sbd (0)(2 instances)
+Flattening unmatched subcell nmos_W60_L0p13_N24_Gpsub_G2 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell C3 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__3e7d8b3e in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx_powdet_sbd (0)(8 instances)
+Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__e54567cf in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx_powdet_sbd (0)(15 instances)
+Flattening unmatched subcell array_gdsfactorypcomponentspcontainersparray_component__89c70ba2 in circuit sparx_powdet_sbd (0)(1 instance)
+Flattening unmatched subcell cmim_W10_L10_Gnone_G1 in circuit sparx_powdet_sbd (0)(5 instances)
+Flattening unmatched subcell cmim_W6p8_L9_Gnone_G1 in circuit sparx_powdet_sbd (0)(2 instances)
+Flattening unmatched subcell rsil_L2p5_W0p5_P0p18_R24p9_N1_SSerial_S2_Gnone_G1$2 in circuit sparx_powdet_sbd (0)(1 instance)
 
-Class sparx160_powdet_sbd (0):  Merged 100 parallel devices.
-Class sparx160_powdet_sbd (1):  Merged 1 parallel devices.
+Class sparx_powdet_sbd (0):  Merged 100 parallel devices.
+Class sparx_powdet_sbd (1):  Merged 1 parallel devices.
 Subcircuit summary:
-Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
+Circuit 1: sparx_powdet_sbd                |Circuit 2: sparx_powdet_sbd                
 -------------------------------------------|-------------------------------------------
 cap_cmim (61->3)                           |cap_cmim (61->3)                           
 schottky_nbl1 (2)                          |schottky_nbl1 (2)                          
@@ -153,7 +153,7 @@ schottky_W1_L0p3_N1_N1_0/schottky_nbl1:0 vs. schottky_nbl1:D2:
 Property Nx in circuit2 has no matching property in circuit1
 
 Subcircuit pins:
-Circuit 1: sparx160_powdet_sbd             |Circuit 2: sparx160_powdet_sbd             
+Circuit 1: sparx_powdet_sbd                |Circuit 2: sparx_powdet_sbd                
 -------------------------------------------|-------------------------------------------
 rfin                                       |rfin                                       
 vdd                                        |vdd                                        
@@ -162,10 +162,10 @@ vout                                       |vout
 vss                                        |vss                                        
 ---------------------------------------------------------------------------------------
 Cell pin lists are equivalent.
-Device classes sparx160_powdet_sbd and sparx160_powdet_sbd are equivalent.
+Device classes sparx_powdet_sbd and sparx_powdet_sbd are equivalent.
 
 Final result: Circuits match uniquely.
 Property errors were found.
 
 The following cells had property errors:
- sparx160_powdet_sbd
+ sparx_powdet_sbd
