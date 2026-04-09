@@ -20,7 +20,7 @@ https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 </p>
 
 
-## Block Diagramm
+## Block Diagram
 - Six-Port
   - Branch Line Coupler (BLC)
   - Wilkinson Divider
