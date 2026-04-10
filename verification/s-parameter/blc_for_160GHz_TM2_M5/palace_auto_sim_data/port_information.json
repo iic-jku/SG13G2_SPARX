@@ -1,0 +1,58 @@
+{
+    "ports": [
+        {
+            "portnumber": 1,
+            "Z0": 50,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.2,
+            "xmin": 0.0,
+            "xmax": 0.1,
+            "ymin": 0.0,
+            "ymax": 7.2,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 2,
+            "Z0": 50,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.2,
+            "xmin": 246.095,
+            "xmax": 246.195,
+            "ymin": 0.0,
+            "ymax": 7.2,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 3,
+            "Z0": 50,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.199999999999989,
+            "xmin": 246.095,
+            "xmax": 246.195,
+            "ymin": -233.685,
+            "ymax": -226.485,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 4,
+            "Z0": 50,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.199999999999989,
+            "xmin": 0.0,
+            "xmax": 0.1,
+            "ymin": -233.685,
+            "ymax": -226.485,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        }
+    ],
+    "unit": 1e-06,
+    "name": "palace_auto_sim"
+}
