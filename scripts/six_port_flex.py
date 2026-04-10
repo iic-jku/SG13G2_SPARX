@@ -97,7 +97,7 @@ NOFILL_SIDE_WIDTH = 235  # side nofill width (85 + pitch + 25)
 NOFILL_SIDE_OFFSET = 12.5  # side nofill centering offset ((110 - 85) / 2)
 
 # Layout spacing (um)
-RFIN_GAP = 20  # gap between BLC port and PD rfin
+RFIN_GAP = 40  # gap between BLC port and PD rfin
 PD_HALF_HEIGHT = 105  # approximate half-height of power detector cell
 PROBE_PD_GAP = 50  # gap between PD edge and probe edge
 SEALRING_MARGIN = 50  # margin around circuit for sealring
@@ -1914,8 +1914,8 @@ def powdet_sbd() -> gf.Component:
     c.ports["rfin"].orientation = 270
     c.add_port(name="vss", port=c3_ref.ports["LC_B_1_1"])
     c.ports["vss"].orientation = 90
-    c.add_port(name="vdd", port=c3_ref.ports["LC_T_1_1"])
-    c.ports["vdd"].orientation = 0
+    c.add_port(name="vdd", port=c3_ref.ports["LC_T_5_1"])
+    c.ports["vdd"].orientation = 90
     c.pprint_ports()
 
     # No-fill exclusion zones for each metal layer
@@ -2347,9 +2347,16 @@ pd.write_gds(powdet_gds_filename)
 # ============================================================
 
 # PD1 reference, position and route
-pd1_ref = c.add_ref(pd)
-pd1_ref.center = pd1_center
-
+pd1_ref = c.add_ref(pd).mirror_x()
+rfin_connection_pd1 = c.add_ref(
+    ihp.cells.straight(
+        length=rfin_gap,
+        cross_section=signal_cross_section,
+        width=blc_1_ref.ports["e2"].width,
+    )
+)
+rfin_connection_pd1.connect("e1", blc_1_ref.ports["e2"])
+pd1_ref.connect("rfin", rfin_connection_pd1.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd1 to probe top
 route_pd1_vdd = gf.routing.route_bundle_electrical(
@@ -2358,6 +2365,7 @@ route_pd1_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_top.ports["e4"]],
     route_width=ROUTE_WIDTH_VDD,
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=ROUTE_MIN_STRAIGHT,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -2431,20 +2439,19 @@ route_pd1_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd1 to blc — straight connection
-rfin_connection_pd1 = c.add_ref(
-    ihp.cells.straight(
-        length=rfin_gap,
-        cross_section=signal_cross_section,
-        width=blc_1_ref.ports["e2"].width,
-    )
-)
-rfin_connection_pd1.connect("e1", blc_1_ref.ports["e2"], allow_width_mismatch=True)
 
 
 # PD2 reference, position and route
-pd2_ref = c.add_ref(pd).mirror_x()
-pd2_ref.center = pd2_center
+pd2_ref = c.add_ref(pd)
+rfin_connection_pd2 = c.add_ref(
+    ihp.cells.straight(
+        length=rfin_gap,
+        cross_section=signal_cross_section,
+        width=blc_1_ref.ports["e3"].width,
+    )
+)
+rfin_connection_pd2.connect("e1", blc_1_ref.ports["e3"], allow_width_mismatch=True)
+pd2_ref.connect("rfin", rfin_connection_pd2.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd2 to probe top
 route_pd2_vdd = gf.routing.route_bundle_electrical(
@@ -2453,6 +2460,7 @@ route_pd2_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_top.ports["e4"]],
     route_width=ROUTE_WIDTH_VDD,
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=ROUTE_MIN_STRAIGHT,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -2504,19 +2512,17 @@ route_pd2_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd2 to blc — straight connection
-rfin_connection_pd2 = c.add_ref(
+# PD3 reference, position and route
+pd3_ref = c.add_ref(pd).mirror_y().mirror_x()
+rfin_connection_pd3 = c.add_ref(
     ihp.cells.straight(
         length=rfin_gap,
         cross_section=signal_cross_section,
-        width=blc_1_ref.ports["e3"].width,
+        width=blc_2_ref.ports["e3"].width,
     )
 )
-rfin_connection_pd2.connect("e1", blc_1_ref.ports["e3"], allow_width_mismatch=True)
-
-# PD3 reference, position and route
-pd3_ref = c.add_ref(pd).mirror_y()
-pd3_ref.center = pd3_center
+rfin_connection_pd3.connect("e1", blc_2_ref.ports["e3"], allow_width_mismatch=True)
+pd3_ref.connect("rfin", rfin_connection_pd3.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd3 to probe bottom
 route_pd3_vdd = gf.routing.route_bundle_electrical(
@@ -2525,6 +2531,7 @@ route_pd3_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_bottom.ports["e4"]],
     route_width=ROUTE_WIDTH_VDD,
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=ROUTE_MIN_STRAIGHT,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -2577,20 +2584,18 @@ route_pd3_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd3 to blc — straight connection
-rfin_connection_pd3 = c.add_ref(
+
+# PD4 reference, position and route
+pd4_ref = c.add_ref(pd).mirror_y()
+rfin_connection_pd4 = c.add_ref(
     ihp.cells.straight(
         length=rfin_gap,
         cross_section=signal_cross_section,
-        width=blc_2_ref.ports["e3"].width,
+        width=blc_2_ref.ports["e2"].width,
     )
 )
-rfin_connection_pd3.connect("e1", blc_2_ref.ports["e3"], allow_width_mismatch=True)
-
-
-# PD4 reference, position and route
-pd4_ref = c.add_ref(pd).mirror_x().mirror_y()
-pd4_ref.center = pd4_center
+rfin_connection_pd4.connect("e1", blc_2_ref.ports["e2"], allow_width_mismatch=True)
+pd4_ref.connect("rfin", rfin_connection_pd4.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd4 to probe bottom
 route_pd4_vdd = gf.routing.route_bundle_electrical(
@@ -2599,6 +2604,7 @@ route_pd4_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_bottom.ports["e4"]],
     route_width=ROUTE_WIDTH_VDD,
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=ROUTE_MIN_STRAIGHT,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -2650,15 +2656,6 @@ route_pd4_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd4 to blc — straight connection
-rfin_connection_pd4 = c.add_ref(
-    ihp.cells.straight(
-        length=rfin_gap,
-        cross_section=signal_cross_section,
-        width=blc_2_ref.ports["e2"].width,
-    )
-)
-rfin_connection_pd4.connect("e1", blc_2_ref.ports["e2"], allow_width_mismatch=True)
 
 
 # ============================================================
