@@ -56,7 +56,8 @@ https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
-- [x] Add an additional pin layer to the pin label for correct netlist extraction in code: @davkel99
+- [ ] Move remaining files from private repo to SPARX: @davkel99
+- [ ] Add SPARX as module to private repo: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Top-level Six-Port simulation in Xschem: @simi1505
 
