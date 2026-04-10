@@ -29,11 +29,11 @@ POWDET = sparx_powdet_sbd
 CELL ?= $(TOP)
 
 # PEX mode (1 = C-decoupled, 2 = C-coupled, 3 = full-RC)
-# Override with: make pex EXT_MODE=<1|2|3>
+# Override with: make <target> EXT_MODE=<1|2|3>
 EXT_MODE ?= 3
 
 # Floating-point precision (significant digits) for xschem's ev function
-# Override with: make lvs-netlist EV_PRECISION=<digits>
+# Override with: make <target> EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
 # Design frequency in GHz (default: 160)
@@ -46,8 +46,8 @@ NO_FILL ?= 0
 NO_FILL_M5 ?= 0
 
 # Folder structure
-LAY_DIR 	:= layout
-SCH_DIR  	:= schematic
+LAY_DIR     := layout
+SCH_DIR     := schematic
 IMG_DIR     := img
 NET_SCH_DIR := netlist/schematic
 NET_LAY_DIR := netlist/layout
@@ -58,7 +58,7 @@ DRC_RPT_DIR := verification/drc
 
 # Help Target
 help: ## Show this help message
-	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<GHz>]'
+	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
@@ -217,7 +217,7 @@ magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make 
 
 # Verify Targets
 klayout-verify-cell: ## Verify a specific cell with KLayout (usage: make klayout-verify-cell CELL=<cellname>)
-	$(MAKE) klayout-lvs klayout-drc klayout-pex CELL=$(CELL) 
+	$(MAKE) klayout-lvs klayout-drc klayout-pex CELL=$(CELL)
 .PHONY: klayout-verify-cell
 
 klayout-verify-top: ## Verify top cell with KLayout (usage: make klayout-verify-top)
@@ -231,11 +231,6 @@ magic-verify-cell: ## Verify a specific cell with Magic (usage: make magic-verif
 magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
 	$(MAKE) magic-lvs magic-drc magic-pex
 .PHONY: magic-verify-top
-
-verify-all: ## Verify all (usage: make verify-all)
-	$(MAKE) magic-lvs magic-drc magic-pex CELL=$(CELL)
-	$(MAKE) magic-lvs klayout-drc-regular magic-pex
-.PHONY: verify-all
 # ================================================================================================
 
 
@@ -254,7 +249,7 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 	cd IHP && pip install .
 .PHONY: build-pdk
 
-build-opt-layout: ## Build layout of six-port (usage: make build-opt-layout)
+build-opt-layout: ## Build area-optimized layout of six-port at 160 GHz (usage: make build-opt-layout)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
 	rm -rf build/
 .PHONY: build-opt-layout
@@ -275,7 +270,8 @@ build-top: ## Build TOP cell (usage: make build-top)
 .PHONY: build-top
 
 all: ## Build and verify the TOP cell (usage: make all)
-	$(MAKE) verify-all
 	$(MAKE) build-top
+	$(MAKE) klayout-verify-top
+	$(MAKE) magic-verify-top
 .PHONY: all
 # ================================================================================================

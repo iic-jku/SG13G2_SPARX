@@ -2,6 +2,9 @@
 
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
+> [!IMPORTANT]
+> This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.04` or later.
+
 <p align="center">
   <a href="img/sparx160_top_white_wo_M5.png">
     <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver for 160GHz without M5 GND plane" width=70%>
@@ -12,7 +15,7 @@
 
 
 ## Overview
-SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-Parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic and Netgen, a whole LVS, DRC and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngpsice and VACASK. This whole repo is controlled by a Makefile. Just clone it, and `make all`. To build and verify a six-port receiver at a target frequency of 160 GHz. If you need another target frequency, for example, 77 GHz, just `make build-flex-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz under one minute is demonstrated.
+SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This whole repo is controlled by a Makefile. Just clone it and run `make all` to build and verify the area-optimized six-port receiver at 160 GHz. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run `make build-flex-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz in under one minute is demonstrated.
 
 https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 <p align="center">
@@ -174,15 +177,6 @@ make klayout-verify-top
 make magic-verify-top
 ```
 
-### Verify All
-
-Runs verification for a specific cell and the top cell (KLayout LVS + DRC, Magic PEX):
-
-```sh
-make verify-all
-make verify-all CELL=sparx_powdet_sbd
-```
-
 ### Render Layout of the Design
 
 Renders the top-level GDS layout and saves it in the `img/` folder:
@@ -230,11 +224,12 @@ make build-top
 
 ### Build All
 
-Builds the complete design by first verifying all cells (`verify-all`), then building the top-level cell (`build-top`):
+Builds the complete top-level cell by running `build-top` and verifies it with `klayout-verify-top` and `magic-verify-top`:
 
 ```sh
 make all
 ```
+
 
 ## Cite This Work
 
