@@ -1,19 +1,19 @@
-** sch_path: /foss/designs/SG13G2_SPARX160/schematic/sparx_powdet_sbd.sch
+** sch_path: /foss/designs/SG13G2_SPARX/schematic/sparx_powdet_sbd.sch
 .subckt sparx_powdet_sbd vout vref vdd rfin vss
 *.PININFO rfin:I vout:O vss:B vdd:I vref:O
-RR1 bias1 rfin_int 52.314 $SUB=VSS $[rsil] w=0.5e-6 l=2.5e-6 b=0
+RR1 bias1 rfin_int 52.314 $SUB=sub $[rsil] w=0.5e-6 l=2.5e-6 b=0
 DD1 rfin_int bb_int sub schottky_nbl1
 C2 bias1 vss cap_cmim w=10e-6 l=10e-6 m=30
 MM2 vout bb_int vdd nw sg13_lv_pmos w=100u l=0.13u ng=20
 MM1 vout bb_int vss sub sg13_lv_nmos w=50u l=0.13u ng=20
-RR2 vout bb_int 910.75 $SUB=VSS $[rppd] w=0.5e-6 l=1.5e-6 b=0
+RR2 vout bb_int 910.75 $SUB=sub $[rppd] w=0.5e-6 l=1.5e-6 b=0
 MM4 vref bias2 vdd nw sg13_lv_pmos w=10u l=0.13u ng=2
 MM3 vref bias2 vss sub sg13_lv_nmos w=5u l=0.13u ng=2
 C3 vdd vss cap_cmim w=10e-6 l=10e-6 m=28
 DD2 net1 bias2 sub schottky_nbl1
-RR3 bias1 vdd 6.233k $SUB=VSS $[rhigh] w=0.5e-6 l=2e-6 b=0
-RR4 vref bias2 910.75 $SUB=VSS $[rppd] w=0.5e-6 l=1.5e-6 b=0
-RR5 net1 bias1 52.314 $SUB=VSS $[rsil] w=0.5e-6 l=2.5e-6 b=0
+RR3 bias1 vdd 6.233k $SUB=sub $[rhigh] w=0.5e-6 l=2e-6 b=0
+RR4 vref bias2 910.75 $SUB=sub $[rppd] w=0.5e-6 l=1.5e-6 b=0
+RR5 net1 bias1 52.314 $SUB=sub $[rsil] w=0.5e-6 l=2.5e-6 b=0
 MM5_dummy vss vss vss sub sg13_lv_nmos w=5u l=0.13u ng=2
 MM6_dummy vdd vdd vdd nw sg13_lv_pmos w=10u l=0.13u ng=2
 C1 rfin rfin_int cap_cmim w=10e-6 l=10e-6
