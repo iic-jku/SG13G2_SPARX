@@ -1298,8 +1298,8 @@ def powdet_sbd() -> gf.Component:
     c.ports["rfin"].orientation = 270
     c.add_port(name="vss", port=C3_ref.ports["LC_B_1_1"])
     c.ports["vss"].orientation = 90
-    c.add_port(name="vdd", port=C3_ref.ports["LC_T_1_1"])
-    c.ports["vdd"].orientation = 0
+    c.add_port(name="vdd", port=C3_ref.ports["LC_T_5_1"])
+    c.ports["vdd"].orientation = 90
     c.pprint_ports()
     
     c.center = (0, 0)
@@ -1652,8 +1652,15 @@ pd.name = powdet_cell_name
 pd.write_gds(str(powdet_gds_filename))
 
 # PD1 reference, position and route
-pd1_ref = c.add_ref(pd)
-pd1_ref.center = pd1_center
+pd1_ref = c.add_ref(pd).mirror_x()
+connection_rfin = ihp.cells.straight(
+    length=wavelength/22,
+    cross_section=signal_cross_section,
+    width=ihp.cells.waveguides._calculate_width_from_Z0(Z0=Z0, e_r=e_r, signal_cross_section=signal_cross_section, ground_cross_section=ground_cross_section),
+)
+connection_rfin_ref = c.add_ref(connection_rfin)
+connection_rfin_ref.connect("e1", blc_1_ref.ports["e2"])
+pd1_ref.connect("rfin", connection_rfin_ref.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd1 to probe top
 route_pd1_vdd = gf.routing.route_bundle_electrical(
@@ -1662,6 +1669,7 @@ route_pd1_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_top.ports["e4"]],
     route_width=8,    # adjust for thicker connections
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=10,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -1735,24 +1743,13 @@ route_pd1_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd1 to blc
-route_pd1_rfin = gf.routing.route_bundle_electrical(
-    component=c,
-    ports1=[pd1_ref.ports["rfin"]],
-    ports2=[blc_1_ref.ports["e2"]],
-    route_width=blc_1_ref.ports["e2"].width,    
-    layer=ihp.tech.LAYER.TopMetal2drawing,
-    start_straight_length=6, 
-    allow_layer_mismatch=True,
-    allow_width_mismatch=True,
-    auto_taper=False,
-    separation=0,
-)
-
 
 # PD2 reference, position and route
-pd2_ref = c.add_ref(pd).mirror_x()
-pd2_ref.center = pd2_center
+pd2_ref = c.add_ref(pd)
+
+connection_rfin_ref = c.add_ref(connection_rfin)
+connection_rfin_ref.connect("e1", blc_1_ref.ports["e3"])
+pd2_ref.connect("rfin", connection_rfin_ref.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd2 to probe top
 route_pd2_vdd = gf.routing.route_bundle_electrical(
@@ -1761,6 +1758,7 @@ route_pd2_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_top.ports["e4"]],
     route_width=8,    # adjust for thicker connections
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=10,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -1826,8 +1824,11 @@ route_pd2_rfin = gf.routing.route_bundle_electrical(
 )
 
 # PD3 reference, position and route
-pd3_ref = c.add_ref(pd).mirror_y()
-pd3_ref.center = pd3_center
+pd3_ref = c.add_ref(pd)
+
+connection_rfin_ref = c.add_ref(connection_rfin)
+connection_rfin_ref.connect("e1", blc_2_ref.ports["e3"])
+pd3_ref.connect("rfin", connection_rfin_ref.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd3 to probe bottom
 route_pd3_vdd = gf.routing.route_bundle_electrical(
@@ -1836,6 +1837,7 @@ route_pd3_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_bottom.ports["e4"]],
     route_width=8,    # adjust for thicker connections
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=10,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
@@ -1888,23 +1890,14 @@ route_pd3_vref = gf.routing.route_bundle_electrical(
     separation=0,
 )
 
-# rfin connection of pd3 to blc
-route_pd3_rfin = gf.routing.route_bundle_electrical(
-    component=c,
-    ports1=[pd3_ref.ports["rfin"]],
-    ports2=[blc_2_ref.ports["e3"]],
-    route_width=blc_2_ref.ports["e2"].width,    
-    layer=ihp.tech.LAYER.TopMetal2drawing,
-    allow_layer_mismatch=True,
-    allow_width_mismatch=True,
-    auto_taper=False,
-    separation=0,
-)
 
 
 # PD4 reference, position and route
-pd4_ref = c.add_ref(pd).mirror_x().mirror_y()
-pd4_ref.center = pd4_center
+pd4_ref = c.add_ref(pd).mirror_y()
+
+connection_rfin_ref = c.add_ref(connection_rfin)
+connection_rfin_ref.connect("e1", blc_2_ref.ports["e2"])
+pd4_ref.connect("rfin", connection_rfin_ref.ports["e2"], allow_width_mismatch=True)
 
 # vdd connection of pd4 to probe bottom
 route_pd4_vdd = gf.routing.route_bundle_electrical(
@@ -1913,6 +1906,7 @@ route_pd4_vdd = gf.routing.route_bundle_electrical(
     ports2=[probe_bottom.ports["e4"]],
     route_width=8,    # adjust for thicker connections
     layer=ihp.tech.LAYER.TopMetal1drawing,
+    start_straight_length=10,
     allow_layer_mismatch=True,
     allow_width_mismatch=True,
     auto_taper=False,
