@@ -121,6 +121,8 @@ magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CE
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+# 	Alternative using sak-lvs.sh for netlist export and LVS in one step (replaces magic-lvs-netlist target):
+#   PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) STD_CELL_LIBRARY=$(STD_CELL_LIBRARY) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
 	mv $(LVS_RPT_DIR)/$(CELL).ext.spc $(NET_LAY_DIR)/$(CELL)_magic.ext.spc
 	rm -f $(LVS_RPT_DIR)/$(CELL).sch.spc
 	rm -f $(LVS_RPT_DIR)/ext_$(CELL).tcl
