@@ -9,7 +9,8 @@ lvs_run_*
 .DS_Store
 *.pyc
 *.ext
+/build
+/IHP
+/sscs-ose-code-a-chip/IHP
 /schematic/simulations
 /testbenches/simulations
-/IHP
-/build
