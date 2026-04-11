@@ -12,5 +12,6 @@ lvs_run_*
 /build
 /IHP
 /sscs-ose-code-a-chip/IHP
+/sscs-ose-code-a-chip/pdk
 /schematic/simulations
 /testbenches/simulations
