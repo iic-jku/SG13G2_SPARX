@@ -13,5 +13,7 @@ lvs_run_*
 /IHP
 /sscs-ose-code-a-chip/IHP
 /sscs-ose-code-a-chip/pdk
+/sscs-ose-code-a-chip/magic
 /schematic/simulations
 /testbenches/simulations
+/doc/videos/sparx_gen_60ghz_to_300ghz_orig.mp4
