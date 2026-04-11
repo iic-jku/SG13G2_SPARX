@@ -35,8 +35,8 @@ https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
   - Metal5 (M5): GND plane
 
 <p align="center">
-  <a href="doc/sparx_blockdiagram.png">
-    <img src="doc/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
+  <a href="doc/figures/sparx_blockdiagram.png">
+    <img src="doc/figures/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
   </a>
   <br>
   <em>Block Diagram of the Six-Port Receiver.</em>
