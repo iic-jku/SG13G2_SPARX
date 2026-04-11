@@ -57,6 +57,9 @@ https://github.com/user-attachments/assets/d6d2d47e-5059-4160-81d7-d421cda29d1a
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
 - [ ] CaC - remove /foss/pdks/ ???: @davkel99
 - [ ] CaC - final formatting of code: @davkel99
+- [ ] CaC - test DRC: @davkel99
+- [ ] CaC - add Power Detector circuit???: @davkel99
+- [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99
 - [ ] GDSFactory Pins + Labels are not recognized by PEX: @davkel99
 - [ ] Move remaining files from private repo to SPARX: @davkel99
 - [ ] Add SPARX as module to private repo: @davkel99
