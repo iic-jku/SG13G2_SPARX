@@ -55,10 +55,6 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 ## ToDos
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] CaC - remove /foss/pdks/ ???: @davkel99
-- [x] CaC - final formatting of code: @davkel99
-- [x] CaC - test DRC: @davkel99
-- [ ] CaC - add Power Detector circuit???: @davkel99
 - [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99
 - [ ] GDSFactory Pins + Labels are not recognized by PEX: @davkel99
 - [ ] Move remaining files from private repo to SPARX: @davkel99
@@ -66,7 +62,6 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Add Top-level Six-Port simulation in Xschem: @simi1505
-- [ ] Beautify schematics and testbenches in Xschem: @simi1505
 
 ## Makefile Targets
 
