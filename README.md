@@ -56,8 +56,8 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
 - [ ] CaC - remove /foss/pdks/ ???: @davkel99
-- [ ] CaC - final formatting of code: @davkel99
-- [ ] CaC - test DRC: @davkel99
+- [x] CaC - final formatting of code: @davkel99
+- [x] CaC - test DRC: @davkel99
 - [ ] CaC - add Power Detector circuit???: @davkel99
 - [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99
 - [ ] GDSFactory Pins + Labels are not recognized by PEX: @davkel99
