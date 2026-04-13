@@ -57,12 +57,6 @@ def fill_gat_active(size=(3,3), active_extension=(0.18,0.18)) -> gf.Component:
 def fill_ground() -> gf.Component:
     c = gf.Component()
     c.add_polygon(layer=ihp.tech.LAYER.Metal5drawing, points=[
-        # (0,0),  # used for L
-        # (5,0),  # used for L
-        # (5,1),  # used for L
-        # (1,1),  # used for L
-        # (1,5),  # used for L
-        # (0,5),  # used for L
         (0,0),
         (1,0),
         (1,1),
@@ -122,20 +116,19 @@ def powdet_sbd() -> gf.Component:
 
     D1_ref = c.add_ref(schottky)
     D1_ref.connect("e4", via_M2_M5_ref.ports["bottom"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # c.add_ref(schottky_text).center = D1_ref.center
+
 
     # create D2 and place nearby D1 for better matching
     D2_ref = c.add_ref(schottky)
     D2_ref.ymin = D1_ref.ymin
-    D2_ref.xmin = D1_ref.xmax # min spacing according to design rules 5.10
-    # c.add_ref(schottky_text).center = D2_ref.center
+    D2_ref.xmin = D1_ref.xmax 
     
     # create capasitor array for cap 2
     C2 = gf.Component("C2")
     cmim = ihp.cells.cmim(width=10, length=10)
     cap_connection_thickness = 4 # thickness of the metal connection between caps, adjust as needed
-    # create 3 * 4 array of cmim capacitors with column pitch of 0.52 + 11.2 to fit the required spacing for TM1 and the size of the caps
-    # with one missing cap to fit C1 in there
+
+    # create the array of cmim capacitors for C2 with column pitch of 0.52 + 11.2 to fit the required spacing for TM1 and the size of the caps
     spacing_between_caps = 0.52
     top_row = C2.add_ref(gf.components.array(component=cmim, columns=6, rows=1, column_pitch= spacing_between_caps + 11.2))
     
@@ -470,16 +463,6 @@ def powdet_sbd() -> gf.Component:
         ))
     straight_ref.center = ((start_point[0]+end_point[0])/2, gate_via_refs_nmos[11].center[1]) # align with the via of the first M3 gate
     
-    # connect Gates 14-23 (10 gates) together with metal1
-    # start_point = M1_3.ports["G_14"].center
-    # end_point = M1_3.ports["G_23"].center
-    # straight_ref = M1_3.add_ref(ihp.cells.straight(
-    #     length=abs(end_point[0]-start_point[0]), 
-    #     cross_section="metal2_routing", 
-    #     width=0.6 # manual meassure of the heigth of the via
-    #     ))
-    # straight_ref.center = ((start_point[0]+end_point[0])/2, gate_via_refs_nmos[13].center[1]) # align with the via of the 13th M1 gate
-
 
     # connect source to GND
     M1_3_ds_ports = M1_3.get_ports_list(layer=ihp.tech.LAYER.Metal1drawing)
@@ -560,10 +543,6 @@ def powdet_sbd() -> gf.Component:
     M1_3.add_port(name="gate_connection_M3", center=((gate_via_refs_nmos[11].center[0] + gate_via_refs_nmos[12].center[0]) /2, gate_via_refs_nmos[11].center[1]), cross_section="metal2_routing", orientation=270, port_type="electrical")
     M1_3_ref = c_output.add_ref(M1_3)
     M1_3_ref.move((0,30))
-    # c_output.add(gate_via_refs_nmos)
-
-    # c_output.add_port(name="drain_connection_M1", port=drain_via_refs_nmos[2].ports["top"])
-   
 
     
     M2_4 = ihp.cells.pmos(
@@ -874,8 +853,7 @@ def powdet_sbd() -> gf.Component:
     
     # create capasitor array for cap 3
     C3 = gf.Component("C3")
-    # create 3 * 4 array of cmim capacitors with column pitch of 0.52 + 11.2 to fit the required spacing for TM1 and the size of the caps
-    # with one missing cap to fit C1 in there
+    # create the array of cmim capacitors for C3 with column pitch of 0.52 + 11.2 to fit the required spacing for TM1 and the size of the caps
     spacing_between_caps = 0.52
     left_col = C3.add_ref(gf.components.array(component=cmim, columns=3, rows=5, column_pitch= spacing_between_caps + 11.2, row_pitch= -(spacing_between_caps + 11.2)))
     middle_col = C3.add_ref(gf.components.array(component=cmim, columns=2, rows=4, column_pitch= spacing_between_caps + 11.2, row_pitch= -(spacing_between_caps + 11.2)))
@@ -1259,27 +1237,6 @@ def powdet_sbd() -> gf.Component:
         separation=0,
     )
 
-    # input_antenna_interuption_TM1 = ihp.cells.straight(
-    #     length=10,
-    #     cross_section="topmetal1_routing",
-    #     width=7.2,
-    # )
-    # input_antenna_interuption_TM2 = ihp.cells.straight(
-    #     length=10,
-    #     cross_section="topmetal2_routing",
-    #     width=7.2,
-    # )
-    # input_antenna_interuption_TM2_ref = c.add_ref(input_antenna_interuption_TM2)
-    # input_antenna_interuption_TM2_ref.connect("e1", via_TM1_TM2_ref.ports["top"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # via_TM1_TM2.ports["top"].orientation = 90
-    # via_TM1_TM2.ports["bottom"].orientation = 270
-    # via_TM1_TM2_ref = c.add_ref(via_TM1_TM2)
-    # via_TM1_TM2_ref.connect("top", input_antenna_interuption_TM2_ref.ports["e2"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # input_antenna_interuption_TM1_ref = c.add_ref(input_antenna_interuption_TM1)
-    # input_antenna_interuption_TM1_ref.connect("e1", via_TM1_TM2_ref.ports["bottom"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # via_TM1_TM2_ref = c.add_ref(via_TM1_TM2)
-    # via_TM1_TM2_ref.connect("bottom", input_antenna_interuption_TM1_ref.ports["e2"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    # c_output.pprint_ports()
     
     straight_M3 = ihp.cells.straight(
         length=10,
@@ -1309,7 +1266,6 @@ def powdet_sbd() -> gf.Component:
     c.add_ref(gf.components.rectangle(size=(c.xsize, c.ysize), layer=ihp.tech.LAYER.Metal2nofill, centered=True))
     c.add_ref(gf.components.rectangle(size=(c.xsize, c.ysize), layer=ihp.tech.LAYER.Metal3nofill, centered=True))
     c.add_ref(gf.components.rectangle(size=(c.xsize, c.ysize), layer=ihp.tech.LAYER.Metal4nofill, centered=True))
-    # c.add_ref(gf.components.rectangle(size=(c.xsize, c.ysize), layer=ihp.tech.LAYER.Metal5nofill, centered=True))
     M5_nofill = c.add_ref(gf.components.rectangle(size=(C1_ref.xsize+40, C1_ref.ysize+20), layer=ihp.tech.LAYER.Metal5nofill)).center = C1_ref.center
     
     sizex = C2_ref.xsize + C3_ref.xsize
@@ -1317,20 +1273,7 @@ def powdet_sbd() -> gf.Component:
     x = C2_ref.xmin + sizex/2
     y = C2_ref.ymin + sizey/2
     cap_M5_nofill = c.add_ref(gf.components.rectangle(size=(sizex-10, sizey-10), layer=ihp.tech.LAYER.Metal5nofill)).center = (x,y)
-    # c.add_ports(output_stage_ref.ports, prefix="output_stage_")
-    # c.add_ports(via_M1_M2_ref.ports, prefix="via_")
-    # c.add_ports(XR1_ref.ports, prefix="XR1_")
-    # c.add_ports(XR5_ref.ports, prefix="XR5_")
-    # c.add_ports(D1_ref.ports, prefix="SBD1_")
-    # c.add_ports(D2_ref.ports, prefix="SBD2_")
-    # c.add_ports(M1_3_ref.ports, prefix="M1_")
-    # c.add_ports(output_stage_ref.ports)
-    # c.add_ports(C2_ref.ports, prefix="C2_")
-    # c.add_ports(C3_ref.ports, prefix="C3_")
-    
-    
-    # c.pprint_ports()
-    
+
     return c
 # ----------------------------------------------------
 # define design parameters
