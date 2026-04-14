@@ -18,8 +18,8 @@ T {Schottky Barrier Diode Based Power Detector} 620 -1720 0 0 1 1 {}
 T {Circuit Operation:
 - R1 provides a 50 Ω input termination.
 - C1 ac-couples the RF + LO signal to the demodulating SBD D1 and is implemented as a MIM capacitor.
-- M1–M2 and R2 form a transimpedance amplifier (TIA) that delivers a buffered voltage output.
-- M3–M4, D2, and R3–R5 implement a replica bias. With this replica circuit, it is now possible to measure the demodulated output signal differentially.
+- M3–M4 and R2 form a transimpedance amplifier (TIA) that delivers a buffered voltage output.
+- M1–M2, D2, and R3–R5 implement a replica bias. With this replica circuit, it is now possible to measure the demodulated output signal differentially.
 - C2-C4 are MIM capacitor arrays which provide proper supply-rail decoupling.
 
 Layout Considerations:
@@ -154,10 +154,10 @@ w=10e-6
 l=10e-6
 m=30
 spiceprefix=X}
-C {annotate_fet_params.sym} 570 -340 0 0 {name=annot1 ref=M1}
-C {annotate_fet_params.sym} 730 -340 0 0 {name=annot2 ref=M2}
+C {annotate_fet_params.sym} 1030 -340 0 0 {name=annot1 ref=M1}
+C {annotate_fet_params.sym} 1190 -340 0 0 {name=annot2 ref=M2}
 C {opin.sym} 1000 -620 0 1 {name=p12 lab=vref}
-C {sg13_lv_pmos.sym} 680 -760 0 0 {name=M2
+C {sg13_lv_pmos.sym} 680 -760 0 0 {name=M4
 l=0.13u
 w=100u
 ng=20
@@ -165,7 +165,7 @@ m=1
 model=sg13_lv_pmos
 spiceprefix=X
 }
-C {sg13_lv_nmos.sym} 680 -480 0 0 {name=M1
+C {sg13_lv_nmos.sym} 680 -480 0 0 {name=M3
 l=0.13u
 w=50u
 ng=20
@@ -182,7 +182,7 @@ spiceprefix=X
 b=0
 m=1
 }
-C {sg13_lv_pmos.sym} 1160 -760 0 1 {name=M4
+C {sg13_lv_pmos.sym} 1160 -760 0 1 {name=M2
 l=0.13u
 w=10u
 ng=2
@@ -190,7 +190,7 @@ m=1
 model=sg13_lv_pmos
 spiceprefix=X
 }
-C {sg13_lv_nmos.sym} 1160 -480 0 1 {name=M3
+C {sg13_lv_nmos.sym} 1160 -480 0 1 {name=M1
 l=0.13u
 w=5u
 ng=2
@@ -205,8 +205,8 @@ l=10e-6
 m=28
 spiceprefix=X}
 C {lab_wire.sym} 560 -620 0 0 {name=p7 sig_type=std_logic lab=bb_int}
-C {annotate_fet_params.sym} 1030 -340 0 0 {name=annot3 ref=M3}
-C {annotate_fet_params.sym} 1180 -340 0 0 {name=annot4 ref=M4}
+C {annotate_fet_params.sym} 590 -340 0 0 {name=annot3 ref=M3}
+C {annotate_fet_params.sym} 740 -340 0 0 {name=annot4 ref=M4}
 C {schottky_nbl1.sym} 1410 -620 3 1 {name=D2
 model=schottky_nbl1
 Nx=1
