@@ -26,8 +26,8 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 ## Block Diagram
 - Six-Port
   - Branch Line Coupler (BLC)
-  - Wilkinson Divider
-  - Hairpin Coupled-Line Bandpass Filter
+  - Wilkinson Power Divider (WPD)
+  - Hairpin Coupled-Line Bandpass Filter (BPF)
 - Power Detector (PD)
   - Schottky Barrier Diode (SBD)
 - Metal Stack
@@ -36,10 +36,21 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 
 <p align="center">
   <a href="doc/figures/sparx_blockdiagram/sparx_blockdiagram.png">
-    <img src="doc/figures/sparx_blockdiagram/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=70%>
+    <img src="doc/figures/sparx_blockdiagram/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=75%>
   </a>
   <br>
   <em>Block Diagram of the Six-Port Receiver.</em>
+</p>
+
+
+## Schematic of SBD-based Power Detector
+
+<p align="center">
+  <a href="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png">
+    <img src="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png" alt="Schematic of SBD-based Power Detector" width=75%>
+  </a>
+  <br>
+  <em>Schematic of SBD-based Power Detector.</em>
 </p>
 
 
@@ -55,7 +66,7 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 ## ToDos
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
 - [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99
+- [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99 & @simi1505
 - [ ] GDSFactory Pins + Labels are not recognized by PEX: @davkel99
 - [ ] Move remaining files from private repo to SPARX: @davkel99
 - [ ] Add SPARX as module to private repo: @davkel99
