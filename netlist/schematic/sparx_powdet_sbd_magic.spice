@@ -13,9 +13,9 @@ XC3 vdd vss cap_cmim w=10e-6 l=10e-6 m=28
 XD2 net1 bias2 vss schottky_nbl1 Nx=1 Ny=1
 XR3 bias1 vdd vss rhigh w=0.5e-6 l=2e-6 m=1 b=0
 XR4 vref bias2 vss rppd w=0.5e-6 l=1.5e-6 m=1 b=0
-XR5 net1 bias1 vss rsil w=0.5e-6 l=2.5e-6 m=1 b=0
-XM5_dummy vss vss vss vss sg13_lv_nmos w=5u l=0.13u ng=2
-XM6_dummy vdd vdd vdd vdd sg13_lv_pmos w=10u l=0.13u ng=2
+XR5 bias1 net1 vss rsil w=0.5e-6 l=2.5e-6 m=1 b=0
+XMdummy1 vss vss vss vss sg13_lv_nmos w=5u l=0.13u ng=2
+XMdummy2 vdd vdd vdd vdd sg13_lv_pmos w=10u l=0.13u ng=2
 XC1 rfin rfin_int cap_cmim w=10e-6 l=10e-6
 XC4 vdd vss cap_cmim w=6.8e-6 l=9e-6 m=2
 .ends
