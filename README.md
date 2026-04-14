@@ -47,7 +47,7 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 
 <p align="center">
   <a href="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png">
-    <img src="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png" alt="Schematic of SBD-based Power Detector" width=75%>
+    <img src="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png" alt="Schematic of SBD-based Power Detector" width=100%>
   </a>
   <br>
   <em>Schematic of SBD-based Power Detector.</em>
