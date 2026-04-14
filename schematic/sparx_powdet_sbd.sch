@@ -32,10 +32,10 @@ Layout Considerations:
 T {4mA} 680 -390 0 0 0.3 0.3 {}
 T {400uA} 1170 -390 0 1 0.3 0.3 {}
 T {nom. 1.5V} 100 -910 0 0 0.3 0.3 {}
-T {1.1V} 350 -640 0 0 0.2 0.2 {}
-T {0.72V} 1130 -640 0 1 0.2 0.2 {}
-T {0.72V} 740 -640 0 1 0.2 0.2 {}
-T {0.75V} 470 -640 0 0 0.2 0.2 {}
+T {1.128V} 350 -640 0 0 0.2 0.2 {}
+T {0.737V} 1125 -640 0 1 0.2 0.2 {}
+T {0.730V} 750 -640 0 1 0.2 0.2 {}
+T {0.756V} 470 -640 0 0 0.2 0.2 {}
 T {Note that the nw and sub nets are using conditional net labels! Adding further labels also needs to have these options set!!!} 90 -1020 0 0 0.6 0.6 {}
 T {Replica Circuit} 1502.5 -450 0 0 0.4 0.4 {}
 T {Power Detector Circuit} 267.5 -450 0 0 0.4 0.4 {}
@@ -43,6 +43,8 @@ T {Decoupling
 Capacitors} 1962.5 -475 0 0 0.4 0.4 {}
 T {Dummy
 Transistors} 2262.5 -645 0 0 0.4 0.4 {}
+T {1.129V} 350 -830 0 0 0.2 0.2 {}
+T {0.761V} 1275 -640 0 1 0.2 0.2 {}
 N 320 -690 320 -620 {lab=rfin_int}
 N 320 -620 400 -620 {lab=rfin_int}
 N 140 -880 700 -880 {lab=vdd}
