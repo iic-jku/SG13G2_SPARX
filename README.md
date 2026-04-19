@@ -10,10 +10,10 @@
 
 <p align="center">
   <a href="img/sparx160_top_white_wo_M5.png">
-    <img src="img/sparx160_top_white_wo_M5.png" alt="Render of the Six-Port Receiver for 160GHz without M5 GND plane" width=70%>
+    <img src="img/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
   </a>
   <br>
-  <em>Render of the Six-Port Receiver for 160GHz without M5 GND plane.</em>
+  <em>Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm).</em>
 </p>
 
 
