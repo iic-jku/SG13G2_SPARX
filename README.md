@@ -1,4 +1,4 @@
-# SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS
+# SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS
 
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
@@ -253,7 +253,7 @@ make all
 @software{2026_SPARX,
 	author = {Kellerer-Pirklbauer, David and Dorrer, Simon and Pretl, Harald},
 	month = April,
-	title = {{GitHub Repository for SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS}},
+	title = {{GitHub Repository for SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS}},
 	url = {https://github.com/iic-jku/SG13G2_SPARX},
 	doi = {ToDo},
 	year = {2026}
