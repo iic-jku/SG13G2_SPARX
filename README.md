@@ -256,8 +256,7 @@ make all
   	year = {2026},
 	title = {{GitHub Repository for SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS}},
 	url = {https://github.com/iic-jku/SG13G2_SPARX},
-	doi = {10.5281/zenodo.19654232},
-  	url = {https://doi.org/10.5281/zenodo.19654232},
+	doi = {10.5281/zenodo.19654232}
 }
 ```
 
