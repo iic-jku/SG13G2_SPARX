@@ -1,0 +1,150 @@
+
+Circuit 1 cell sg13_lv_nmos and Circuit 2 cell sg13_lv_nmos are black boxes.
+Warning: Equate pins:  cell sg13_lv_nmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_lv_nmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_lv_nmos                    |Circuit 2: sg13_lv_nmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_lv_nmos and sg13_lv_nmos are equivalent.
+
+Circuit 1 cell cap_cmim and Circuit 2 cell cap_cmim are black boxes.
+Warning: Equate pins:  cell cap_cmim is a placeholder, treated as a black box.
+Warning: Equate pins:  cell cap_cmim is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: cap_cmim                        |Circuit 2: cap_cmim                        
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes cap_cmim and cap_cmim are equivalent.
+
+Circuit 1 cell sg13_lv_pmos and Circuit 2 cell sg13_lv_pmos are black boxes.
+Warning: Equate pins:  cell sg13_lv_pmos is a placeholder, treated as a black box.
+Warning: Equate pins:  cell sg13_lv_pmos is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: sg13_lv_pmos                    |Circuit 2: sg13_lv_pmos                    
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+4                                          |4                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sg13_lv_pmos and sg13_lv_pmos are equivalent.
+
+Circuit 1 cell rppd and Circuit 2 cell rppd are black boxes.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rppd is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rppd                            |Circuit 2: rppd                            
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rppd and rppd are equivalent.
+
+Circuit 1 cell schottky_nbl1 and Circuit 2 cell schottky_nbl1 are black boxes.
+Warning: Equate pins:  cell schottky_nbl1 is a placeholder, treated as a black box.
+Warning: Equate pins:  cell schottky_nbl1 is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: schottky_nbl1                   |Circuit 2: schottky_nbl1                   
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes schottky_nbl1 and schottky_nbl1 are equivalent.
+
+Circuit 1 cell rsil and Circuit 2 cell rsil are black boxes.
+Warning: Equate pins:  cell rsil is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rsil is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rsil                            |Circuit 2: rsil                            
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rsil and rsil are equivalent.
+
+Circuit 1 cell rhigh and Circuit 2 cell rhigh are black boxes.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+Warning: Equate pins:  cell rhigh is a placeholder, treated as a black box.
+
+Subcircuit pins:
+Circuit 1: rhigh                           |Circuit 2: rhigh                           
+-------------------------------------------|-------------------------------------------
+1                                          |1                                          
+2                                          |2                                          
+3                                          |3                                          
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes rhigh and rhigh are equivalent.
+
+Class sparx_powdet_sbd (0):  Merged 100 parallel devices.
+Class sparx_powdet_sbd (1):  Merged 1 parallel devices.
+Subcircuit summary:
+Circuit 1: sparx_powdet_sbd                |Circuit 2: sparx_powdet_sbd                
+-------------------------------------------|-------------------------------------------
+sg13_lv_nmos (24->3)                       |sg13_lv_nmos (3)                           
+cap_cmim (61->3)                           |cap_cmim (61->3)                           
+sg13_lv_pmos (24->3)                       |sg13_lv_pmos (3)                           
+rppd (2)                                   |rppd (2)                                   
+schottky_nbl1 (2)                          |schottky_nbl1 (2)                          
+rsil (2)                                   |rsil (2)                                   
+rhigh (1)                                  |rhigh (1)                                  
+Number of devices: 16                      |Number of devices: 16                      
+Number of nets: 10                         |Number of nets: 10                         
+---------------------------------------------------------------------------------------
+Netlists match uniquely with property errors.
+schottky_nbl1:66 vs. schottky_nbl1:D1:
+Property w in circuit1 has no matching property in circuit2
+schottky_nbl1:66 vs. schottky_nbl1:D1:
+Property l in circuit1 has no matching property in circuit2
+schottky_nbl1:66 vs. schottky_nbl1:D1:
+Property Ny in circuit2 has no matching property in circuit1
+schottky_nbl1:66 vs. schottky_nbl1:D1:
+Property Nx in circuit2 has no matching property in circuit1
+schottky_nbl1:61 vs. schottky_nbl1:D2:
+Property w in circuit1 has no matching property in circuit2
+schottky_nbl1:61 vs. schottky_nbl1:D2:
+Property l in circuit1 has no matching property in circuit2
+schottky_nbl1:61 vs. schottky_nbl1:D2:
+Property Ny in circuit2 has no matching property in circuit1
+schottky_nbl1:61 vs. schottky_nbl1:D2:
+Property Nx in circuit2 has no matching property in circuit1
+
+Subcircuit pins:
+Circuit 1: sparx_powdet_sbd                |Circuit 2: sparx_powdet_sbd                
+-------------------------------------------|-------------------------------------------
+rfin                                       |rfin                                       
+vdd                                        |vdd                                        
+vref                                       |vref                                       
+vout                                       |vout                                       
+vss                                        |vss                                        
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes sparx_powdet_sbd and sparx_powdet_sbd are equivalent.
+
+Final result: Circuits match uniquely.
+Property errors were found.
+
+The following cells had property errors:
+ sparx_powdet_sbd

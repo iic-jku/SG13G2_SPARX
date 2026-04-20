@@ -1,0 +1,29 @@
+* Extracted by KLayout with SG13G2 LVS runset on : 20/04/2026 16:27
+
+.SUBCKT sparx_powdet_sbd rfin vdd vss vout vref
+M$1 vss vss vss \$1 sg13_lv_nmos L=0.13u W=5u AS=1.325p AD=1.325p PS=8.56u
++ PD=8.56u rfmode=0
+M$2 vss \$12 vout \$1 sg13_lv_nmos L=0.13u W=50u AS=9.5p AD=9.5p PS=57.6u
++ PD=57.6u rfmode=0
+M$12 vss \$13 vref \$1 sg13_lv_nmos L=0.13u W=5u AS=0.95p AD=0.95p PS=5.76u
++ PD=5.76u rfmode=0
+M$25 vdd vdd vdd \$27 sg13_lv_pmos L=0.13u W=10u AS=2.65p AD=2.65p PS=16.06u
++ PD=16.06u rfmode=0
+M$26 vdd \$12 vout \$27 sg13_lv_pmos L=0.13u W=100u AS=19p AD=19p PS=107.6u
++ PD=107.6u rfmode=0
+M$36 vdd \$13 vref \$27 sg13_lv_pmos L=0.13u W=10u AS=1.9p AD=1.9p PS=10.76u
++ PD=10.76u rfmode=0
+D$49 \$7 \$13 \$1 schottky_nbl1 m=1.0201
+D$50 \$6 \$12 \$1 schottky_nbl1 m=1.0201
+R$51 \$2 \$6 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
+R$52 \$2 \$7 \$1 rsil w=0.5u l=2.5u ps=0u b=0 m=1
+R$53 vref \$13 \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1
+R$54 \$12 vout \$1 rppd w=0.5u l=1.5u ps=0u b=0 m=1
+R$55 \$2 vdd \$1 rhigh w=0.5u l=2u ps=0u b=0 m=1
+C$56 vdd vss cap_cmim w=10u l=10u A=100p P=40u m=28
+C$61 \$2 vss cap_cmim w=10u l=10u A=100p P=40u m=30
+C$71 vdd vss cap_cmim w=6.8u l=9u A=61.2p P=31.6u m=2
+C$116 rfin \$6 \$1 rfcmim w=0u l=0u A=0p P=0u m=1 wfeed=0u
+R$117 vdd \$27 ntap1 A=15.708p P=104.72u
+R$118 vss \$1 ptap1 A=13.68p P=91.2u
+.ENDS sparx_powdet_sbd

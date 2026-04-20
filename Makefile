@@ -93,12 +93,13 @@ klayout-lvs: ## Run KLayout LVS of the CELL cell (usage: make klayout-lvs [CELL=
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/lvs/run_lvs.py \
-		--layout=$(LAY_DIR)/$(CELL).gds \
+		--layout=$(LAY_DIR)/$(CELL)_flat.gds \
 		--netlist=$(NET_SCH_DIR)/$(CELL)_klayout.cdl \
 		--topcell=$(CELL) \
 		--run_dir=$(LVS_RPT_DIR) \
 		--run_mode=deep
-	mv $(LVS_RPT_DIR)/$(CELL)_extracted.cir $(NET_LAY_DIR)/$(CELL)_klayout.cir
+	mv $(LVS_RPT_DIR)/$(CELL)_flat_extracted.cir $(NET_LAY_DIR)/$(CELL)_klayout.cir
+	mv $(LVS_RPT_DIR)/$(CELL)_flat.lvsdb $(LVS_RPT_DIR)/$(CELL).lvsdb
 	sleep 4
 .PHONY: klayout-lvs
 
@@ -120,9 +121,9 @@ magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CE
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
 # 	Alternative using sak-lvs.sh for netlist export and LVS in one step (replaces magic-lvs-netlist target):
-#   PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) STD_CELL_LIBRARY=$(STD_CELL_LIBRARY) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+#   PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) STD_CELL_LIBRARY=$(STD_CELL_LIBRARY) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
 	mv $(LVS_RPT_DIR)/$(CELL).ext.spc $(NET_LAY_DIR)/$(CELL)_magic.ext.spc
 	rm -f $(LVS_RPT_DIR)/$(CELL).sch.spc
 	rm -f $(LVS_RPT_DIR)/ext_$(CELL).tcl
@@ -181,7 +182,7 @@ klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make
 	--pdk $$PDK_UNDERSCORED \
 	--cell $(CELL) \
 	--schematic $(SCH_DIR)/$(CELL).sch \
-	--gds $(LAY_DIR)/$(CELL).gds \
+	--gds $(LAY_DIR)/$(CELL)_flat.gds \
 	--magic \
 	--magic_mode $$KPEX_MODE \
 	--out_dir $(NET_PEX_DIR) \
@@ -189,7 +190,7 @@ klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make
 #	--2.5D
 #	--mode $$KPEX_MODE
 	sed -i 's/$(CELL)_flat/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_klayout_pex.spice
-	rm -rf $(NET_PEX_DIR)/$(CELL)__$(CELL)
+	rm -rf $(NET_PEX_DIR)/$(CELL)_flat__$(CELL)
 	rm -f $(CELL)_flat.nodes $(CELL)_flat.sim
 	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
 		echo "Reordering pins in $(CELL)_klayout_pex.spice to match $(CELL)_pex.sym..."; \
@@ -202,10 +203,10 @@ klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make
 
 magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [EXT_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(EXT_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL).gds
-	mv $(NET_PEX_DIR)/$(CELL).pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(EXT_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL)_flat.gds
+	mv $(NET_PEX_DIR)/$(CELL)_flat.pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	sed -i 's/$(CELL)/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
-	rm -f $(NET_PEX_DIR)/pex_$(CELL).tcl $(NET_PEX_DIR)/$(CELL).ext $(NET_PEX_DIR)/$(CELL)_flat.ext $(NET_PEX_DIR)/$(CELL)_flat.res.ext
+	rm -f $(NET_PEX_DIR)/pex_$(CELL)_flat.tcl $(NET_PEX_DIR)/$(CELL).ext $(NET_PEX_DIR)/$(CELL)_flat.ext $(NET_PEX_DIR)/$(CELL)_flat.res.ext
 	@if [ -f $(SCH_DIR)/$(CELL)_pex.sym ]; then \
 		echo "Reordering pins in $(CELL)_magic_pex.spice to match $(CELL)_pex.sym..."; \
 		python3 $(NET_PEX_DIR)/reorder_spice_pins.py $(SCH_DIR)/$(CELL)_pex.sym $(NET_PEX_DIR)/$(CELL)_magic_pex.spice; \
