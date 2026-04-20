@@ -2146,18 +2146,18 @@ c.xmin = 0
 c.ymin = 0
 c.move((-25, -25))
 
-c.write_gds(str(gds_filename))
+c.write_gds(str(gds_filename), with_metadata=False)
 c.show()
 c.flatten()
 c.locked = False
 # c.name = top_cell_name + "_flat"
-c.write_gds(str(gds_filename_flat))
+c.write_gds(str(gds_filename_flat), with_metadata=False)
 
 
 
-pd.write_gds(str(powdet_gds_filename))
+pd.write_gds(str(powdet_gds_filename), with_metadata=False)
 # pd.name = powdet_cell_name + "_flat"
 pd.flatten()
-pd.write_gds(str(powdet_gds_filename_flat))
+pd.write_gds(str(powdet_gds_filename_flat), with_metadata=False)
 # pd.draw_ports()
 # pd.show()
