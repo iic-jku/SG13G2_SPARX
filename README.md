@@ -67,10 +67,10 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 
 
 ## ToDos
-- [ ] KLayout LVS --> CMIM issues with PWell.block layer (@klayoutmatthias)
-- [ ] KLayout PEX (2.5D) --> work in progress (@martinjanköhler)
-- [ ] CaC - PR submission before April 15th 8:59 CET: @davkel99 & @simi1505
-- [ ] GDSFactory Pins + Labels are not recognized by PEX: @davkel99
+- [ ] KLayout LVS --> CMIM issues with PWell.block layer: @klayoutmatthias
+- [ ] KLayout PEX (2.5D) --> work in progress: @martinjanköhler
+- [ ] LVS and PEX currently require flat GDSs (GDSFactory Pins + Labels are not recognized) --> only workaround for now: @davkel99 & @simi1505
+- [ ] Merge `six_port_area_optimized.py` and `six_port_flex.py` to `six_port_gen.py`: @davkel99
 - [ ] Move remaining files from private repo to SPARX: @davkel99
 - [ ] Add SPARX as module to private repo: @davkel99
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
