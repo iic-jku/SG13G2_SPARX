@@ -193,12 +193,12 @@ make klayout-verify-top
 make magic-verify-top
 ```
 
-### Render Layout of the Design
+### Render Top Layout
 
-Renders the top-level GDS layout and saves it in the `img/` folder:
+Renders the top-level GDS and saves it in the `render/` folder:
 
 ```sh
-make render-image
+make render-gds
 ```
 
 ### Build PDK
@@ -232,7 +232,7 @@ The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL
 
 ### Build Top Cell
 
-Builds the top-level cell by running `build-pdk`, `build-opt-layout`, and `render-image`:
+Builds the top-level cell by running `build-pdk`, `build-opt-layout`, and `render-gds`:
 
 ```sh
 make build-top
