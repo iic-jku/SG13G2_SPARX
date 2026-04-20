@@ -32,6 +32,9 @@ args = parser.parse_args()
 
 gds_filename = Path(args.gds_filename)
 powdet_gds_filename = Path(args.powdet_gds_filename)
+powdet_gds_filename_flat = powdet_gds_filename.with_name(
+    f"{powdet_gds_filename.stem}_flat{powdet_gds_filename.suffix}"
+)
 top_cell_name = gds_filename.stem
 powdet_cell_name = powdet_gds_filename.stem
 
@@ -1595,7 +1598,6 @@ c.add_ref(ihp.cells.sealring(width=1000, height=1300)).center = c.center
 pd = powdet_sbd()
 pd.locked = False
 pd.name = powdet_cell_name
-pd.write_gds(str(powdet_gds_filename))
 
 # PD1 reference, position and route
 pd1_ref = c.add_ref(pd).mirror_x()
@@ -2134,5 +2136,9 @@ c.move((-25, -25))
 c.write_gds(str(gds_filename))
 c.show()
 
+
+pd.write_gds(str(powdet_gds_filename))
+pd.flatten()
+pd.write_gds(str(powdet_gds_filename_flat))
 # pd.draw_ports()
 # pd.show()
