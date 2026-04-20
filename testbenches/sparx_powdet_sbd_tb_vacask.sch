@@ -6,6 +6,8 @@ S {}
 F {}
 E {}
 T {VACASK Testbench for SBD-Based Power Detector} 600 -1720 0 0 1 1 {}
+T {SPDX-FileCopyrightText: 2025-2026 The SPARX Team
+SPDX-License-Identifier: Apache-2.0} 1920 -220 0 0 0.4 0.4 {}
 N 800 -300 800 -280 {
 lab=GND}
 N 1020 -380 1020 -300 {lab=GND}

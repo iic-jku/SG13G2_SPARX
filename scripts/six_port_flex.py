@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025-2026 The SPARX Team
+# SPDX-License-Identifier: Apache-2.0
+
 """Six-port receiver GDS layout generator using IHP SG13G2 PDK.
 
 Builds a complete six-port network comprising branch-line couplers,

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025-2026 The SPARX Team
+# SPDX-License-Identifier: Apache-2.0
+
 from rawfile import rawread
 import numpy as np
 import matplotlib.pyplot as plt
