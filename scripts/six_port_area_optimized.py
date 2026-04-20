@@ -2150,13 +2150,13 @@ c.write_gds(str(gds_filename))
 c.show()
 c.flatten()
 c.locked = False
-c.name = top_cell_name + "_flat"
+# c.name = top_cell_name + "_flat"
 c.write_gds(str(gds_filename_flat))
 
 
 
 pd.write_gds(str(powdet_gds_filename))
-pd.name = powdet_cell_name + "_flat"
+# pd.name = powdet_cell_name + "_flat"
 pd.flatten()
 pd.write_gds(str(powdet_gds_filename_flat))
 # pd.draw_ports()
