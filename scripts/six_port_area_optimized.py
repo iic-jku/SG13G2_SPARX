@@ -31,6 +31,9 @@ parser.add_argument(
 args = parser.parse_args()
 
 gds_filename = Path(args.gds_filename)
+gds_filename_flat = gds_filename.with_name(
+    f"{gds_filename.stem}_flat{gds_filename.suffix}"
+)
 powdet_gds_filename = Path(args.powdet_gds_filename)
 powdet_gds_filename_flat = powdet_gds_filename.with_name(
     f"{powdet_gds_filename.stem}_flat{powdet_gds_filename.suffix}"
@@ -2145,9 +2148,15 @@ c.move((-25, -25))
 
 c.write_gds(str(gds_filename))
 c.show()
+c.flatten()
+c.locked = False
+c.name = top_cell_name + "_flat"
+c.write_gds(str(gds_filename_flat))
+
 
 
 pd.write_gds(str(powdet_gds_filename))
+pd.name = powdet_cell_name + "_flat"
 pd.flatten()
 pd.write_gds(str(powdet_gds_filename_flat))
 # pd.draw_ports()
