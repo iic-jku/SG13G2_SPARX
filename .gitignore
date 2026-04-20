@@ -18,3 +18,4 @@ lvs_run_*
 /testbenches/simulations
 /doc/videos/sparx_gen_60ghz_to_300ghz_orig.mp4
 venv/
+/.venv

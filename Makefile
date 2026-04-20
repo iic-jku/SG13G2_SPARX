@@ -248,16 +248,17 @@ render-image: ## Render an image from the layout of the TOP macro (usage: make r
 build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells (usage: make build-pdk)
 	rm -rf IHP/
 	git clone -b IHP-TO https://github.com/iic-jku/IHP.git
-	cd IHP && pip install .
+	/usr/bin/python3 -m venv --system-site-packages .venv
+	. .venv/bin/activate && cd IHP && pip install .
 .PHONY: build-pdk
 
 build-opt-layout: ## Build area-optimized layout of six-port at 160 GHz (usage: make build-opt-layout)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
+	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_optimized.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
 	rm -rf build/
 .PHONY: build-opt-layout
 
 build-flex-layout: ## Build frequency-scalable layout of six-port (usage: make build-flex-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_flex.py \
+	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_flex.py \
 		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx$(FREQ)_powdet_sbd.gds \
 		--frequency $(FREQ)e9 \
 		$(if $(filter 1,$(NO_FILL)),--no-fill) \
