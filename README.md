@@ -9,8 +9,8 @@
 > This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.04` or later.
 
 <p align="center">
-  <a href="img/sparx160_top_white_wo_M5.png">
-    <img src="img/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
+  <a href="render/sparx160_top_white_wo_M5.png">
+    <img src="render/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
   </a>
   <br>
   <em>Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm).</em>
@@ -76,6 +76,75 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Add Top-level Six-Port simulation in Xschem: @simi1505
+
+
+## Directory Structure
+
+```text
+📁 SG13G2_SPARX/
+├─ 📁 doc/
+│  ├─ 📁 figures/
+│  └─ 📁 videos/
+├─ 📁 layout/
+│  ├─ sparx_powdet_sbd.gds
+│  ├─ sparx_top.gds
+├─ 📁 measurements/
+│  └─ README.md
+├─ 📁 netlist/
+│  ├─ 📁 layout/
+│  │  ├─ sparx_powdet_sbd_klayout.cir
+│  │  └─ sparx_powdet_sbd_magic.ext.spc
+│  ├─ 📁 pex/
+│  │  ├─ reorder_spice_pins.py
+│  │  ├─ sparx_powdet_sbd_klayout_pex.spice
+│  │  └─ sparx_powdet_sbd_magic_pex.spice
+│  └─ 📁 schematic/
+│     ├─ sparx_powdet_sbd_klayout.cdl
+│     └─ sparx_powdet_sbd_magic.spice
+├─ 📁 release/
+│  └─ 📁 v.1.0.0/
+│     ├─ 📁 gds/
+│     │  └─ RFFE6027.gds
+│     └─ ReleaseNote.md
+├─ 📁 render/
+│  ├─ sparx_top_black.png
+│  └─ sparx_top_white.png
+├─ 📁 schematic/
+│  ├─ sparx_powdet_sbd.sch
+│  ├─ sparx_powdet_sbd.sym
+│  ├─ sparx_powdet_sbd_pex.sym
+│  └─ xschemrc
+├─ 📁 scripts/
+│  ├─ 📁 assets/
+│  ├─ lay2img.py
+│  ├─ make_gds.py
+│  ├─ six_port_gen.py
+├─ 📁 sscs-ose-code-a-chip/
+│  ├─ 📁 assets/
+│  ├─ README.md
+│  ├─ SPARX_JKU_VLSI2026.ipynb
+├─ 📁 testbenches/
+│  ├─ sparx_powdet_sbd_tb.sch
+│  ├─ sparx_powdet_sbd_tb_vacask.sch
+│  └─ xschemrc
+├─ 📁 verification/
+│  ├─ 📁 drc/
+│  │  ├─ sparx_powdet_sbd.magic.drc.rpt
+│  ├─ 📁 lvs/
+│  │  ├─ sparx_powdet_sbd.lvs.out
+│  │  ├─ sparx_powdet_sbd.lvsdb
+│  └─ 📁 s-parameter/
+│     ├─ 📁 blc_for_160GHz_TM2_M5/
+│     ├─ 📁 hairpin_coupled_line_bp_filter_t_custom_160GHz_order_3_TM2_M5/
+│     └─ 📁 wilkinson_power_divider_160GHz_TM2_M5/
+├─ .gitattributes
+├─ .gitignore
+├─ CITATION.cff
+├─ LICENSE
+├─ Makefile
+└─ README.md
+```
+
 
 ## Makefile Targets
 
