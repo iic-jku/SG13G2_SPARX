@@ -130,6 +130,7 @@ https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 ├─ 📁 verification/
 │  ├─ 📁 drc/
 │  │  ├─ sparx_powdet_sbd.magic.drc.rpt
+│  │  ├─ sparx_powdet_sbd_sparx_powdet_sbd_full.lyrdb
 │  ├─ 📁 lvs/
 │  │  ├─ sparx_powdet_sbd.lvs.out
 │  │  ├─ sparx_powdet_sbd.lvsdb
