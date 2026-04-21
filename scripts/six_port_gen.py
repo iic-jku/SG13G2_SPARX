@@ -153,7 +153,7 @@ ROUTING_DEFAULTS = dict(
     separation=0,
 )
 
-c = gf.Component("six_port_flex")
+c = gf.Component(top_gds_filename.stem)
 
 
 @gf.cell
