@@ -262,7 +262,7 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 
 build-layout: ## Build the six-port layout for a specific frequency (usage: make build-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
 	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_gen.py \
-		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx$(FREQ)_powdet_sbd.gds \
+		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx_powdet_sbd.gds \
 		--frequency $(FREQ)e9 \
 		$(if $(filter 1,$(NO_FILL)),--no-fill) \
 		$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5)
