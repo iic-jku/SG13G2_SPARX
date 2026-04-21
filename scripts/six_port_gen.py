@@ -125,8 +125,7 @@ NOFILL_SIDE_OFFSET = 12.5  # side nofill centering offset ((110 - 85) / 2)
 
 # Layout spacing (um)
 RFIN_GAP = 40  # gap between BLC port and PD rfin
-PD_HALF_HEIGHT = 105  # approximate half-height of power detector cell
-PROBE_PD_GAP = 50  # gap between PD edge and probe edge
+PROBE_PD_GAP = 5  # gap between PD edge and probe edge
 SEALRING_MARGIN = 50  # margin around circuit for sealring
 
 # Six-port network geometry
@@ -2310,31 +2309,9 @@ pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["v
 pin_marker_vref = pd.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal3text))
 pin_marker_vref.center = pd.ports["vref"].center
 
-# rfin port offset from PD center (in the un-mirrored PD cell)
-rfin_offset_x = pd.ports["rfin"].center[0] - pd.center[0]
-rfin_offset_y = pd.ports["rfin"].center[1] - pd.center[1]
-
-# PD1: connected to blc_1 e2 (top side, PD above BLC → rfin points down)
-# PD1 is un-mirrored, rfin orientation=270 (pointing down)
-blc1_e2 = blc_1_ref.ports["e2"].center
-pd1_center = (blc1_e2[0] - rfin_offset_x, blc1_e2[1] + rfin_gap - rfin_offset_y)
-
-# PD2: connected to blc_1 e3 (top side, mirrored_x → rfin_offset_x flips sign)
-blc1_e3 = blc_1_ref.ports["e3"].center
-pd2_center = (blc1_e3[0] + rfin_offset_x, blc1_e3[1] + rfin_gap - rfin_offset_y)
-
-# PD3: connected to blc_2 e3 (bottom side, mirrored_y → rfin_offset_y flips sign)
-blc2_e3 = blc_2_ref.ports["e3"].center
-pd3_center = (blc2_e3[0] - rfin_offset_x, blc2_e3[1] - rfin_gap + rfin_offset_y)
-
-# PD4: connected to blc_2 e2 (bottom side, mirrored_x + mirrored_y → both flip)
-blc2_e2 = blc_2_ref.ports["e2"].center
-pd4_center = (blc2_e2[0] + rfin_offset_x, blc2_e2[1] - rfin_gap + rfin_offset_y)
-
-print(f"PD centers: PD1={pd1_center}, PD2={pd2_center}, PD3={pd3_center}, PD4={pd4_center}")
 
 # probe pads top — positioned to clear PD extent
-pd_half_height = PD_HALF_HEIGHT  # approximate half-height of power detector cell
+pd_height = pd.ysize  # approximate half-height of power detector cell
 probe_pd_gap = PROBE_PD_GAP  # gap between PD edge and probe edge
 chip_center = c.center
 probe_top = c.add_ref(
@@ -2346,7 +2323,7 @@ probe_top = c.add_ref(
     )
 )
 probe_top.center = chip_center
-probe_top.ymax = max(pd1_center[1], pd2_center[1]) + pd_half_height + probe_pd_gap
+probe_top.ymin = blc_1_ref.ymax + RFIN_GAP / 2 + pd_height + probe_pd_gap
 
 # no fill VDD
 c.add_ref(
@@ -2377,7 +2354,7 @@ probe_bottom = c.add_ref(
     )
 ).rotate(180)
 probe_bottom.center = chip_center
-probe_bottom.ymin = min(pd3_center[1], pd4_center[1]) - pd_half_height - probe_pd_gap
+probe_bottom.ymax = blc_2_ref.ymin - RFIN_GAP / 2 - pd_height - probe_pd_gap
 
 # no fill VDD
 c.add_ref(
