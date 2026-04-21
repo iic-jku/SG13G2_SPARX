@@ -306,10 +306,10 @@ The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL
 Builds a frequency sweep by repeatedly calling `build-layout` for each frequency from `START_FREQ` to `STOP_FREQ` using `STEP_FREQ`.
 
 ```sh
-make build-layout-auto
-make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20
-make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL=1
-make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL_M5=1
+make build-layout-sweep
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL=1
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL_M5=1
 ```
 
 Default sweep settings are `START_FREQ=60`, `STOP_FREQ=300`, and `STEP_FREQ=20` (all in GHz). `NO_FILL` and `NO_FILL_M5` are forwarded to each `build-layout` run.

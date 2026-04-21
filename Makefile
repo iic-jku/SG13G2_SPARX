@@ -46,7 +46,7 @@ NO_FILL ?= 0
 NO_FILL_M5 ?= 0
 
 # Frequency sweep in GHz
-# Override with: make build-layout-auto START_FREQ=<GHz> STOP_FREQ=<GHz> STEP_FREQ=<GHz>
+# Override with: make build-layout-sweep START_FREQ=<GHz> STOP_FREQ=<GHz> STEP_FREQ=<GHz>
 START_FREQ ?= 60
 STOP_FREQ ?= 300
 STEP_FREQ ?= 20
@@ -74,7 +74,7 @@ help: ## Show this help message
 	@echo 'FREQ defaults to 160 (GHz). Override for build-layout.'
 	@echo 'NO_FILL defaults to 0 (fill enabled). Set to 1 to disable metal fill.'
 	@echo 'NO_FILL_M5 defaults to 0 (M5 fill enabled). Set to 1 to disable M5 ground fill.'
-	@echo 'START_FREQ, STOP_FREQ, STEP_FREQ default to 60, 300, and 20 (GHz) for build-layout-auto.'
+	@echo 'START_FREQ, STOP_FREQ, STEP_FREQ default to 60, 300, and 20 (GHz) for build-layout-sweep.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
 # ================================================================================================
@@ -269,14 +269,14 @@ build-layout: ## Build the six-port layout for a specific frequency (usage: make
 	rm -rf build/
 .PHONY: build-layout
 
-build-layout-auto: ## Build frequency-scalable six-port layouts over a sweep (usage: make build-layout-auto [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+build-layout-sweep: ## Build frequency-scalable six-port layouts over a sweep (usage: make build-layout-sweep [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
 	bash -lc ' \
 		for ghz in $$(seq $(START_FREQ) $(STEP_FREQ) $(STOP_FREQ)); do \
 			echo "=== Running make build-layout for $${ghz} GHz ==="; \
 			$(MAKE) build-layout FREQ=$${ghz} NO_FILL=$(NO_FILL) NO_FILL_M5=$(NO_FILL_M5); \
 		done'
 	rm -rf build/
-.PHONY: build-layout-auto
+.PHONY: build-layout-sweep
 
 build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
 	$(MAKE) build-pdk
