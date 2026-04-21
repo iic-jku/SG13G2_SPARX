@@ -1,4 +1,4 @@
-** sch_path: /foss/designs/SG13G2_SPARX/schematic/sparx_powdet_sbd.sch
+** sch_path: /foss/designs/designs/SG13G2_SPARX160/schematic/sparx_powdet_sbd.sch
 .subckt sparx_powdet_sbd vout vref vdd rfin vss
 *.PININFO rfin:I vout:O vss:B vdd:I vref:O
 XR1 bias1 rfin_int vss rsil w=0.5e-6 l=2.5e-6 m=1 b=0

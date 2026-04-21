@@ -675,9 +675,7 @@ def powdet_sbd() -> gf.Component:
     c2.add_ports(middle_row.ports, prefix="MR_")
     c2.add_ports(bottom_row.ports, prefix="BR_")
 
-    # c2.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=c2.ports["BR_T_1_1"].center)
-    # pin_marker_vss = c2.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
-    # pin_marker_vss.center = c2.ports["BR_T_1_1"].center
+    
 
     # Orient outermost ports inward for horizontal cap-to-cap connection
     for prefix in [
@@ -1405,7 +1403,7 @@ def powdet_sbd() -> gf.Component:
     c_output.add_port(name="vref", port=via_m1_m4_ref.ports["top"])
      
     # c_output.add_label(text="vref", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
-    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4pin))
     # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
 
 
@@ -1428,7 +1426,7 @@ def powdet_sbd() -> gf.Component:
     via_m1_m3_ref.connect("bottom", xr2_ref.ports["e1"], allow_width_mismatch=True, allow_layer_mismatch=True)
     
     # c_output.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
-    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4pin))
     # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
 
     # bias2
@@ -1651,9 +1649,14 @@ def powdet_sbd() -> gf.Component:
         c3, ["MC_B_4_1", "MC_B_4_2", "LC_B_5_1", "LC_B_5_2", "LC_B_5_3", "RC_B_5_1"], 270
     )
 
-    # c3.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=c3.ports["LC_T_1_1"].center)
+    # c3.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=c3.ports["LC_T_5_1"].center)
     # pin_marker_vdd = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
-    # pin_marker_vdd.center = c3.ports["LC_T_1_1"].center
+    # pin_marker_vdd.center = c3.ports["LC_T_5_1"].center
+    
+    
+    # c3.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=c3.ports["LC_B_1_1"].center)
+    # pin_marker_vss = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
+    # pin_marker_vss.center = c3.ports["LC_B_1_1"].center
     
     c3_ref = c.add_ref(c3)
 
