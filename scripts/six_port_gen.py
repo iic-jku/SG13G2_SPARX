@@ -22,6 +22,7 @@ ihp.PDK.activate()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
+DEFAULT_FREQUENCY = 160e9  # design frequency in Hz
 
 def resolve_output_path(path_value: str) -> Path:
     """Resolve output path relative to project root unless absolute."""
@@ -37,7 +38,7 @@ parser = argparse.ArgumentParser(description="Six-port receiver GDS generator")
 parser.add_argument(
     "gds_filename",
     nargs="?",
-    default=str(PROJECT_ROOT / "layout" / "sparx_top.gds"),
+    default=str(PROJECT_ROOT / "layout" / f"sparx{DEFAULT_FREQUENCY / 1e9:.0f}_top.gds"),
     help="Output GDS file for the top-level layout",
 )
 parser.add_argument(
@@ -46,7 +47,7 @@ parser.add_argument(
     default=str(PROJECT_ROOT / "layout" / "sparx_powdet_sbd.gds"),
     help="Output GDS file for the power detector sub-cell",
 )
-parser.add_argument("--frequency", type=float, default=160e9, help="Design frequency in Hz (default: 160e9)")
+parser.add_argument("--frequency", type=float, default=DEFAULT_FREQUENCY, help="Design frequency in Hz (default: 160e9)")
 parser.add_argument("--no-fill", action="store_true", help="Disable metal fill (faster for layout preview)")
 parser.add_argument("--no-fill-m5", action="store_true", help="Disable Metal5 ground fill")
 args = parser.parse_args()
@@ -614,9 +615,10 @@ def powdet_sbd() -> gf.Component:
     cmim = ihp.cells.cmim(width=CMIM_SIZE, length=CMIM_SIZE)
     c1_ref = c.add_ref(cmim)
     c1_ref.connect("T", via_tm1_tm2_ref.ports["bottom"], allow_width_mismatch=True)
-    c.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=via_tm1_tm2_ref.ports["top"].center)
-    pin_marker_rfin = c.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(0.5,0.5)))
-    pin_marker_rfin.center = via_tm1_tm2_ref.ports["top"].center
+    
+    # c.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=via_tm1_tm2_ref.ports["top"].center)
+    # pin_marker_rfin = c.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(0.5,0.5)))
+    # pin_marker_rfin.center = via_tm1_tm2_ref.ports["top"].center
 
     # via cell from Metal2 to Metal5
     via_m2_m5 = ihp.cells.via_stack(
@@ -673,9 +675,9 @@ def powdet_sbd() -> gf.Component:
     c2.add_ports(middle_row.ports, prefix="MR_")
     c2.add_ports(bottom_row.ports, prefix="BR_")
 
-    c2.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=c2.ports["BR_T_1_1"].center)
-    pin_marker_vss = c2.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
-    pin_marker_vss.center = c2.ports["BR_T_1_1"].center
+    # c2.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=c2.ports["BR_T_1_1"].center)
+    # pin_marker_vss = c2.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
+    # pin_marker_vss.center = c2.ports["BR_T_1_1"].center
 
     # Orient outermost ports inward for horizontal cap-to-cap connection
     for prefix in [
@@ -1400,10 +1402,11 @@ def powdet_sbd() -> gf.Component:
 
     via_m1_m4_ref = c_output.add_ref(via_m1_m4)
     via_m1_m4_ref.connect("bottom", xr4_ref.ports["e1"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    c_output.add_label(text="vref", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
     c_output.add_port(name="vref", port=via_m1_m4_ref.ports["top"])
-    pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
-    pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
+     
+    # c_output.add_label(text="vref", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
+    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+    # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
 
 
 
@@ -1420,12 +1423,13 @@ def powdet_sbd() -> gf.Component:
     via_m1_m4_ref = c_output.add_ref(via_m1_m4)
     via_m1_m4_ref.connect("bottom", xr2_ref.ports["e2"], allow_width_mismatch=True, allow_layer_mismatch=True)
 
-    c_output.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
     c_output.add_port(name="vout", port=via_m1_m4_ref.ports["top"])
     via_m1_m3_ref = c_output.add_ref(via_m1_m3)
     via_m1_m3_ref.connect("bottom", xr2_ref.ports["e1"], allow_width_mismatch=True, allow_layer_mismatch=True)
-    pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
-    pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
+    
+    # c_output.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
+    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+    # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
 
     # bias2
     route_gates_m3_m4 = gf.routing.route_bundle_electrical(
@@ -1647,10 +1651,11 @@ def powdet_sbd() -> gf.Component:
         c3, ["MC_B_4_1", "MC_B_4_2", "LC_B_5_1", "LC_B_5_2", "LC_B_5_3", "RC_B_5_1"], 270
     )
 
-    c3.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=c3.ports["LC_T_1_1"].center)
+    # c3.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=c3.ports["LC_T_1_1"].center)
+    # pin_marker_vdd = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
+    # pin_marker_vdd.center = c3.ports["LC_T_1_1"].center
+    
     c3_ref = c.add_ref(c3)
-    pin_marker_vdd = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
-    pin_marker_vdd.center = c3.ports["LC_T_1_1"].center
 
 
 
@@ -2302,11 +2307,11 @@ pin_marker_vdd = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMeta
 pin_marker_vdd.center = pd.ports["vdd"].center
 
 pd.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=pd.ports["vout"].center)
-pin_marker_vout = pd.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+pin_marker_vout = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal4pin, size=(0.5,0.5)))
 pin_marker_vout.center = pd.ports["vout"].center
 
 pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["vref"].center))
-pin_marker_vref = pd.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal3text))
+pin_marker_vref = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal3pin, size=(0.5,0.5)))
 pin_marker_vref.center = pd.ports["vref"].center
 
 
@@ -2932,13 +2937,13 @@ c.move((-25, -25))
 
 c.write_gds(top_gds_filename, with_metadata=False)
 c.show()
+
+# currently not used, top level sim not working yet and takes a lot of processing time
 # c.flatten()
 # c.write_gds(top_gds_filename_flat, with_metadata=False)
-# c.show()
 
-pd.locked = False  # unlock PD cell for separate GDS export
+
+pd.name = powdet_gds_filename.stem
 pd.write_gds(powdet_gds_filename, with_metadata=False)
-# pd.show()
 pd.flatten()
 pd.write_gds(powdet_gds_filename_flat, with_metadata=False)
-# pd.show()
