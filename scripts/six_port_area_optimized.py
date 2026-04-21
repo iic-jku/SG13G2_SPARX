@@ -1610,6 +1610,30 @@ c.add_ref(ihp.cells.sealring(width=1000, height=1300)).center = c.center
 # create powerdetector
 pd = powdet_sbd()
 pd.locked = False
+
+# # add pins for lvs and pex
+# pd.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=pd.ports["rfin"].center)
+# pin_marker_rfin = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(0.5,0.5)))
+# pin_marker_rfin.center = pd.ports["rfin"].center
+
+# pd.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=pd.ports["vss"].center)
+# pin_marker_vss = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
+# pin_marker_vss.center = pd.ports["vss"].center
+
+# pd.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=pd.ports["vdd"].center)
+# pin_marker_vdd = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
+# pin_marker_vdd.center = pd.ports["vdd"].center
+
+# pd.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=pd.ports["vout"].center)
+# pin_marker_vout = pd.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4text))
+# pin_marker_vout.center = pd.ports["vout"].center
+
+# pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["vref"].center))
+# pin_marker_vref = pd.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal3text))
+# pin_marker_vref.center = pd.ports["vref"].center
+    
+    
+
 pd.name = powdet_cell_name
 
 # PD1 reference, position and route
