@@ -21,3 +21,5 @@ venv/
 /.venv
 scripts/six_port_area_optimized.py
 scripts/six_port_flex.py
+sparx_powdet_sbd.nodes
+sparx_powdet_sbd.sim
