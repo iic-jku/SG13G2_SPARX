@@ -7,5 +7,5 @@
 for ghz in $(seq 60 20 300); do
     freq=$((ghz * 1000000000))
     echo "=== Running at ${ghz} GHz ==="
-    python six_port_flex.py --frequency "${freq}" "$@"
+    python six_port_gen.py --frequency "${freq}" "$@"
 done
