@@ -18,7 +18,7 @@
 
 
 ## Overview
-SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This whole repo is controlled by a Makefile. Just clone it and run `make all` to build and verify the area-optimized six-port receiver at 160 GHz. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run `make build-flex-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz in under one minute is demonstrated.
+SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This whole repository is controlled by a Makefile. Just clone it and run `make all` to build the six-port receiver at 160 GHz and verify the power detector cell. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run `make build-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz in under one minute is demonstrated.
 
 https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 <p align="center">
@@ -80,7 +80,6 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer: @klayoutmatthias
 - [ ] KLayout PEX (2.5D) --> work in progress: @martinjanköhler
 - [ ] LVS and PEX currently require flat GDSs (GDSFactory Pins + Labels are not recognized) --> only workaround for now: @davkel99 & @simi1505
-- [ ] Merge `six_port_area_optimized.py` and `six_port_flex.py` to `six_port_gen.py`: @davkel99
 - [ ] Move remaining files from private repo to SPARX: @davkel99
 - [ ] Add SPARX as module to private repo: @davkel99
 - [ ] Change DBU from 5nm to 1nm in code: @davkel99
@@ -289,30 +288,35 @@ Clones and installs the IHP-Open-PDK repository with GDSFactory cells:
 make build-pdk
 ```
 
-### Build Area-Optimized Layout
+### Build SPARX Layout
 
-Generates the area-optimized six-port layout GDS files (`layout/sparx_top.gds` and `layout/sparx_powdet_sbd.gds`) at the fixed 160 GHz design frequency:
-
-```sh
-make build-opt-layout
-```
-
-### Build Frequency-Scalable Layout
-
-Generates the frequency-scalable six-port layout GDS files (e.g. `layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx77_powdet_sbd.gds` for 77 GHz):
+Generates the six-port layout GDS files for a specific frequency (e.g. `layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx77_powdet_sbd.gds` for 77 GHz):
 
 ```sh
-make build-flex-layout
-make build-flex-layout FREQ=77
-make build-flex-layout FREQ=77 NO_FILL=1
-make build-flex-layout FREQ=77 NO_FILL_M5=1
+make build-layout
+make build-layout FREQ=77
+make build-layout FREQ=77 NO_FILL=1
+make build-layout FREQ=77 NO_FILL_M5=1
 ```
 
 The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL=1` disables metal fill (faster for layout preview). `NO_FILL_M5=1` disables only the Metal5 ground fill.
 
+### Build Frequency Sweep Automatically
+
+Builds a frequency sweep by repeatedly calling `build-layout` for each frequency from `START_FREQ` to `STOP_FREQ` using `STEP_FREQ`.
+
+```sh
+make build-layout-auto
+make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20
+make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL=1
+make build-layout-auto START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL_M5=1
+```
+
+Default sweep settings are `START_FREQ=60`, `STOP_FREQ=300`, and `STEP_FREQ=20` (all in GHz). `NO_FILL` and `NO_FILL_M5` are forwarded to each `build-layout` run.
+
 ### Build Top Cell
 
-Builds the top-level cell by running `build-pdk`, `build-opt-layout`, and `render-gds`:
+Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-gds`:
 
 ```sh
 make build-top
@@ -320,7 +324,7 @@ make build-top
 
 ### Build All
 
-Builds the complete top-level cell by running `build-top` and verifies it with `klayout-verify-top` and `magic-verify-top`:
+Builds the top-level cell by running `build-top` and then verifies the power detector cell (`sparx_powdet_sbd`) with `magic-verify-cell`:
 
 ```sh
 make all

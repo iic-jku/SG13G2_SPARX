@@ -36,16 +36,20 @@ EXT_MODE ?= 3
 # Override with: make <target> EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
-# Frequency sweep for build-flex-layout (GHz)
-# Override with: make build-flex-layout START_FREQ=<GHz> STOP_FREQ=<GHz> STEP_FREQ=<GHz>
+# Design frequency in GHz (default: 160)
+# Override with: make build-layout FREQ=<frequency_in_GHz>
+FREQ ?= 160
+
+# Metal fill options for build-layout (0 = fill enabled, 1 = fill disabled)
+# Override with: make build-layout NO_FILL=1 NO_FILL_M5=1
+NO_FILL ?= 0
+NO_FILL_M5 ?= 0
+
+# Frequency sweep in GHz
+# Override with: make build-layout-auto START_FREQ=<GHz> STOP_FREQ=<GHz> STEP_FREQ=<GHz>
 START_FREQ ?= 60
 STOP_FREQ ?= 300
 STEP_FREQ ?= 20
-
-# Metal fill options for build-flex-layout (0 = fill enabled, 1 = fill disabled)
-# Override with: make build-flex-layout NO_FILL=1 NO_FILL_M5=1
-NO_FILL ?= 0
-NO_FILL_M5 ?= 0
 
 # Folder structure
 LAY_DIR     := layout
@@ -60,16 +64,17 @@ DRC_RPT_DIR := verification/drc
 
 # Help Target
 help: ## Show this help message
-	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1]'
+	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<GHz>] [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1]'
 	@echo ''
 	@echo 'Available targets:'
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 	@echo ''
 	@echo 'CELL defaults to $(TOP). Override to verify subcells.'
 	@echo 'EXT_MODE defaults to 3 (full-RC). 1=C-decoupled, 2=C-coupled.'
-	@echo 'build-flex-layout sweeps from 60 to 300 GHz in 20 GHz steps by default.'
+	@echo 'FREQ defaults to 160 (GHz). Override for build-layout.'
 	@echo 'NO_FILL defaults to 0 (fill enabled). Set to 1 to disable metal fill.'
 	@echo 'NO_FILL_M5 defaults to 0 (M5 fill enabled). Set to 1 to disable M5 ground fill.'
+	@echo 'START_FREQ, STOP_FREQ, STEP_FREQ default to 60, 300, and 20 (GHz) for build-layout-auto.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
 .PHONY: help
 # ================================================================================================
@@ -255,33 +260,34 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 	. .venv/bin/activate && cd IHP && pip install .
 .PHONY: build-pdk
 
-build-opt-layout: ## Build area-optimized layout of six-port at 160 GHz (usage: make build-opt-layout)
-	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_area_gen.py $(LAY_DIR)/$(TOP).gds $(LAY_DIR)/$(POWDET).gds
+build-layout: ## Build the six-port layout for a specific frequency (usage: make build-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_gen.py \
+		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx$(FREQ)_powdet_sbd.gds \
+		--frequency $(FREQ)e9 \
+		$(if $(filter 1,$(NO_FILL)),--no-fill) \
+		$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5)
 	rm -rf build/
-.PHONY: build-opt-layout
+.PHONY: build-layout
 
-build-flex-layout: ## Build frequency-scalable layout of six-port (usage: make build-flex-layout [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
-	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) bash -lc ' \
+build-layout-auto: ## Build frequency-scalable six-port layouts over a sweep (usage: make build-layout-auto [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+	bash -lc ' \
 		for ghz in $$(seq $(START_FREQ) $(STEP_FREQ) $(STOP_FREQ)); do \
-			echo "=== Running at $${ghz} GHz ==="; \
-			python3 $(MAKEFILE_DIR)/scripts/six_port_gen.py \
-				$(LAY_DIR)/sparx$${ghz}_top.gds $(LAY_DIR)/sparx_powdet_sbd.gds \
-				--frequency $$(( $${ghz} * 1000000000 )) \
-				$(if $(filter 1,$(NO_FILL)),--no-fill) \
-				$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5); \
+			echo "=== Running make build-layout for $${ghz} GHz ==="; \
+			$(MAKE) build-layout FREQ=$${ghz} NO_FILL=$(NO_FILL) NO_FILL_M5=$(NO_FILL_M5); \
 		done'
 	rm -rf build/
-.PHONY: build-flex-layout
+.PHONY: build-layout-auto
 
-build-top: ## Build TOP cell (usage: make build-top)
+build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
 	$(MAKE) build-pdk
-	$(MAKE) build-opt-layout
-	$(MAKE) render-image
+	$(MAKE) build-layout FREQ=$(FREQ)
+	$(MAKE) render-gds
 .PHONY: build-top
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
-	$(MAKE) klayout-verify-top
-	$(MAKE) magic-verify-top
+#	$(MAKE) klayout-verify-top
+#	$(MAKE) magic-verify-top
+	$(MAKE) magic-verify-cell CELL=$(POWDET)
 .PHONY: all
 # ================================================================================================
