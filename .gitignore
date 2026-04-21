@@ -19,3 +19,5 @@ lvs_run_*
 /doc/videos/sparx_gen_60ghz_to_300ghz_orig.mp4
 venv/
 /.venv
+scripts/six_port_area_optimized.py
+scripts/six_port_flex.py
