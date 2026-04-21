@@ -245,9 +245,9 @@ magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
 
 
 # Rendering Target
-render-gds: ## Render an image from the GDS of the TOP macro (usage: make render-gds)
+render-gds: ## Render an image from the GDS of the TOP macro (usage: make render-gds [FREQ=<GHz>])
 	mkdir -p $(RENDER_DIR)/
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/$(TOP).gds $(RENDER_DIR)/$(TOP).png --width 2048 --oversampling 4
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
 .PHONY: render-gds
 # ================================================================================================
 
@@ -281,13 +281,13 @@ build-layout-sweep: ## Build frequency-scalable six-port layouts over a sweep (u
 build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
 	$(MAKE) build-pdk
 	$(MAKE) build-layout FREQ=$(FREQ)
-	$(MAKE) render-gds
+	$(MAKE) render-gds FREQ=$(FREQ)
 .PHONY: build-top
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
 #	$(MAKE) klayout-verify-top
 #	$(MAKE) magic-verify-top
-	$(MAKE) magic-verify-cell CELL=$(POWDET)
+	$(MAKE) magic-lvs magic-drc CELL=$(POWDET)
 .PHONY: all
 # ================================================================================================
