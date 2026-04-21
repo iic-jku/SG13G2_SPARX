@@ -2811,13 +2811,15 @@ jku_logo_ref.xmax = chip_right - sealring_margin
 jku_logo_ref.ymin = probe_bottom.ymax + 10
 
 
-if FREQUENCY == 160e9:
+# place IWS logo only for 160 GHz design, to avoid overcrowding the layout for higher frequencies where the design is more compact
+if FREQUENCY <= 200e9:
     iws = c.add_ref(gf.import_gds(str(iws_gds_path), cellname="Logo_IWS"))
-    iws.move((-120,130))
+    iws.xmax = blc_3_ref.xmax  # align right edge of IWS logo with right edge of BLC block
+    iws.ymax = blc_1_ref.ymax  # align top edge of IWS logo with top edge of BLC block
     
 
 
-# place gds with D. Kellerer
+# place gds with D. Kellerer only if space is available between top probe pads and left probe pads
 kellerer = gf.import_gds(str(kellerer_gds_path), cellname="Name_D").rotate(-90)
 if abs(probe_top.ymin - probe_left.ymax) > kellerer.ysize + 2* LOGO_VERTICAL_CLEARANCE:  # only place if enough space between pads
     kellerer_ref = c.add_ref(kellerer)
@@ -2825,7 +2827,7 @@ if abs(probe_top.ymin - probe_left.ymax) > kellerer.ysize + 2* LOGO_VERTICAL_CLE
     kellerer_ref.center = (kellerer_ref.center[0], probe_left.ymax + (abs(probe_top.ymin - probe_left.ymax) / 2))
 
 
-# place supervisor names
+# place supervisor names only if space is available between bottom probe pads and left probe pads
 supervisors = gf.import_gds(str(supervisors_gds_path), cellname="supervisors").rotate(-90)
 if abs(probe_bottom.ymax - probe_left.ymin) > supervisors.ysize + 2* LOGO_VERTICAL_CLEARANCE:  # only place if enough space between pads
     supervisors_ref = c.add_ref(supervisors)
