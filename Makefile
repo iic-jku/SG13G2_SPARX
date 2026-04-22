@@ -20,7 +20,7 @@
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 # Variables
-TOP = sparx_top
+TOP = sparx160_top
 POWDET = sparx_powdet_sbd
 
 .DEFAULT_GOAL := help
@@ -169,7 +169,7 @@ klayout-drc-regular: ## Run regular DRC of the TOP cell (usage: make klayout-drc
 
 magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -f "*" -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -f "*" -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds $(CELL)
 	rm -f $(DRC_RPT_DIR)/drc_$(CELL).tcl
 	sleep 4
 .PHONY: magic-drc
@@ -290,5 +290,6 @@ all: ## Build and verify the TOP cell (usage: make all)
 #	$(MAKE) klayout-verify-top
 #	$(MAKE) magic-verify-top
 	$(MAKE) magic-lvs magic-drc CELL=$(POWDET)
+	$(MAKE) magic-drc klayout-drc
 .PHONY: all
 # ================================================================================================

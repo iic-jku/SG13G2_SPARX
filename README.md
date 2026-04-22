@@ -96,7 +96,7 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 │  └─ 📁 videos/
 ├─ 📁 layout/
 │  ├─ sparx_powdet_sbd.gds
-│  ├─ sparx_top.gds
+│  ├─ sparx160_top.gds
 ├─ 📁 measurements/
 │  └─ README.md
 ├─ 📁 netlist/
@@ -290,7 +290,7 @@ make build-pdk
 
 ### Build SPARX Layout
 
-Generates the six-port layout GDS files for a specific frequency (e.g. `layout/sparx160_top.gds` and `layout/sparx160_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx77_powdet_sbd.gds` for 77 GHz):
+Generates the six-port layout GDS files for a specific frequency (e.g. `layout/sparx160_top.gds` and `layout/sparx_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx_powdet_sbd.gds` for 77 GHz):
 
 ```sh
 make build-layout
@@ -324,7 +324,7 @@ make build-top
 
 ### Build All
 
-Builds the top-level cell by running `build-top` and then verifies the power detector cell (`sparx_powdet_sbd`) with `magic-verify-cell`:
+Builds the top-level cell by running `build-top` and then verifies the SBD-based power detector cell (Magic LVS & DRC) and the top-level cell (Magic & KLayout DRC):
 
 ```sh
 make all
