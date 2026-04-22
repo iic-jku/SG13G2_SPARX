@@ -1,6 +1,6 @@
 # Makefile for SPARX: An Automated, Programmatically Generated Frequency-Scalable Six-Port Receiver in 130-nm CMOS
 #
-# SPDX-FileCopyrightText: 2026 Simon Dorrer
+# SPDX-FileCopyrightText: 2025-2026 The SPARX Team
 # Johannes Kepler University, Department for Integrated Circuits
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,6 +19,7 @@
 
 MAKEFILE_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
+# Variables
 TOP = sparx_top
 POWDET = sparx_powdet_sbd
 
