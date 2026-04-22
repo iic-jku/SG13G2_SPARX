@@ -33,7 +33,7 @@ CELL ?= $(TOP)
 # Override with: make <target> EXT_MODE=<1|2|3>
 EXT_MODE ?= 3
 
-# Floating-point precision (significant digits) for xschem's ev function
+# Floating-point precision (significant digits) for Xschem's ev function
 # Override with: make <target> EV_PRECISION=<digits>
 EV_PRECISION ?= 5
 
@@ -76,7 +76,7 @@ help: ## Show this help message
 	@echo 'NO_FILL defaults to 0 (fill enabled). Set to 1 to disable metal fill.'
 	@echo 'NO_FILL_M5 defaults to 0 (M5 fill enabled). Set to 1 to disable M5 ground fill.'
 	@echo 'START_FREQ, STOP_FREQ, STEP_FREQ default to 60, 300, and 20 (GHz) for build-layout-sweep.'
-	@echo 'EV_PRECISION defaults to 5 significant digits for xschem ev function.'
+	@echo 'EV_PRECISION defaults to 5 significant digits for Xschem ev function.'
 .PHONY: help
 # ================================================================================================
 
@@ -176,7 +176,7 @@ magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<celln
 # ================================================================================================
 
 
-# Parasitic Extraction Targets
+# PEX Targets
 klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make klayout-pex [CELL=<cellname>] [EXT_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
 	PDK_UNDERSCORED=$$(echo $$PDK | sed -e 's/-/_/g'); \
@@ -227,26 +227,18 @@ magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make 
 
 
 # Verify Targets
-klayout-verify-cell: ## Verify a specific cell with KLayout (usage: make klayout-verify-cell CELL=<cellname>)
+klayout-verify: ## Verify CELL cell with KLayout (usage: make klayout-verify CELL=<cellname>)
 	$(MAKE) klayout-lvs klayout-drc klayout-pex CELL=$(CELL)
-.PHONY: klayout-verify-cell
+.PHONY: klayout-verify
 
-klayout-verify-top: ## Verify top cell with KLayout (usage: make klayout-verify-top)
-	$(MAKE) klayout-lvs klayout-drc-regular klayout-pex
-.PHONY: klayout-verify-top
-
-magic-verify-cell: ## Verify a specific cell with Magic (usage: make magic-verify-cell CELL=<cellname>)
+magic-verify: ## Verify CELL cell with Magic (usage: make magic-verify CELL=<cellname>)
 	$(MAKE) magic-lvs magic-drc magic-pex CELL=$(CELL)
-.PHONY: magic-verify-cell
-
-magic-verify-top: ## Verify top cell with Magic (usage: make magic-verify-top)
-	$(MAKE) magic-lvs magic-drc magic-pex
-.PHONY: magic-verify-top
+.PHONY: magic-verify
 # ================================================================================================
 
 
 # Rendering Target
-render-gds: ## Render an image from the GDS of the TOP macro (usage: make render-gds [FREQ=<GHz>])
+render-gds: ## Render an image from the GDS of the TOP cell (usage: make render-gds [FREQ=<GHz>])
 	mkdir -p $(RENDER_DIR)/
 	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
 .PHONY: render-gds
@@ -287,8 +279,8 @@ build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
-#	$(MAKE) klayout-verify-top
-#	$(MAKE) magic-verify-top
+#	$(MAKE) klayout-verify
+#	$(MAKE) magic-verify
 	$(MAKE) magic-lvs magic-drc CELL=$(POWDET)
 	$(MAKE) magic-drc klayout-drc
 .PHONY: all

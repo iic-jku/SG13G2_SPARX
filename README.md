@@ -18,7 +18,7 @@
 
 
 ## Overview
-SPARX stands for Six-Port Automated Receiver. The whole layout is generated in Python with self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is done with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This whole repository is controlled by a Makefile. Just clone it and run `make all` to build the six-port receiver at 160 GHz and verify the power detector cell. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run `make build-layout FREQ=77`. In the following video, the generation of six-port receivers from 60 GHz to 300 GHz in under one minute is demonstrated.
+SPARX stands for Six-Port Automated Receiver. The complete layout is generated in Python using self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is performed with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This repository is controlled by a Makefile. Just clone it and run `make all` to build the six-port receiver at 160 GHz and verify the power detector cell. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run `make build-layout FREQ=77`. The following video demonstrates the generation of six-port receivers from 60 GHz to 300 GHz in under one minute.
 
 https://github.com/user-attachments/assets/a1e6cacb-4a70-4f2c-9b7a-f4b6fbb5a47a
 <p align="center">
@@ -82,7 +82,7 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 - [ ] LVS and PEX currently require flat GDSs (GDSFactory Pins + Labels are not recognized) --> only workaround for now: @davkel99 & @simi1505
 - [ ] Move remaining files from private repo to SPARX: @davkel99
 - [ ] Add SPARX as module to private repo: @davkel99
-- [ ] Change DBU from 5nm to 1nm in code: @davkel99
+- [ ] Change DBU from 5 nm to 1 nm in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
 - [ ] Add Top-level Six-Port simulation in Xschem: @simi1505
 
@@ -164,8 +164,9 @@ Exports the schematic netlist for LVS from Xschem and places it in `netlist/sche
 
 The `EV_PRECISION` parameter sets the number of significant digits used by Xschem's `ev` function when calculating device properties (default: 5). Increase this to avoid LVS mismatches caused by floating-point rounding differences between Xschem and KLayout (see [xschem#465](https://github.com/StefanSchippers/xschem/issues/465)).
 
-Note that currently, for the KLayout LVS `ntap` and `ptap` devices are extracted, and therefore the schematic netlist also needs to provide them. However, for the Magic + Netgen LVS `ntap` and `ptap` devices are not extracted. Therefore, in the schematic, the `lvs_ignore = short` command is used for these devices. To make these settings also effective for the schematic netlist export, the option `set lvs_ignore 1` must be set in the target `magic-lvs-netlist`.
-Note that KLayout works with CDL netlists and Magic works with SPICE netlists. On the other hand, the target `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 1`, `set top_is_subckt 1` and `set lvs_ignore 0`. However, the target `magic-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 0`, `set top_is_subckt 1` and `set lvs_ignore 1`.
+Currently, KLayout LVS extracts `ntap` and `ptap` devices, so the schematic netlist must include them as well. In contrast, Magic + Netgen LVS does not extract `ntap` and `ptap`. Therefore, the schematic uses `lvs_ignore = short` for these devices and conditional net labels (see https://github.com/StefanSchippers/xschem/issues/474). To make this effective during schematic netlist export, `set lvs_ignore 1` must be set in the `magic-lvs-netlist` target.
+
+KLayout uses CDL netlists, while Magic uses SPICE netlists. Accordingly, `klayout-lvs-netlist` uses the Xschem commands `set spiceprefix 1`, `set lvs_netlist 1`, `set top_is_subckt 1`, and `set lvs_ignore 0`. In contrast, `magic-lvs-netlist` uses `set spiceprefix 1`, `set lvs_netlist 0`, `set top_is_subckt 1`, and `set lvs_ignore 1`.
 
 To extract a CDL schematic netlist for KLayout LVS, use the following target:
 ```sh
@@ -256,11 +257,11 @@ make magic-pex CELL=sparx_powdet_sbd EXT_MODE=3
 
 ### Verify a Specific Cell
 
-Runs LVS, DRC, and PEX for a specific cell:
+Runs LVS, DRC, and PEX for a specific cell (e.g. `sparx_powdet_sbd`):
 
 ```sh
-make klayout-verify-cell CELL=sparx_powdet_sbd
-make magic-verify-cell CELL=sparx_powdet_sbd
+make klayout-verify CELL=sparx_powdet_sbd
+make magic-verify CELL=sparx_powdet_sbd
 ```
 
 ### Verify Top Cell
@@ -268,8 +269,8 @@ make magic-verify-cell CELL=sparx_powdet_sbd
 Runs LVS, DRC, and PEX for the top cell:
 
 ```sh
-make klayout-verify-top
-make magic-verify-top
+make klayout-verify
+make magic-verify
 ```
 
 ### Render Top Layout
@@ -324,7 +325,7 @@ make build-top
 
 ### Build All
 
-Builds the top-level cell by running `build-top` and then verifies the SBD-based power detector cell (Magic LVS & DRC) and the top-level cell (Magic & KLayout DRC):
+Builds the top-level cell by running `build-top`, then verifies the SBD-based power detector cell with Magic LVS and DRC. Finally, it runs Magic DRC and KLayout DRC for the top-level cell.
 
 ```sh
 make all
