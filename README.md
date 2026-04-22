@@ -76,7 +76,7 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 | Supply Voltage      | 1.5 V                                                                             |
 
 
-## ToDos
+## ToDo List
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer: @klayoutmatthias
 - [ ] KLayout PEX (2.5D) --> work in progress: @martinjanköhler
 - [ ] LVS and PEX currently require flat GDSs (GDSFactory Pins + Labels are not recognized) --> only workaround for now: @davkel99 & @simi1505
@@ -204,17 +204,17 @@ make magic-lvs CELL=sparx_powdet_sbd
 
 Runs DRC on the GDS layout in `layout/`. Reports are saved to `verification/drc/`.
 
+**KLayout DRC (regular)** runs the full DRC rule set on the top-level cell:
+
+```sh
+make klayout-drc-regular
+```
+
 **KLayout DRC** uses `run_drc.py` from the IHP Open-PDK with relaxed rules (FEOL, density checks, and extra rules disabled):
 
 ```sh
 make klayout-drc
 make klayout-drc CELL=sparx_powdet_sbd
-```
-
-**KLayout DRC (regular)** runs the full DRC rule set on the top-level cell:
-
-```sh
-make klayout-drc-regular
 ```
 
 **Magic DRC** uses `sak-drc.sh`:
@@ -323,7 +323,7 @@ Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-gd
 make build-top
 ```
 
-### Build All
+### Build and Verify All
 
 Builds the top-level cell by running `build-top`, then verifies the SBD-based power detector cell with Magic LVS and DRC. Finally, it runs Magic DRC and KLayout DRC for the top-level cell.
 

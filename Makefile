@@ -63,7 +63,7 @@ LVS_RPT_DIR := verification/lvs
 DRC_RPT_DIR := verification/drc
 
 
-# Help Target
+# Help target
 help: ## Show this help message
 	@echo 'Usage: make <target> [CELL=<cellname>] [EXT_MODE=<1|2|3>] [EV_PRECISION=<digits>] [FREQ=<GHz>] [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1]'
 	@echo ''
@@ -142,6 +142,17 @@ magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CE
 
 
 # DRC Targets
+klayout-drc-regular: ## Run regular DRC of the TOP cell (usage: make klayout-drc-regular)
+	mkdir -p $(DRC_RPT_DIR)
+	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
+		--path=$(LAY_DIR)/$(TOP).gds \
+		--topcell=$(TOP) \
+		--run_dir=$(DRC_RPT_DIR) \
+		--mp=32 \
+		--density_thr=32
+	sleep 4
+.PHONY: klayout-drc-regular
+
 klayout-drc: ## Run KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
 	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
@@ -155,17 +166,6 @@ klayout-drc: ## Run KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=
 		--density_thr=32
 	sleep 4
 .PHONY: klayout-drc
-
-klayout-drc-regular: ## Run regular DRC of the TOP cell (usage: make klayout-drc-regular)
-	mkdir -p $(DRC_RPT_DIR)
-	python3 $(PDK_ROOT)/$(PDK)/libs.tech/klayout/tech/drc/run_drc.py \
-		--path=$(LAY_DIR)/$(TOP).gds \
-		--topcell=$(TOP) \
-		--run_dir=$(DRC_RPT_DIR) \
-		--mp=32 \
-		--density_thr=32
-	sleep 4
-.PHONY: klayout-drc-regular
 
 magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
@@ -227,13 +227,13 @@ magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make 
 
 
 # Verify Targets
-klayout-verify: ## Verify CELL cell with KLayout (usage: make klayout-verify-cell CELL=<cellname>)
+klayout-verify: ## Verify the CELL cell with KLayout (usage: make klayout-verify [CELL=<cellname>])
 	$(MAKE) klayout-lvs CELL=$(CELL)
 	$(MAKE) klayout-drc CELL=$(CELL)
 	$(MAKE) klayout-pex CELL=$(CELL)
 .PHONY: klayout-verify
 
-magic-verify: ## Verify CELL cell with Magic (usage: make magic-verify-cell CELL=<cellname>)
+magic-verify: ## Verify the CELL cell with Magic (usage: make magic-verify [CELL=<cellname>])
 	$(MAKE) magic-lvs CELL=$(CELL)
 	$(MAKE) magic-drc CELL=$(CELL)
 	$(MAKE) magic-pex CELL=$(CELL)
