@@ -227,12 +227,16 @@ magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make 
 
 
 # Verify Targets
-klayout-verify: ## Verify CELL cell with KLayout (usage: make klayout-verify CELL=<cellname>)
-	$(MAKE) klayout-lvs klayout-drc klayout-pex CELL=$(CELL)
+klayout-verify: ## Verify CELL cell with KLayout (usage: make klayout-verify-cell CELL=<cellname>)
+	$(MAKE) klayout-lvs CELL=$(CELL)
+	$(MAKE) klayout-drc CELL=$(CELL)
+	$(MAKE) klayout-pex CELL=$(CELL)
 .PHONY: klayout-verify
 
-magic-verify: ## Verify CELL cell with Magic (usage: make magic-verify CELL=<cellname>)
-	$(MAKE) magic-lvs magic-drc magic-pex CELL=$(CELL)
+magic-verify: ## Verify CELL cell with Magic (usage: make magic-verify-cell CELL=<cellname>)
+	$(MAKE) magic-lvs CELL=$(CELL)
+	$(MAKE) magic-drc CELL=$(CELL)
+	$(MAKE) magic-pex CELL=$(CELL)
 .PHONY: magic-verify
 # ================================================================================================
 
@@ -281,7 +285,9 @@ all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
 #	$(MAKE) klayout-verify
 #	$(MAKE) magic-verify
-	$(MAKE) magic-lvs magic-drc CELL=$(POWDET)
-	$(MAKE) magic-drc klayout-drc
+	$(MAKE) magic-lvs CELL=$(POWDET)
+	$(MAKE) magic-drc CELL=$(POWDET)
+	$(MAKE) magic-drc
+	$(MAKE) klayout-drc
 .PHONY: all
 # ================================================================================================
