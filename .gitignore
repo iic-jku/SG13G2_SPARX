@@ -6,6 +6,7 @@ drc_run_*
 lvs_run_*
 *.vcd
 *.raw
+*.log
 .DS_Store
 *.pyc
 *.ext
