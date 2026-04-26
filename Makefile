@@ -53,14 +53,14 @@ STOP_FREQ ?= 300
 STEP_FREQ ?= 20
 
 # Folder structure
-LAY_DIR     := layout
-SCH_DIR     := schematic
-RENDER_DIR  := render
-NET_SCH_DIR := netlist/schematic
-NET_LAY_DIR := netlist/layout
-NET_PEX_DIR := netlist/pex
-LVS_RPT_DIR := verification/lvs
-DRC_RPT_DIR := verification/drc
+SCH_DIR     	:= schematic
+LAY_DIR     	:= layout
+RENDER_IMG_DIR  := render/img
+NET_SCH_DIR 	:= netlist/schematic
+NET_LAY_DIR 	:= netlist/layout
+NET_PEX_DIR 	:= netlist/pex
+LVS_RPT_DIR 	:= verification/lvs
+DRC_RPT_DIR 	:= verification/drc
 
 
 # Help target
@@ -243,8 +243,8 @@ magic-verify: ## Verify the CELL cell with Magic (usage: make magic-verify [CELL
 
 # Rendering Target
 render-gds: ## Render an image from the GDS of the TOP cell (usage: make render-gds [FREQ=<GHz>])
-	mkdir -p $(RENDER_DIR)/
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
+	mkdir -p $(RENDER_IMG_DIR)/
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_IMG_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
 .PHONY: render-gds
 # ================================================================================================
 
