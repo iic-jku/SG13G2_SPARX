@@ -25,6 +25,10 @@ POWDET = sparx_powdet_sbd
 
 .DEFAULT_GOAL := help
 
+# Version for release target
+# Override with: make <target> VERSION=<version>
+VERSION ?= 2.0.0
+
 # Cell name for verification targets (default: top-level cell)
 # Override with: make <target> CELL=<cellname>
 CELL ?= $(TOP)
@@ -55,6 +59,8 @@ STEP_FREQ ?= 20
 # Folder structure
 SCH_DIR     	:= schematic
 LAY_DIR     	:= layout
+SCRIPTS_DIR     := scripts
+RELEASE_DIR		:= release
 RENDER_IMG_DIR  := render/img
 NET_SCH_DIR 	:= netlist/schematic
 NET_LAY_DIR 	:= netlist/layout
@@ -78,6 +84,48 @@ help: ## Show this help message
 	@echo 'START_FREQ, STOP_FREQ, STEP_FREQ default to 60, 300, and 20 (GHz) for build-layout-sweep.'
 	@echo 'EV_PRECISION defaults to 5 significant digits for Xschem ev function.'
 .PHONY: help
+# ================================================================================================
+
+
+# Build Targets
+build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells (usage: make build-pdk)
+	rm -rf IHP/
+	git clone -b IHP-TO https://github.com/iic-jku/IHP.git
+	/usr/bin/python3 -m venv --system-site-packages .venv
+	. .venv/bin/activate && cd IHP && pip install .
+.PHONY: build-pdk
+
+build-layout: ## Build the six-port layout for a specific frequency (usage: make build-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(SCRIPTS_DIR)/six_port_gen.py \
+		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx_powdet_sbd.gds \
+		--frequency $(FREQ)e9 \
+		$(if $(filter 1,$(NO_FILL)),--no-fill) \
+		$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5)
+	rm -rf build/
+.PHONY: build-layout
+
+build-layout-sweep: ## Build frequency-scalable six-port layouts over a sweep (usage: make build-layout-sweep [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
+	bash -lc ' \
+		for ghz in $$(seq $(START_FREQ) $(STEP_FREQ) $(STOP_FREQ)); do \
+			echo "=== Running make build-layout for $${ghz} GHz ==="; \
+			$(MAKE) build-layout FREQ=$${ghz} NO_FILL=$(NO_FILL) NO_FILL_M5=$(NO_FILL_M5); \
+		done'
+	rm -rf build/
+.PHONY: build-layout-sweep
+
+build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
+	$(MAKE) build-pdk
+	$(MAKE) build-layout FREQ=$(FREQ)
+	$(MAKE) render-gds FREQ=$(FREQ)
+.PHONY: build-top
+# ================================================================================================
+
+
+# Rendering Target
+render-gds: ## Render an image from the GDS of the TOP cell (usage: make render-gds [FREQ=<GHz>])
+	mkdir -p $(RENDER_IMG_DIR)/
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(SCRIPTS_DIR)/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_IMG_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
+.PHONY: render-gds
 # ================================================================================================
 
 
@@ -241,46 +289,6 @@ magic-verify: ## Verify the CELL cell with Magic (usage: make magic-verify [CELL
 # ================================================================================================
 
 
-# Rendering Target
-render-gds: ## Render an image from the GDS of the TOP cell (usage: make render-gds [FREQ=<GHz>])
-	mkdir -p $(RENDER_IMG_DIR)/
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_IMG_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
-.PHONY: render-gds
-# ================================================================================================
-
-
-# Build Targets
-build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells (usage: make build-pdk)
-	rm -rf IHP/
-	git clone -b IHP-TO https://github.com/iic-jku/IHP.git
-	/usr/bin/python3 -m venv --system-site-packages .venv
-	. .venv/bin/activate && cd IHP && pip install .
-.PHONY: build-pdk
-
-build-layout: ## Build the six-port layout for a specific frequency (usage: make build-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
-	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(MAKEFILE_DIR)/scripts/six_port_gen.py \
-		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx_powdet_sbd.gds \
-		--frequency $(FREQ)e9 \
-		$(if $(filter 1,$(NO_FILL)),--no-fill) \
-		$(if $(filter 1,$(NO_FILL_M5)),--no-fill-m5)
-	rm -rf build/
-.PHONY: build-layout
-
-build-layout-sweep: ## Build frequency-scalable six-port layouts over a sweep (usage: make build-layout-sweep [START_FREQ=<GHz>] [STOP_FREQ=<GHz>] [STEP_FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
-	bash -lc ' \
-		for ghz in $$(seq $(START_FREQ) $(STEP_FREQ) $(STOP_FREQ)); do \
-			echo "=== Running make build-layout for $${ghz} GHz ==="; \
-			$(MAKE) build-layout FREQ=$${ghz} NO_FILL=$(NO_FILL) NO_FILL_M5=$(NO_FILL_M5); \
-		done'
-	rm -rf build/
-.PHONY: build-layout-sweep
-
-build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
-	$(MAKE) build-pdk
-	$(MAKE) build-layout FREQ=$(FREQ)
-	$(MAKE) render-gds FREQ=$(FREQ)
-.PHONY: build-top
-
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
 #	$(MAKE) klayout-verify
@@ -290,4 +298,15 @@ all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) magic-drc
 	$(MAKE) klayout-drc
 .PHONY: all
+# ================================================================================================
+
+
+# Release Target
+release: ## Copy the gds and netlist files to the release folder (usage: make release VERSION=<version>)
+	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/gds
+	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/netlist
+	cp -f $(LAY_DIR)/$(TOP).gds $(RELEASE_DIR)/v.$(VERSION)/gds/$(TOP).gds
+	cp -r $(NET_SCH_DIR) $(RELEASE_DIR)/v.$(VERSION)/netlist/schematic
+	cp -r $(NET_LAY_DIR) $(RELEASE_DIR)/v.$(VERSION)/netlist/layout
+.PHONY: release
 # ================================================================================================

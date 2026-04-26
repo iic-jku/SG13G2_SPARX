@@ -9,8 +9,8 @@
 > This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.04` or later.
 
 <p align="center">
-  <a href="render/sparx160_top_white_wo_M5.png">
-    <img src="render/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
+  <a href="render/img/sparx160_top_white_wo_M5.png">
+    <img src="render/img/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
   </a>
   <br>
   <em>Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm).</em>
@@ -116,8 +116,10 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 │     │  └─ RFFE6027.gds
 │     └─ ReleaseNote.md
 ├─ 📁 render/
-│  ├─ sparx_top_black.png
-│  └─ sparx_top_white.png
+│  └─ 📁 img/
+│     ├─ sparx160_top_white_wo_M5.png
+│     ├─ sparx_top_black.png
+│     └─ sparx_top_white.png
 ├─ 📁 schematic/
 │  ├─ sparx_powdet_sbd.sch
 │  ├─ sparx_powdet_sbd.sym
@@ -157,6 +159,65 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 
 
 ## Makefile Targets
+
+### Show Available Targets
+
+The default Make target is `help`, so running `make` prints usage and all available targets with short descriptions.
+
+```sh
+make
+make help
+```
+
+### Build PDK
+
+Clones and installs the IHP-Open-PDK repository with GDSFactory cells:
+
+```sh
+make build-pdk
+```
+
+### Build SPARX Layout
+
+Generates the six-port layout GDS files for a specific frequency (e.g. `layout/sparx160_top.gds` and `layout/sparx_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx_powdet_sbd.gds` for 77 GHz):
+
+```sh
+make build-layout
+make build-layout FREQ=77
+make build-layout FREQ=77 NO_FILL=1
+make build-layout FREQ=77 NO_FILL_M5=1
+```
+
+The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL=1` disables metal fill (faster for layout preview). `NO_FILL_M5=1` disables only the Metal5 ground fill.
+
+### Build Frequency Sweep Automatically
+
+Builds a frequency sweep by repeatedly calling `build-layout` for each frequency from `START_FREQ` to `STOP_FREQ` using `STEP_FREQ`.
+
+```sh
+make build-layout-sweep
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL=1
+make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL_M5=1
+```
+
+Default sweep settings are `START_FREQ=60`, `STOP_FREQ=300`, and `STEP_FREQ=20` (all in GHz). `NO_FILL` and `NO_FILL_M5` are forwarded to each `build-layout` run.
+
+### Build Top Cell
+
+Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-gds`:
+
+```sh
+make build-top
+```
+
+### Render Top Layout
+
+Renders the top-level GDS and saves it in the `render/img/` folder:
+
+```sh
+make render-gds
+```
 
 ### Export Schematic Netlist for LVS
 
@@ -273,62 +334,33 @@ make klayout-verify
 make magic-verify
 ```
 
-### Render Top Layout
-
-Renders the top-level GDS and saves it in the `render/` folder:
-
-```sh
-make render-gds
-```
-
-### Build PDK
-
-Clones and installs the IHP-Open-PDK repository with GDSFactory cells:
-
-```sh
-make build-pdk
-```
-
-### Build SPARX Layout
-
-Generates the six-port layout GDS files for a specific frequency (e.g. `layout/sparx160_top.gds` and `layout/sparx_powdet_sbd.gds` for the default 160 GHz, or `layout/sparx77_top.gds` and `layout/sparx_powdet_sbd.gds` for 77 GHz):
-
-```sh
-make build-layout
-make build-layout FREQ=77
-make build-layout FREQ=77 NO_FILL=1
-make build-layout FREQ=77 NO_FILL_M5=1
-```
-
-The `FREQ` parameter sets the design frequency in GHz (default: `160`). `NO_FILL=1` disables metal fill (faster for layout preview). `NO_FILL_M5=1` disables only the Metal5 ground fill.
-
-### Build Frequency Sweep Automatically
-
-Builds a frequency sweep by repeatedly calling `build-layout` for each frequency from `START_FREQ` to `STOP_FREQ` using `STEP_FREQ`.
-
-```sh
-make build-layout-sweep
-make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20
-make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL=1
-make build-layout-sweep START_FREQ=60 STOP_FREQ=300 STEP_FREQ=20 NO_FILL_M5=1
-```
-
-Default sweep settings are `START_FREQ=60`, `STOP_FREQ=300`, and `STEP_FREQ=20` (all in GHz). `NO_FILL` and `NO_FILL_M5` are forwarded to each `build-layout` run.
-
-### Build Top Cell
-
-Builds the top-level cell by running `build-pdk`, `build-layout`, and `render-gds`:
-
-```sh
-make build-top
-```
-
 ### Build and Verify All
 
 Builds the top-level cell by running `build-top`, then verifies the SBD-based power detector cell with Magic LVS and DRC. Finally, it runs Magic DRC and KLayout DRC for the top-level cell.
 
 ```sh
 make all
+```
+
+### Release
+
+Copies the final top-level GDS from `layout/` to `release/v.<VERSION>/gds/` and copies the generated netlists into `release/v.<VERSION>/netlist/`.
+
+The following netlist folders are exported:
+
+- `netlist/schematic` -> `release/v.<VERSION>/netlist/schematic`
+- `netlist/layout` -> `release/v.<VERSION>/netlist/layout`
+
+Run with default version (`2.0.0`):
+
+```sh
+make release
+```
+
+Run with a custom version:
+
+```sh
+make release VERSION=2.1.0
 ```
 
 
