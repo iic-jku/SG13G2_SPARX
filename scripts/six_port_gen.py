@@ -2941,9 +2941,8 @@ c.move((-25, -25))
 c.write_gds(top_gds_filename, with_metadata=False)
 c.show()
 
-# currently not used, top level sim not working yet and takes a lot of processing time
-# c.flatten()
-# c.write_gds(top_gds_filename_flat, with_metadata=False)
+c.flatten()
+c.write_gds(top_gds_filename_flat, with_metadata=False)
 
 
 pd.name = powdet_gds_filename.stem
