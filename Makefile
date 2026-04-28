@@ -57,6 +57,17 @@ GROUND_CROSS_SECTION ?= M5
 Z0 ?= 50
 E_R ?= 4.1
 
+# HBPF-specific filter parameters for EM simulation
+# Override with: make sim-hbpf-em BANDWIDTH=<GHz> FILTER_TYPE=<butter|cheby|ellip> FILTER_ORDER=<N> RIPPLE_DB=<dB>
+BANDWIDTH ?= 20
+FILTER_TYPE ?= butter
+FILTER_ORDER ?= 3
+RIPPLE_DB ?= 3
+
+# Additional config parameter for wpd simulation
+# Override with: make sim-wpd-em FREQ=<GHz> SIGNAL_CROSS_SECTION=<metal> GROUND_CROSS_SECTION=<metal> Z0=<Ohms> E_R=<relative_permittivity> CONFIG=<config_name>
+CONFIG ?= C 	# C or U 
+
 # Palace number of processors for EM simulation# Override with: make sim-blc-em NP=<num_processors>
 NP ?= 4
 
@@ -78,6 +89,7 @@ NET_PEX_DIR 	:= netlist/pex
 LVS_RPT_DIR 	:= verification/lvs
 DRC_RPT_DIR 	:= verification/drc
 EM_RPT_DIR 		:= verification/em
+PALACE_SCRIPTS_DIR := $(PDK_ROOT)/$(PDK)/libs.tech/palace/scripts
 
 
 # Help target
@@ -312,8 +324,54 @@ sim-blc-em: ## Run EM simulation with BLC of the CELL cell (usage: make sim-blc-
 			--e_r $(E_R) && \
 		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$BLC_GDS_FILENAME.gds && \
 		cd $(EM_RPT_DIR)/palace_model/$$BLC_GDS_FILENAME/palace_sim_data && \
-		palace -np $(NP) config.json
+		palace -np $(NP) config.json && \
+		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-blc-em
+
+
+sim-wpd-em: ## Run EM simulation with WPD of the CELL cell (usage: make sim-wpd-em [FREQ=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>])
+	WPD_GDS_FILENAME=wpd_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R))_config_$(CONFIG); \
+	. .venv/bin/activate && \
+		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/wpd_em_sim.py \
+			--frequency $(FREQ)e9 \
+			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
+			--ground_cross_section $(GROUND_CROSS_SECTION) \
+			--Z0 $(Z0) \
+			--e_r $(E_R) \
+			--config $(CONFIG) && \
+		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$WPD_GDS_FILENAME.gds && \
+		cd $(EM_RPT_DIR)/palace_model/$$WPD_GDS_FILENAME/palace_sim_data && \
+		palace -np $(NP) config.json && \
+		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
+.PHONY: sim-wpd-em
+
+
+sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-em [FREQ=<GHz>] [BANDWIDTH=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>] [FILTER_TYPE=<butter|cheby>] [FILTER_ORDER=<N>] [RIPPLE_DB=<dB>])
+	BPF_FILTER_TYPE_LOWER=$$(echo "$(FILTER_TYPE)" | tr '[:upper:]' '[:lower:]'); \
+	if [ "$$BPF_FILTER_TYPE_LOWER" = "butter" ]; then \
+		RIPPLE_TAG=""; \
+	else \
+		RIPPLE_DB_TAG=$$(printf '%s' "$(RIPPLE_DB)" | sed 's/\.0$$//'); \
+		RIPPLE_TAG="_rip_$$(printf '%s' "$$RIPPLE_DB_TAG" | tr '.' '_')dB"; \
+	fi; \
+	BPF_GDS_FILENAME=bpf_f_$(FREQ)GHz_bw_$(BANDWIDTH)GHz_sig_$(SIGNAL_CROSS_SECTION)_gnd_$(GROUND_CROSS_SECTION)_z0_$(Z0)Ohm_er_$(subst .,_,$(E_R))_$(FILTER_TYPE)_ord_$(FILTER_ORDER)$$RIPPLE_TAG; \
+	. .venv/bin/activate && \
+		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/bpf_em_sim.py \
+			--frequency $(FREQ)e9 \
+			--bandwidth $(BANDWIDTH)e9 \
+			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
+			--ground_cross_section $(GROUND_CROSS_SECTION) \
+			--Z0 $(Z0) \
+			--e_r $(E_R) \
+			--filter_type $(FILTER_TYPE) \
+			--filter_order $(FILTER_ORDER) \
+			--ripple_dB $(RIPPLE_DB) && \
+		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$BPF_GDS_FILENAME.gds && \
+		cd $(EM_RPT_DIR)/palace_model/$$BPF_GDS_FILENAME/palace_sim_data && \
+			palace -np $(NP) config.json && \
+			python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
+		
+.PHONY: sim-bpf-em
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
