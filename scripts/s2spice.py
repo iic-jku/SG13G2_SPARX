@@ -298,7 +298,12 @@ def write_vf_spice(nw: rf.Network, subckt: str, outpath: Path, n_poles: int) -> 
     all standard SPICE2 / ngspice elements.
     """
     try:
-        from skrf.vectorfitting import VectorFitting
+        # scikit-rf 1.x exposes VectorFitting at the package root;
+        # older builds kept it in the skrf.vectorfitting submodule.
+        try:
+            from skrf.vectorfitting import VectorFitting
+        except ModuleNotFoundError:
+            from skrf import VectorFitting
     except ImportError:
         print(
             "scikit-rf VectorFitting not available (requires scikit-rf >= 0.20).\n"
