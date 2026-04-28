@@ -17,7 +17,6 @@ import gdsfactory as gf
 import ihp
 import make_gds
 import scipy
-
 ihp.PDK.activate()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -1958,20 +1957,28 @@ def powdet_sbd() -> gf.Component:
     straight_m3_ref = c.add_ref(straight_m3)
     straight_m3_ref.connect("e1", output_stage_ref.ports["vref"], allow_width_mismatch=True, allow_layer_mismatch=True)
     # add ports to the powerdetector
-    c.add_port(name="vout", port=output_stage_ref.ports["vout"])
+    vout_port = c.add_port(name="vout", port=output_stage_ref.ports["vout"])
     c.ports["vout"].orientation = 90
-    c.add_port(name="vref", port=straight_m3_ref.ports["e2"])
+    
+    vref_port = c.add_port(name="vref", port=straight_m3_ref.ports["e2"])
     c.ports["vref"].center = (c.ports["vref"].center[0], c.ports["vref"].center[1] - 0.1)  # preventing notch
     c.ports["vref"].orientation = 90
-    c.add_port(name="rfin", port=via_tm1_tm2_ref.ports["top"])
+    
+    rfin_port = c.add_port(name="rfin", port=via_tm1_tm2_ref.ports["top"])
     c.ports["rfin"].orientation = 270
-    c.add_port(name="vss", port=c3_ref.ports["LC_B_1_1"])
+    
+    vss_port = c.add_port(name="vss", port=c3_ref.ports["LC_B_1_1"])
     c.ports["vss"].orientation = 90
-    c.add_port(name="vdd", port=c3_ref.ports["LC_T_5_1"])
+    
+    vdd_port = c.add_port(name="vdd", port=c3_ref.ports["LC_T_5_1"])
     c.ports["vdd"].orientation = 90
     c.pprint_ports()
     
-    
+    gf.labels.add_port_labels(c, ports= [vout_port], layer = ihp.tech.LAYER.Metal4label)
+    gf.labels.add_port_labels(c, ports= [vref_port], layer = ihp.tech.LAYER.Metal3label)
+    gf.labels.add_port_labels(c, ports= [rfin_port], layer = ihp.tech.LAYER.TopMetal2label)
+    gf.labels.add_port_labels(c, ports= [vss_port], layer = ihp.tech.LAYER.Metal5label)
+    gf.labels.add_port_labels(c, ports= [vdd_port], layer = ihp.tech.LAYER.TopMetal1label)
 
     # No-fill exclusion zones for each metal layer
     c.center = (0, 0)
@@ -2297,25 +2304,25 @@ pd = powdet_sbd()
 pd.locked = False
 
 # add pins for lvs and pex
-pd.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=pd.ports["rfin"].center)
-pin_marker_rfin = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(0.5,0.5)))
-pin_marker_rfin.center = pd.ports["rfin"].center
+# pd.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=pd.ports["rfin"].center)
+# pin_marker_rfin = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(2,2)))
+# pin_marker_rfin.center = pd.ports["rfin"].center
 
-pd.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=pd.ports["vss"].center)
-pin_marker_vss = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
-pin_marker_vss.center = pd.ports["vss"].center
+# pd.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=pd.ports["vss"].center)
+# pin_marker_vss = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(2,2)))
+# pin_marker_vss.center = pd.ports["vss"].center
 
-pd.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=pd.ports["vdd"].center)
-pin_marker_vdd = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
-pin_marker_vdd.center = pd.ports["vdd"].center
+# pd.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=pd.ports["vdd"].center)
+# pin_marker_vdd = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(2,2)))
+# pin_marker_vdd.center = pd.ports["vdd"].center
 
-pd.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=pd.ports["vout"].center)
-pin_marker_vout = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal4pin, size=(0.5,0.5)))
-pin_marker_vout.center = pd.ports["vout"].center
+# pd.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=pd.ports["vout"].center)
+# pin_marker_vout = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal4pin, size=(2,2)))
+# pin_marker_vout.center = pd.ports["vout"].center
 
-pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["vref"].center))
-pin_marker_vref = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal3pin, size=(0.5,0.5)))
-pin_marker_vref.center = pd.ports["vref"].center
+# pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["vref"].center))
+# pin_marker_vref = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal3pin, size=(2,2)))
+# pin_marker_vref.center = pd.ports["vref"].center
 
 
 # probe pads top — positioned to clear PD extent
@@ -2941,11 +2948,12 @@ c.move((-25, -25))
 c.write_gds(top_gds_filename, with_metadata=False)
 c.show()
 
-c.flatten()
-c.write_gds(top_gds_filename_flat, with_metadata=False)
+# c.flatten()
+# c.write_gds(top_gds_filename_flat, with_metadata=False)
 
 
 pd.name = powdet_gds_filename.stem
+pd.show()
 pd.write_gds(powdet_gds_filename, with_metadata=False)
 pd.flatten()
 pd.write_gds(powdet_gds_filename_flat, with_metadata=False)

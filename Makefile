@@ -50,6 +50,16 @@ FREQ ?= 160
 NO_FILL ?= 0
 NO_FILL_M5 ?= 0
 
+# Characteristic impedance and substrate parameters for EM simulation
+# Override with: make sim-blc-em FREQ=<GHz> SIGNAL_CROSS_SECTION=<metal> GROUND_CROSS_SECTION=<metal> Z0=<Ohms> E_R=<relative_permittivity>
+SIGNAL_CROSS_SECTION ?= TM2
+GROUND_CROSS_SECTION ?= M5
+Z0 ?= 50
+E_R ?= 4.1
+
+# Palace number of processors for EM simulation# Override with: make sim-blc-em NP=<num_processors>
+NP ?= 4
+
 # Frequency sweep in GHz
 # Override with: make build-layout-sweep START_FREQ=<GHz> STOP_FREQ=<GHz> STEP_FREQ=<GHz>
 START_FREQ ?= 60
@@ -67,6 +77,7 @@ NET_LAY_DIR 	:= netlist/layout
 NET_PEX_DIR 	:= netlist/pex
 LVS_RPT_DIR 	:= verification/lvs
 DRC_RPT_DIR 	:= verification/drc
+EM_RPT_DIR 		:= verification/em
 
 
 # Help target
@@ -177,7 +188,7 @@ magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CE
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
+	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
 # 	Alternative using sak-lvs.sh for netlist export and LVS in one step (replaces magic-lvs-netlist target):
 #   PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) STD_CELL_LIBRARY=$(STD_CELL_LIBRARY) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
 	mv $(LVS_RPT_DIR)/$(CELL).ext.spc $(NET_LAY_DIR)/$(CELL)_magic.ext.spc
@@ -288,6 +299,21 @@ magic-verify: ## Verify the CELL cell with Magic (usage: make magic-verify [CELL
 .PHONY: magic-verify
 # ================================================================================================
 
+
+# EM simulation
+sim-blc-em: ## Run EM simulation with BLC of the CELL cell (usage: make sim-blc-em [FREQ=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>])
+	BLC_GDS_FILENAME=blc_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R)); \
+	. .venv/bin/activate && \
+		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/blc_em_sim.py \
+			--frequency $(FREQ)e9 \
+			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
+			--ground_cross_section $(GROUND_CROSS_SECTION) \
+			--Z0 $(Z0) \
+			--e_r $(E_R) && \
+		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$BLC_GDS_FILENAME.gds && \
+		cd $(EM_RPT_DIR)/palace_model/$$BLC_GDS_FILENAME/palace_sim_data && \
+		palace -np $(NP) config.json
+.PHONY: sim-blc-em
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
