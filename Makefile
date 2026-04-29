@@ -372,6 +372,16 @@ sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 		
 .PHONY: sim-bpf-em
+# ================================================================================================
+
+# view the sim results of EM simulation
+FILE_NAME ?= blc_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R)).s4p
+view-em-sim: ## View EM simulation results with s-parameter plots (usage: make view-em-sim FILE_NAME=<name_with_extension>)
+	cd $(EM_RPT_DIR)/palace_model && python3 ../scripts/plot_snp.py $$(find . -type f -name "$(FILE_NAME)")
+
+.PHONY: view-em-sim
+# ================================================================================================
+
 
 all: ## Build and verify the TOP cell (usage: make all)
 	$(MAKE) build-top
