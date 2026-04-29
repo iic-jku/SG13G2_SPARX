@@ -340,8 +340,8 @@ sim-wpd-em: ## Run EM simulation with WPD of the CELL cell (usage: make sim-wpd-
 			--e_r $(E_R) \
 			--config $(CONFIG) && \
 		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$WPD_GDS_FILENAME.gds && \
-		cd $(EM_RPT_DIR)/palace_model/$$WPD_GDS_FILENAME/palace_sim_data && \
-		#palace -np $(NP) config.json && \
+		cd $(EM_RPT_DIR)/palace_model/$${WPD_GDS_FILENAME}_data && \
+		palace -np $(NP) config.json && \
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-wpd-em
 
@@ -367,9 +367,9 @@ sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-
 			--filter_order $(FILTER_ORDER) \
 			--ripple_dB $(RIPPLE_DB) && \
 		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$BPF_GDS_FILENAME.gds && \
-		cd $(EM_RPT_DIR)/palace_model/$$BPF_GDS_FILENAME/palace_sim_data && \
-			palace -np $(NP) config.json && \
-			python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
+		cd $(EM_RPT_DIR)/palace_model/$${BPF_GDS_FILENAME}_data && \
+		palace -np $(NP) config.json && \
+		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 		
 .PHONY: sim-bpf-em
 
