@@ -59,14 +59,14 @@ E_R ?= 4.1
 
 # HBPF-specific filter parameters for EM simulation
 # Override with: make sim-hbpf-em BANDWIDTH=<GHz> FILTER_TYPE=<butter|cheby|ellip> FILTER_ORDER=<N> RIPPLE_DB=<dB>
-BANDWIDTH ?= 20
+BANDWIDTH ?= 1
 FILTER_TYPE ?= butter
 FILTER_ORDER ?= 3
 RIPPLE_DB ?= 3
 
 # Additional config parameter for wpd simulation
 # Override with: make sim-wpd-em FREQ=<GHz> SIGNAL_CROSS_SECTION=<metal> GROUND_CROSS_SECTION=<metal> Z0=<Ohms> E_R=<relative_permittivity> CONFIG=<config_name>
-CONFIG ?= C 	# C or U 
+CONFIG ?= U 	# C or U 
 
 # Palace number of processors for EM simulation# Override with: make sim-blc-em NP=<num_processors>
 NP ?= 4
