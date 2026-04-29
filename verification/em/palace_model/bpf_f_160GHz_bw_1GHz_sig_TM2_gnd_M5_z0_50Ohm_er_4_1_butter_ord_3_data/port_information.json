@@ -1,0 +1,32 @@
+{
+    "ports": [
+        {
+            "portnumber": 1,
+            "Z0": 50.0,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.2,
+            "xmin": 0.0,
+            "xmax": 0.1,
+            "ymin": -3.6,
+            "ymax": 3.6,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 2,
+            "Z0": 50.0,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.2,
+            "xmin": 175.34,
+            "xmax": 175.44,
+            "ymin": -3.6,
+            "ymax": 3.6,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        }
+    ],
+    "unit": 1e-06,
+    "name": "bpf_f_160GHz_bw_1GHz_sig_TM2_gnd_M5_z0_50Ohm_er_4_1_butter_ord_3"
+}

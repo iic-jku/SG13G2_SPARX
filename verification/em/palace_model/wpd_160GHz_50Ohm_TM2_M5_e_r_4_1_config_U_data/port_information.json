@@ -1,0 +1,45 @@
+{
+    "ports": [
+        {
+            "portnumber": 1,
+            "Z0": 50.0,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.2,
+            "xmin": 0.0,
+            "xmax": 0.1,
+            "ymin": -3.6,
+            "ymax": 3.6,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 2,
+            "Z0": 50.0,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.200000000000003,
+            "xmin": 155.63,
+            "xmax": 155.73,
+            "ymin": 76.065,
+            "ymax": 83.265,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        },
+        {
+            "portnumber": 3,
+            "Z0": 50.0,
+            "direction": "Z",
+            "length": 5.6503,
+            "width": 7.200000000000003,
+            "xmin": 155.63,
+            "xmax": 155.73,
+            "ymin": -83.265,
+            "ymax": -76.065,
+            "zmin": 7.58,
+            "zmax": 13.2303
+        }
+    ],
+    "unit": 1e-06,
+    "name": "wpd_160GHz_50Ohm_TM2_M5_e_r_4_1_config_U"
+}
