@@ -323,7 +323,7 @@ sim-blc-em: ## Run EM simulation with BLC of the CELL cell (usage: make sim-blc-
 			--Z0 $(Z0) \
 			--e_r $(E_R) && \
 		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$BLC_GDS_FILENAME.gds && \
-		cd $(EM_RPT_DIR)/palace_model/$$BLC_GDS_FILENAME/palace_sim_data && \
+		cd $(EM_RPT_DIR)/palace_model/$${BLC_GDS_FILENAME}_data && \
 		palace -np $(NP) config.json && \
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-blc-em
@@ -341,7 +341,7 @@ sim-wpd-em: ## Run EM simulation with WPD of the CELL cell (usage: make sim-wpd-
 			--config $(CONFIG) && \
 		python3 $(EM_RPT_DIR)/scripts/palace_sim.py ../layout/$$WPD_GDS_FILENAME.gds && \
 		cd $(EM_RPT_DIR)/palace_model/$$WPD_GDS_FILENAME/palace_sim_data && \
-		palace -np $(NP) config.json && \
+		#palace -np $(NP) config.json && \
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-wpd-em
 

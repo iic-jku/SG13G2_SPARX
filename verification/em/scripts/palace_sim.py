@@ -103,10 +103,10 @@ merge_polygon_size = 0
 script_path = utilities.get_script_path(__file__)
 
 # use script filename as model basename
-model_basename = utilities.get_basename(__file__)
+model_basename = str.split(gds_filename.split('/')[-1], ".")[0]
 
 # set and create directory for simulation output
-sim_path = utilities.create_sim_path (script_path,model_basename, dirname="../palace_model/" +str.split(gds_filename.split('/')[-1], ".")[0])
+sim_path = utilities.create_sim_path (script_path,model_basename, dirname="../palace_model/")
 print('Simulation data directory: ', sim_path)
 
 f_center = _get_ghz_from_filename(gds_filename) * 1e9
