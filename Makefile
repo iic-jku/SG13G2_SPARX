@@ -119,7 +119,7 @@ build-pdk: ## Clone & install the IHP-Open-PDK repository with GDSFactory cells 
 .PHONY: build-pdk
 
 build-layout: ## Build the six-port layout for a specific frequency (usage: make build-layout [FREQ=<GHz>] [NO_FILL=0|1] [NO_FILL_M5=0|1])
-	. .venv/bin/activate && PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(SCRIPTS_DIR)/six_port_gen.py \
+	. .venv/bin/activate && python3 $(SCRIPTS_DIR)/six_port_gen.py \
 		$(LAY_DIR)/sparx$(FREQ)_top.gds $(LAY_DIR)/sparx_powdet_sbd.gds \
 		--frequency $(FREQ)e9 \
 		$(if $(filter 1,$(NO_FILL)),--no-fill) \
@@ -147,7 +147,7 @@ build-top: ## Build TOP cell (usage: make build-top [FREQ=<GHz>])
 # Rendering Target
 render-gds: ## Render an image from the GDS of the TOP cell (usage: make render-gds [FREQ=<GHz>])
 	mkdir -p $(RENDER_IMG_DIR)/
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(SCRIPTS_DIR)/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_IMG_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
+	python3 $(SCRIPTS_DIR)/lay2img.py $(LAY_DIR)/sparx$(FREQ)_top.gds $(RENDER_IMG_DIR)/sparx$(FREQ)_top.png --width 2048 --oversampling 4
 .PHONY: render-gds
 # ================================================================================================
 
@@ -200,9 +200,9 @@ magic-lvs: ## Run Magic + Netgen LVS of the CELL cell (usage: make magic-lvs [CE
 	mkdir -p $(LVS_RPT_DIR)
 	mkdir -p $(NET_LAY_DIR)
 	$(MAKE) magic-lvs-netlist CELL=$(CELL)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
+	sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(NET_SCH_DIR)/$(CELL)_magic.spice -l $(LAY_DIR)/$(CELL).gds -c $(CELL)
 # 	Alternative using sak-lvs.sh for netlist export and LVS in one step (replaces magic-lvs-netlist target):
-#   PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) STD_CELL_LIBRARY=$(STD_CELL_LIBRARY) sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
+# 	sak-lvs.sh -d -w $(LVS_RPT_DIR) -s $(SCH_DIR)/$(CELL).sch -l $(LAY_DIR)/$(CELL)_flat.gds -c $(CELL)
 	mv $(LVS_RPT_DIR)/$(CELL).ext.spc $(NET_LAY_DIR)/$(CELL)_magic.ext.spc
 	rm -f $(LVS_RPT_DIR)/$(CELL).sch.spc
 	rm -f $(LVS_RPT_DIR)/ext_$(CELL).tcl
@@ -240,7 +240,7 @@ klayout-drc: ## Run KLayout DRC of the CELL cell (usage: make klayout-drc [CELL=
 
 magic-drc: ## Run Magic DRC of the CELL cell (usage: make magic-drc [CELL=<cellname>])
 	mkdir -p $(DRC_RPT_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-drc.sh -d -m -f "*" -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds $(CELL)
+	sak-drc.sh -d -m -f "*" -w $(DRC_RPT_DIR) $(LAY_DIR)/$(CELL).gds $(CELL)
 	rm -f $(DRC_RPT_DIR)/drc_$(CELL).tcl
 	sleep 4
 .PHONY: magic-drc
@@ -282,7 +282,7 @@ klayout-pex: ## Run Parasitic Extraction with KPEX of the CELL cell (usage: make
 
 magic-pex: ## Run Parasitic Extraction with Magic of the CELL cell (usage: make magic-pex [CELL=<cellname>] [EXT_MODE=<1|2|3>])
 	mkdir -p $(NET_PEX_DIR)
-	PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) sak-pex.sh -d -m $(EXT_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL)_flat.gds
+	sak-pex.sh -d -m $(EXT_MODE) -w $(NET_PEX_DIR) $(LAY_DIR)/$(CELL)_flat.gds
 	mv $(NET_PEX_DIR)/$(CELL)_flat.pex.spice $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	sed -i 's/$(CELL)/$(CELL)_pex/g' $(NET_PEX_DIR)/$(CELL)_magic_pex.spice
 	rm -f $(NET_PEX_DIR)/pex_$(CELL)_flat.tcl $(NET_PEX_DIR)/$(CELL).ext $(NET_PEX_DIR)/$(CELL)_flat.ext $(NET_PEX_DIR)/$(CELL)_flat.res.ext
@@ -312,11 +312,11 @@ magic-verify: ## Verify the CELL cell with Magic (usage: make magic-verify [CELL
 # ================================================================================================
 
 
-# EM simulation
+# EM Simulation Targets
 sim-blc-em: ## Run EM simulation with BLC of the CELL cell (usage: make sim-blc-em [FREQ=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>])
 	BLC_GDS_FILENAME=blc_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R)); \
 	. .venv/bin/activate && \
-		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/blc_em_sim.py \
+		python3 $(EM_RPT_DIR)/scripts/blc_em_sim.py \
 			--frequency $(FREQ)e9 \
 			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
 			--ground_cross_section $(GROUND_CROSS_SECTION) \
@@ -328,11 +328,10 @@ sim-blc-em: ## Run EM simulation with BLC of the CELL cell (usage: make sim-blc-
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-blc-em
 
-
 sim-wpd-em: ## Run EM simulation with WPD of the CELL cell (usage: make sim-wpd-em [FREQ=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>])
 	WPD_GDS_FILENAME=wpd_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R))_config_$(CONFIG); \
 	. .venv/bin/activate && \
-		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/wpd_em_sim.py \
+		python3 $(EM_RPT_DIR)/scripts/wpd_em_sim.py \
 			--frequency $(FREQ)e9 \
 			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
 			--ground_cross_section $(GROUND_CROSS_SECTION) \
@@ -345,7 +344,6 @@ sim-wpd-em: ## Run EM simulation with WPD of the CELL cell (usage: make sim-wpd-
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
 .PHONY: sim-wpd-em
 
-
 sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-em [FREQ=<GHz>] [BANDWIDTH=<GHz>] [SIGNAL_CROSS_SECTION=<metal>] [GROUND_CROSS_SECTION=<metal>] [Z0=<Ohms>] [E_R=<e_r>] [FILTER_TYPE=<butter|cheby>] [FILTER_ORDER=<N>] [RIPPLE_DB=<dB>])
 	BPF_FILTER_TYPE_LOWER=$$(echo "$(FILTER_TYPE)" | tr '[:upper:]' '[:lower:]'); \
 	if [ "$$BPF_FILTER_TYPE_LOWER" = "butter" ]; then \
@@ -356,7 +354,7 @@ sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-
 	fi; \
 	BPF_GDS_FILENAME=bpf_f_$(FREQ)GHz_bw_$(BANDWIDTH)GHz_sig_$(SIGNAL_CROSS_SECTION)_gnd_$(GROUND_CROSS_SECTION)_z0_$(Z0)Ohm_er_$(subst .,_,$(E_R))_$(FILTER_TYPE)_ord_$(FILTER_ORDER)$$RIPPLE_TAG; \
 	. .venv/bin/activate && \
-		PDK_ROOT=$(PDK_ROOT) PDK=$(PDK) python3 $(EM_RPT_DIR)/scripts/bpf_em_sim.py \
+		python3 $(EM_RPT_DIR)/scripts/bpf_em_sim.py \
 			--frequency $(FREQ)e9 \
 			--bandwidth $(BANDWIDTH)e9 \
 			--signal_cross_section $(SIGNAL_CROSS_SECTION) \
@@ -370,15 +368,14 @@ sim-bpf-em: ## Run EM simulation with BPF of the CELL cell (usage: make sim-bpf-
 		cd $(EM_RPT_DIR)/palace_model/$${BPF_GDS_FILENAME}_data && \
 		palace -np $(NP) config.json && \
 		python3 $(PALACE_SCRIPTS_DIR)/combine_extend_snp.py
-		
 .PHONY: sim-bpf-em
 # ================================================================================================
+
 
 # view the sim results of EM simulation
 FILE_NAME ?= blc_$(FREQ)GHz_$(Z0)Ohm_$(SIGNAL_CROSS_SECTION)_$(GROUND_CROSS_SECTION)_e_r_$(subst .,_,$(E_R)).s4p
 view-em-sim: ## View EM simulation results with s-parameter plots (usage: make view-em-sim FILE_NAME=<name_with_extension>)
 	cd $(EM_RPT_DIR)/palace_model && python3 ../scripts/plot_snp.py $$(find . -type f -name "$(FILE_NAME)")
-
 .PHONY: view-em-sim
 # ================================================================================================
 
