@@ -17,6 +17,8 @@ lvs_run_*
 /sscs-ose-code-a-chip/magic
 /schematic/simulations
 /testbenches/simulations
+/doc/.quarto/
+/doc/_site/
 /doc/videos/sparx_gen_60ghz_to_300ghz_orig.mp4
 venv/
 /.venv
