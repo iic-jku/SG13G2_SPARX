@@ -108,9 +108,14 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 
 ```text
 📁 SG13G2_SPARX/
+├─ 📁 .github/
+│  └─ 📁 workflows/
+│     └─ quarto-publish.yml
 ├─ 📁 doc/
-│  ├─ 📁 figures/
-│  └─ 📁 videos/
+│  ├─ 📁 fig/
+│  ├─ 📁 videos/
+│  ├─ index.qmd
+│  └─ Makefile
 ├─ 📁 layout/
 │  ├─ sparx_powdet_sbd.gds
 │  ├─ sparx160_top.gds
@@ -399,8 +404,17 @@ make release VERSION=2.1.0
 
 This project is funded by the JKU/SAL [IWS Lab](https://research.jku.at/de/projects/jku-lit-sal-intelligent-wireless-systems-lab-iws-lab/), a collaboration of [Johannes Kepler University](https://jku.at) and [Silicon Austria Labs](https://silicon-austria-labs.com).
 
-<p align="center">
-  <a href="https://silicon-austria-labs.com" target="_blank">
-    <img src="https://github.com/iic-jku/klayout-pex-website/raw/main/figures/funding/silicon-austria-labs-logo.svg" alt="Silicon Austria Labs" width="300"/>
-  </a>
-</p>
+<table width="100%">
+  <tr>
+    <td align="left" width="50%">
+      <a href="https://iic.jku.at" target="_blank">
+        <img src="doc/fig/funding/iic-jku.svg" alt="Johannes Kepler University: Institute for Integrated Circuits and Quantum Computing" width="94%"/>
+      </a>
+    </td>
+    <td align="right" width="50%">
+      <a href="https://silicon-austria-labs.com" target="_blank">
+        <img src="doc/fig/funding/silicon-austria-labs-logo.svg" alt="Silicon Austria Labs" width="94%"/>
+      </a>
+    </td>
+  </tr>
+</table>
