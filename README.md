@@ -2,6 +2,10 @@
 
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
+Institute for Integrated Circuits and Quantum Computing, Johannes Kepler University (JKU), Linz, Austria
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19654232.svg)](https://doi.org/10.5281/zenodo.19654232)
+
 > [!WARNING]
 > This repository is a Work in Progress.
 
@@ -15,6 +19,11 @@
   <br>
   <em>Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm).</em>
 </p>
+
+
+## Documentation
+
+The full documentation of SPARX is available [here](https://iic-jku.github.io/SG13G2_SPARX/index.html).
 
 
 ## Overview
