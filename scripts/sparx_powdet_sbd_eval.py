@@ -80,5 +80,5 @@ ax.plot(a_rf_ref_db, ref_db, 'k--', alpha=0.5, label='1 dB/dB slope')
 ax.legend()
 ax.grid(True)
 
-plt.savefig('../doc/figures/sparx_sim/sparx_powdet_sbd_hb_sweep.png', dpi=150)
+plt.savefig('../doc/fig/sparx_sim/sparx_powdet_sbd_hb_sweep.png', dpi=150)
 plt.show()

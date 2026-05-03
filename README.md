@@ -66,8 +66,8 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
   - Metal5 (M5): GND plane
 
 <p align="center">
-  <a href="doc/figures/sparx_blockdiagram/sparx_blockdiagram.png">
-    <img src="doc/figures/sparx_blockdiagram/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=75%>
+  <a href="doc/fig/sparx_blockdiagram/sparx_blockdiagram.png">
+    <img src="doc/fig/sparx_blockdiagram/sparx_blockdiagram.png" alt="Block Diagram of the Six-Port Receiver" width=75%>
   </a>
   <br>
   <em>Block Diagram of the Six-Port Receiver.</em>
@@ -77,8 +77,8 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 ## Schematic of SBD-based Power Detector
 
 <p align="center">
-  <a href="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png">
-    <img src="doc/figures/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png" alt="Schematic of SBD-based Power Detector" width=100%>
+  <a href="doc/fig/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png">
+    <img src="doc/fig/sparx_powdet_sbd/sparx_powdet_sbd_circuit.png" alt="Schematic of SBD-based Power Detector" width=100%>
   </a>
   <br>
   <em>Schematic of SBD-based Power Detector.</em>
