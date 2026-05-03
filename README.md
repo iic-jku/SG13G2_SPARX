@@ -1,10 +1,11 @@
 # SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS
 
+[![Quarto Publish](https://github.com/iic-jku/SG13G2_SPARX/actions/workflows/quarto-publish.yml/badge.svg?branch=main)](https://github.com/iic-jku/SG13G2_SPARX/actions/workflows/quarto-publish.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19654232.svg)](https://doi.org/10.5281/zenodo.19654232)
+
 (c) 2025-2026 David Kellerer-Pirklbauer, Simon Dorrer and Harald Pretl
 
 Institute for Integrated Circuits and Quantum Computing, Johannes Kepler University (JKU), Linz, Austria
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19654232.svg)](https://doi.org/10.5281/zenodo.19654232)
 
 > [!WARNING]
 > This repository is a Work in Progress.
@@ -13,8 +14,8 @@ Institute for Integrated Circuits and Quantum Computing, Johannes Kepler Univers
 > This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.05` or later.
 
 <p align="center">
-  <a href="render/img/sparx160_top_white_wo_M5.png">
-    <img src="render/img/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
+  <a href="doc/fig/sparx160/sparx160_top_white_wo_M5.png">
+    <img src="doc/fig/sparx160/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
   </a>
   <br>
   <em>Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm).</em>
@@ -114,11 +115,17 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 ├─ 📁 doc/
 │  ├─ 📁 fig/
 │  ├─ 📁 videos/
+│  ├─ _quarto.yml
 │  ├─ index.qmd
 │  └─ Makefile
 ├─ 📁 layout/
-│  ├─ sparx_powdet_sbd.gds
+│  ├─ sparx60_top.gds
+│  ├─ ...
 │  ├─ sparx160_top.gds
+│  ├─ ...
+│  ├─ sparx300_top.gds
+│  ├─ sparx_powdet_sbd.gds
+│  └─ sparx_powdet_sbd_flat.gds
 ├─ 📁 measurements/
 │  └─ README.md
 ├─ 📁 netlist/
@@ -136,12 +143,12 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 │  └─ 📁 v.1.0.0/
 │     ├─ 📁 gds/
 │     │  └─ RFFE6027.gds
+│     ├─ 📁 img/
 │     └─ ReleaseNote.md
 ├─ 📁 render/
 │  └─ 📁 img/
-│     ├─ sparx160_top_white_wo_M5.png
-│     ├─ sparx_top_black.png
-│     └─ sparx_top_white.png
+│     ├─ sparx160_top_black.png
+│     └─ sparx160_top_white.png
 ├─ 📁 schematic/
 │  ├─ sparx_powdet_sbd.sch
 │  ├─ sparx_powdet_sbd.sym
@@ -151,7 +158,10 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 │  ├─ 📁 assets/
 │  ├─ lay2img.py
 │  ├─ make_gds.py
+│  ├─ s2spice.py
 │  ├─ six_port_gen.py
+│  ├─ sparx_powdet_sbd_circuit.ipynb
+│  └─ sparx_powdet_sbd_eval.py
 ├─ 📁 sscs-ose-code-a-chip/
 │  ├─ 📁 assets/
 │  ├─ README.md
@@ -162,15 +172,17 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 │  └─ xschemrc
 ├─ 📁 verification/
 │  ├─ 📁 drc/
+│  │  ├─ sparx160_top.magic.drc.rpt
+│  │  ├─ sparx160_top_sparx160_top_full.lyrdb
 │  │  ├─ sparx_powdet_sbd.magic.drc.rpt
-│  │  ├─ sparx_powdet_sbd_sparx_powdet_sbd_full.lyrdb
-│  ├─ 📁 lvs/
-│  │  ├─ sparx_powdet_sbd.lvs.out
-│  │  ├─ sparx_powdet_sbd.lvsdb
-│  └─ 📁 s-parameter/
-│     ├─ 📁 blc_for_160GHz_TM2_M5/
-│     ├─ 📁 hairpin_coupled_line_bp_filter_t_custom_160GHz_order_3_TM2_M5/
-│     └─ 📁 wilkinson_power_divider_160GHz_TM2_M5/
+│  │  └─ sparx_powdet_sbd_sparx_powdet_sbd_full.lyrdb
+│  ├─ 📁 em/
+│  │  ├─ 📁 layout/
+│  │  ├─ 📁 palace_model/
+│  │  └─ 📁 scripts/
+│  └─ 📁 lvs/
+│     ├─ sparx_powdet_sbd.lvs.out
+│     └─ sparx_powdet_sbd.lvsdb
 ├─ .gitattributes
 ├─ .gitignore
 ├─ CITATION.cff
