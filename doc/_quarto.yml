@@ -21,7 +21,7 @@ website:
         text: "Home"
       - icon: bi-filetype-pdf
         text: PDF
-        href: SPARX.pdf
+        href: index.pdf
     right:
       - icon: github
         href: "{{< meta var.url-repo >}}"
