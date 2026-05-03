@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "",
+    "text": "Warning\n\n\n\nThis documentation is a Work in Progress."
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "1 Overview",
+    "text": "1 Overview\nSPARX stands for Six-Port Automated Receiver. The complete layout is generated in Python using self-made RF devices as a GDSFactory IHP PDK add-on. S-parameter simulation of the passive RF structures is performed with AWS Palace. With KLayout, Magic, and Netgen, a complete LVS, DRC, and RCX verification flow is implemented. The SBD-based power detector is designed in Xschem and simulated with ngspice and VACASK. This repository is controlled by a Makefile. Just clone it and run make all to build the six-port receiver at 160 GHz and verify the power detector cell. To generate a frequency-scalable layout at a different target frequency, for example 77 GHz, run make build-layout FREQ=77.\nIndex Terms: Branch-line coupler, frequency-scalable layout, GDSFactory, hairpin coupled-line bandpass filter, IHP Open-PDK, mmWave, open-source EDA, power detector, programmatic layout, Schottky barrier diode, six-port receiver, Wilkinson power divider."
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "2 References",
+    "text": "2 References\nTo understand the principle of six-port receivers and their architectures, it is recommended to read the following references:\n\nA. Koelpin, G. Vinci, B. Laemmle, D. Kissinger and R. Weigel, “The Six-Port in Modern Society,” in IEEE Microwave Magazine, vol. 11, no. 7, pp. 35–43, Dec. 2010, doi: 10.1109/MMM.2010.938584\nT. Hentschel, “The six-port as a communications receiver,” in IEEE Transactions on Microwave Theory and Techniques, vol. 53, no. 3, pp. 1039–1047, March 2005, doi: 10.1109/TMTT.2005.843507\nM. Mailand, “System Analysis of Six-Port-Based RF-Receivers,” in IEEE Transactions on Circuits and Systems I: Regular Papers, vol. 65, no. 1, pp. 319–330, Jan. 2018, doi: 10.1109/TCSI.2017.2734922"
+  },
+  {
+    "objectID": "index.html#requirements",
+    "href": "index.html#requirements",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "3 Requirements",
+    "text": "3 Requirements\nTo build this six-port receiver, the following tools and their respective dependencies are required:\n\nGDSFactory: https://github.com/gdsfactory/gdsfactory\nUpdated IHP-Open-PDK GDSFactory version: https://github.com/iic-jku/IHP/tree/IHP-TO\nIHP-Open-PDK: https://github.com/iic-jku/IHP-Open-PDK\n\nThe updated IHP-Open-PDK GDSFactory version contains all self-made RF devices and wraps existing PCells provided by the IHP-Open-PDK, allowing them to be used directly within the GDSFactory framework. This approach requires very little maintenance: if IHP changes the layout of a cell, no wrapper update is necessary — only interface changes to a PCell function require updates."
+  },
+  {
+    "objectID": "index.html#block-diagram",
+    "href": "index.html#block-diagram",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "4 Block Diagram",
+    "text": "4 Block Diagram\nThe SPARX architecture consists of the following main components:\n\nSix-Port\n\nBranch Line Coupler (BLC)\nWilkinson Power Divider (WPD)\nHairpin Coupled-Line Bandpass Filter (BPF)\n\nPower Detector (PD)\n\nSchottky Barrier Diode (SBD)\n\nMetal Stack\n\nTopMetal2 (TM2): RF traces\nMetal5 (M5): GND plane\n\n\n\n\n\n\n\n\n\nBlock Diagram of the Six-Port Receiver"
+  },
+  {
+    "objectID": "index.html#sbd-based-power-detector",
+    "href": "index.html#sbd-based-power-detector",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "5 SBD-based Power Detector",
+    "text": "5 SBD-based Power Detector\n\n\n\n\n\n\n\nSchematic of SBD-based Power Detector"
+  },
+  {
+    "objectID": "index.html#layouts",
+    "href": "index.html#layouts",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "6 Layouts",
+    "text": "6 Layouts\nThe following figures show the chip layout of the 160 GHz six-port receiver (die area: 1000 × 1400 µm).\n\n\n\n\n\n\n\n\n\n\n160 GHz layout with M5 GND plane\n\n\n\n\n\n\n\n\n\n\n\n160 GHz layout without M5 GND plane\n\n\n\n\n\n\nChip Specifications\n\n\n\n\n\n\nParameter\nValue\n\n\n\n\nTechnology\nIHP SG13G2 (130 nm CMOS)\n\n\nDie Area\n1000 × 1400 µm (1.4 mm²)\n\n\nSupply Voltage\n1.5 V"
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "SPARX: An Open-Source, Automated, Programmatically Generated, Frequency-Scalable Six-Port Receiver in 130-nm CMOS",
+    "section": "7 Acknowledgements",
+    "text": "7 Acknowledgements\nThis project is funded by the JKU/SAL IWS Lab, a collaboration of Johannes Kepler University and Silicon Austria Labs."
+  }
+]
