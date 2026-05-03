@@ -79,17 +79,17 @@ let rf_freq = 151G
 let if_freq = rf_freq - lo_freq
 
 op
-write sparx_powdet_sbd_tb.raw
+write @schname\\\\.raw
 set appendwrite
 
 sp lin 31 100G 200G 0
-write sparx_powdet_sbd_tb.raw
+write @schname\\\\.raw
 
 ac dec 1001 1MEG 10G
-write sparx_powdet_sbd_tb.raw
+write @schname\\\\.raw
 
 tran 0.05p 22n 20n
-write sparx_powdet_sbd_tb.raw
+write @schname\\\\.raw
 
 linearize rfin out
 setplot tran2
