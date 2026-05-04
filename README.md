@@ -378,12 +378,15 @@ make all
 
 ### Release
 
-Copies the final top-level GDS from `layout/` to `release/v.<VERSION>/gds/` and copies the generated netlists into `release/v.<VERSION>/netlist/`.
+Copies the final top-level GDS from `layout/` to `release/v.<VERSION>/gds/`, the generated netlists into `release/v.<VERSION>/netlist/`, and the rendered images into `release/v.<VERSION>/img/`.
 
-The following netlist folders are exported:
+The following folders are exported:
 
+- `layout/<TOP>.gds` -> `release/v.<VERSION>/gds/<TOP>.gds`
 - `netlist/schematic` -> `release/v.<VERSION>/netlist/schematic`
 - `netlist/layout` -> `release/v.<VERSION>/netlist/layout`
+- `render/img/<TOP>_black.png` -> `release/v.<VERSION>/img/<TOP>_black.png`
+- `render/img/<TOP>_white.png` -> `release/v.<VERSION>/img/<TOP>_white.png`
 
 Run with default version (`2.0.0`):
 

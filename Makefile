@@ -396,8 +396,11 @@ all: ## Build and verify the TOP cell (usage: make all)
 release: ## Copy the gds and netlist files to the release folder (usage: make release VERSION=<version>)
 	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/gds
 	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/netlist
+	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/img
 	cp -f $(LAY_DIR)/$(TOP).gds $(RELEASE_DIR)/v.$(VERSION)/gds/$(TOP).gds
 	cp -r $(NET_SCH_DIR) $(RELEASE_DIR)/v.$(VERSION)/netlist/schematic
 	cp -r $(NET_LAY_DIR) $(RELEASE_DIR)/v.$(VERSION)/netlist/layout
+	cp -f $(RENDER_IMG_DIR)/$(TOP)_black.png $(RELEASE_DIR)/v.$(VERSION)/img/$(TOP)_black.png
+	cp -f $(RENDER_IMG_DIR)/$(TOP)_white.png $(RELEASE_DIR)/v.$(VERSION)/img/$(TOP)_white.png
 .PHONY: release
 # ================================================================================================
