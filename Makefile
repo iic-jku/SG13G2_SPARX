@@ -393,7 +393,7 @@ all: ## Build and verify the TOP cell (usage: make all)
 
 
 # Release Target
-release: ## Copy the gds and netlist files to the release folder (usage: make release VERSION=<version>)
+release: ## Copy the gds, netlist files and chip renders to the release folder (usage: make release VERSION=<version>)
 	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/gds
 	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/netlist
 	mkdir -p $(RELEASE_DIR)/v.$(VERSION)/img
