@@ -615,9 +615,6 @@ def powdet_sbd() -> gf.Component:
     c1_ref = c.add_ref(cmim)
     c1_ref.connect("T", via_tm1_tm2_ref.ports["bottom"], allow_width_mismatch=True)
     
-    # c.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=via_tm1_tm2_ref.ports["top"].center)
-    # pin_marker_rfin = c.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(0.5,0.5)))
-    # pin_marker_rfin.center = via_tm1_tm2_ref.ports["top"].center
 
     # via cell from Metal2 to Metal5
     via_m2_m5 = ihp.cells.via_stack(
@@ -1401,11 +1398,7 @@ def powdet_sbd() -> gf.Component:
     via_m1_m4_ref.connect("bottom", xr4_ref.ports["e1"], allow_width_mismatch=True, allow_layer_mismatch=True)
     c_output.add_port(name="vref", port=via_m1_m4_ref.ports["top"])
      
-    # c_output.add_label(text="vref", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
-    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4pin))
-    # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
-
-
+    
 
     via_m1_m2.ports["top"].orientation = 180
     via_m1_m2_ref = c_output.add_ref(via_m1_m2)
@@ -1424,9 +1417,6 @@ def powdet_sbd() -> gf.Component:
     via_m1_m3_ref = c_output.add_ref(via_m1_m3)
     via_m1_m3_ref.connect("bottom", xr2_ref.ports["e1"], allow_width_mismatch=True, allow_layer_mismatch=True)
     
-    # c_output.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=via_m1_m4_ref.ports["top"].center)
-    # pin_marker_vout = c_output.add_ref(gf.components.rectangle(size=(0.5,0.5), layer=ihp.tech.LAYER.Metal4pin))
-    # pin_marker_vout.center = via_m1_m4_ref.ports["top"].center
 
     # bias2
     route_gates_m3_m4 = gf.routing.route_bundle_electrical(
@@ -1647,19 +1637,8 @@ def powdet_sbd() -> gf.Component:
     ihp.cells.utils.change_port_orientation(
         c3, ["MC_B_4_1", "MC_B_4_2", "LC_B_5_1", "LC_B_5_2", "LC_B_5_3", "RC_B_5_1"], 270
     )
-
-    # c3.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=c3.ports["LC_T_5_1"].center)
-    # pin_marker_vdd = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(0.5,0.5)))
-    # pin_marker_vdd.center = c3.ports["LC_T_5_1"].center
-    
-    
-    # c3.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=c3.ports["LC_B_1_1"].center)
-    # pin_marker_vss = c3.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(0.5,0.5)))
-    # pin_marker_vss.center = c3.ports["LC_B_1_1"].center
     
     c3_ref = c.add_ref(c3)
-
-
 
     c3_ref.rotate(-90)
     c3_ref.xmin = c2_ref.xmax + CMIM_SPACING_TM1  # manual measurement to set the spacing between c2 and c3
@@ -1974,11 +1953,16 @@ def powdet_sbd() -> gf.Component:
     c.ports["vdd"].orientation = 90
     c.pprint_ports()
     
-    gf.labels.add_port_labels(c, ports= [vout_port], layer = ihp.tech.LAYER.Metal4label)
-    gf.labels.add_port_labels(c, ports= [vref_port], layer = ihp.tech.LAYER.Metal3label)
-    gf.labels.add_port_labels(c, ports= [rfin_port], layer = ihp.tech.LAYER.TopMetal2label)
-    gf.labels.add_port_labels(c, ports= [vss_port], layer = ihp.tech.LAYER.Metal5label)
-    gf.labels.add_port_labels(c, ports= [vdd_port], layer = ihp.tech.LAYER.TopMetal1label)
+    gf.labels.add_port_labels(c, ports= [vout_port], layer = ihp.tech.LAYER.Metal4text)
+    gf.labels.add_port_labels(c, ports= [vref_port], layer = ihp.tech.LAYER.Metal3text)
+    gf.labels.add_port_labels(c, ports= [rfin_port], layer = ihp.tech.LAYER.TopMetal2text)
+    gf.labels.add_port_labels(c, ports= [vss_port], layer = ihp.tech.LAYER.Metal5text)
+    gf.labels.add_port_labels(c, ports= [vdd_port], layer = ihp.tech.LAYER.TopMetal1text)
+    gf.add_pins.add_pin_rectangle(c, port=vout_port, layer=ihp.tech.LAYER.Metal4pin)
+    gf.add_pins.add_pin_rectangle(c, port=vref_port, layer=ihp.tech.LAYER.Metal3pin)
+    gf.add_pins.add_pin_rectangle(c, port=rfin_port, layer=ihp.tech.LAYER.TopMetal2pin)
+    gf.add_pins.add_pin_rectangle(c, port=vss_port, layer=ihp.tech.LAYER.Metal5pin)
+    gf.add_pins.add_pin_rectangle(c, port=vdd_port, layer=ihp.tech.LAYER.TopMetal1pin)
 
     # No-fill exclusion zones for each metal layer
     c.center = (0, 0)
@@ -2302,27 +2286,6 @@ rfin_gap = RFIN_GAP  # straight T-line gap between BLC port and PD rfin port
 # create powerdetector (needed here to read rfin port offset)
 pd = powdet_sbd()
 pd.locked = False
-
-# add pins for lvs and pex
-# pd.add_label(text="rfin", layer=ihp.tech.LAYER.TopMetal2text, position=pd.ports["rfin"].center)
-# pin_marker_rfin = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal2pin, size=(2,2)))
-# pin_marker_rfin.center = pd.ports["rfin"].center
-
-# pd.add_label(text="vss", layer=ihp.tech.LAYER.Metal5text, position=pd.ports["vss"].center)
-# pin_marker_vss = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal5pin, size=(2,2)))
-# pin_marker_vss.center = pd.ports["vss"].center
-
-# pd.add_label(text="vdd", layer=ihp.tech.LAYER.TopMetal1text, position=pd.ports["vdd"].center)
-# pin_marker_vdd = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.TopMetal1pin, size=(2,2)))
-# pin_marker_vdd.center = pd.ports["vdd"].center
-
-# pd.add_label(text="vout", layer=ihp.tech.LAYER.Metal4text, position=pd.ports["vout"].center)
-# pin_marker_vout = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal4pin, size=(2,2)))
-# pin_marker_vout.center = pd.ports["vout"].center
-
-# pd.add_label(text="vref", layer=ihp.tech.LAYER.Metal3text, position=(pd.ports["vref"].center))
-# pin_marker_vref = pd.add_ref(gf.components.rectangle(layer=ihp.tech.LAYER.Metal3pin, size=(2,2)))
-# pin_marker_vref.center = pd.ports["vref"].center
 
 
 # probe pads top — positioned to clear PD extent
@@ -2948,12 +2911,6 @@ c.move((-25, -25))
 c.write_gds(top_gds_filename, with_metadata=False)
 c.show()
 
-# c.flatten()
-# c.write_gds(top_gds_filename_flat, with_metadata=False)
-
-
 pd.name = powdet_gds_filename.stem
 pd.show()
 pd.write_gds(powdet_gds_filename, with_metadata=False)
-pd.flatten()
-pd.write_gds(powdet_gds_filename_flat, with_metadata=False)
