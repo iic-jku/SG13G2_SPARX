@@ -13,6 +13,9 @@ Institute for Integrated Circuits and Quantum Computing, Johannes Kepler Univers
 > [!IMPORTANT]
 > This repository requires the [IIC-OSIC-TOOLS](https://github.com/iic-jku/IIC-OSIC-TOOLS) container with tag `2026.05` or later.
 
+> [!TIP]
+> This repository is based on the [ihp-sg13g2-ams-chip-template](https://github.com/iic-jku/ihp-sg13g2-ams-chip-template) template repository. For a better understanding of the folder structure, how to use the Makefiles, and how to implement your own designs, it is recommended to go through this [tutorial](https://iic-jku.github.io/ihp-sg13g2-ams-chip-template/index.html).
+
 <p align="center">
   <a href="doc/fig/sparx160/sparx160_top_white_wo_M5.png">
     <img src="doc/fig/sparx160/sparx160_top_white_wo_M5.png" alt="Chip render of the ihp-sg13g2 Six-Port Receiver for 160GHz without M5 GND plane (1mm x 1.4mm)" width=70%>
