@@ -1964,9 +1964,20 @@ def powdet_sbd() -> gf.Component:
     gf.add_pins.add_pin_rectangle(c, port=vss_port, layer=ihp.tech.LAYER.Metal5pin)
     gf.add_pins.add_pin_rectangle(c, port=vdd_port, layer=ihp.tech.LAYER.TopMetal1pin)
 
+
+    c.add_ref(
+        gf.components.rectangle(size=(c1_ref.xsize + 40, c1_ref.ysize + 20), layer=ihp.tech.LAYER.Metal5nofill)
+    ).center = c1_ref.center
+    
     # No-fill exclusion zones for each metal layer
     c.center = (0, 0)
-    c.add_ref(gf.components.rectangle(size=(c.xsize + 2, c.ysize + 2), layer=ihp.tech.LAYER.Activnofill, centered=True))
+    
+    
+    
+    no_fill_rect = c.add_ref(gf.components.rectangle(size=(round(c.xsize + 2, 2), round(c.ysize - 7.5, 2)), layer=ihp.tech.LAYER.Activnofill, centered=True))
+    no_fill_rect.ymax = c.ymax + 1
+
+    
     for nofill_layer in [
         ihp.tech.LAYER.GatPolynofill,
         ihp.tech.LAYER.Metal1nofill,
@@ -1974,16 +1985,18 @@ def powdet_sbd() -> gf.Component:
         ihp.tech.LAYER.Metal3nofill,
         ihp.tech.LAYER.Metal4nofill,
     ]:
-        c.add_ref(gf.components.rectangle(size=(c.xsize, c.ysize), layer=nofill_layer, centered=True))
-
-    c.add_ref(
-        gf.components.rectangle(size=(c1_ref.xsize + 40, c1_ref.ysize + 20), layer=ihp.tech.LAYER.Metal5nofill)
-    ).center = c1_ref.center
+        no_fill = c.add_ref(gf.components.rectangle(size=(no_fill_rect.xsize, no_fill_rect.ysize), layer=nofill_layer, centered=True))
+        no_fill.center = no_fill_rect.center
+    
 
     size_x = c2_ref.xsize + c3_ref.xsize
     size_y = c2_ref.ysize
-    x = c2_ref.xmin + size_x / 2
-    y = c2_ref.ymin + size_y / 2
+    
+    x = round(c2_ref.xmin + size_x / 2, 3)
+    y = round(c2_ref.ymin + size_y / 2, 3)
+    x = x - (x % ihp.tech.nm)
+    y = y - (y % ihp.tech.nm)
+    
     cap_m5_nofill = c.add_ref(
         gf.components.rectangle(size=(size_x - 10, size_y - 10), layer=ihp.tech.LAYER.Metal5nofill)
     ).center = (x, y)
@@ -2127,6 +2140,31 @@ connection_bpf_wpd = c.add_ref(
 
 connection_bpf_wpd.connect("e1", wpd_ref.ports["e1"])
 
+bandpass_filter = c.add_ref(
+    ihp.cells.hairpin_coupled_line_bandpass_filter(
+        frequency=f,
+        bandwidth=bandwidth,
+        order=order,
+        filter_type=filter_type,
+        ripple_dB=ripple_dB,
+        connection_length=connection_length_bpf,
+        signal_cross_section=signal_cross_section,
+        ground_cross_section=ground_cross_section,
+        Z0=Z0,
+        e_r=e_r,
+    )
+)
+
+bandpass_filter.connect("e1", connection_bpf_wpd.ports["e2"])
+
+six_port = c.copy()
+six_port.add_port(name="e1", port=bandpass_filter.ports["e2"]) # LO in
+six_port.add_port(name="e2", port=blc_3_ref.ports["e2"])    # rf in
+six_port.add_port(name="e3", port=blc_1_ref.ports["e2"])    # P3
+six_port.add_port(name="e4", port=blc_1_ref.ports["e3"])    # P4
+six_port.add_port(name="e5", port=blc_2_ref.ports["e3"])    # P5
+six_port.add_port(name="e6", port=blc_2_ref.ports["e2"])    # P6
+six_port.add_port(name="e7", port=blc_3_ref.ports["e3"])    # resistor port
 
 connection_blc_r_termination = ihp.cells.straight(
     length=round(CONNECTION_LEN_TERM * freq_scale, 3),  # scales with frequency
@@ -2190,22 +2228,7 @@ c.add_ref(
     )
 ).center = connection_r_termination_vss_ref.center
 
-bandpass_filter = c.add_ref(
-    ihp.cells.hairpin_coupled_line_bandpass_filter(
-        frequency=f,
-        bandwidth=bandwidth,
-        order=order,
-        filter_type=filter_type,
-        ripple_dB=ripple_dB,
-        connection_length=connection_length_bpf,
-        signal_cross_section=signal_cross_section,
-        ground_cross_section=ground_cross_section,
-        Z0=Z0,
-        e_r=e_r,
-    )
-)
 
-bandpass_filter.connect("e1", connection_bpf_wpd.ports["e2"])
 
 connection_bpd_pad = c.add_ref(
     ihp.cells.straight(
@@ -2779,7 +2802,7 @@ kellerer = gf.import_gds(str(kellerer_gds_path), cellname="Name_D").rotate(-90)
 if abs(probe_top.ymin - probe_left.ymax) > kellerer.ysize + 2* LOGO_VERTICAL_CLEARANCE:  # only place if enough space between pads
     kellerer_ref = c.add_ref(kellerer)
     kellerer_ref.xmin = probe_left.xmin
-    kellerer_ref.center = (kellerer_ref.center[0], probe_left.ymax + (abs(probe_top.ymin - probe_left.ymax) / 2))
+    kellerer_ref.center = (kellerer_ref.center[0], round(probe_left.ymax + (abs(probe_top.ymin - probe_left.ymax) / 2), 2))
 
 
 # place supervisor names only if space is available between bottom probe pads and left probe pads
@@ -2787,7 +2810,7 @@ supervisors = gf.import_gds(str(supervisors_gds_path), cellname="supervisors").r
 if abs(probe_bottom.ymax - probe_left.ymin) > supervisors.ysize + 2* LOGO_VERTICAL_CLEARANCE:  # only place if enough space between pads
     supervisors_ref = c.add_ref(supervisors)
     supervisors_ref.xmin = probe_left.xmin
-    supervisors_ref.center = (supervisors_ref.center[0], probe_bottom.ymax + (abs(probe_bottom.ymax - probe_left.ymin) / 2))
+    supervisors_ref.center = (supervisors_ref.center[0], round(probe_bottom.ymax + (abs(probe_bottom.ymax - probe_left.ymin) / 2), 2))
 
 
 if do_fill:
@@ -2911,6 +2934,46 @@ c.move((-25, -25))
 c.write_gds(top_gds_filename, with_metadata=False)
 c.show()
 
+pd.ymin = pd.ymin - pd.ymin % 0.005
+pd.xmin = pd.xmin - pd.xmin % 0.005
 pd.name = powdet_gds_filename.stem
-pd.show()
+# pd.show()
 pd.write_gds(powdet_gds_filename, with_metadata=False)
+
+
+# prepare raw sixport structure for palace simulation
+
+# port1 = six_port.add_ref(gf.components.rectangle(size=(0.1, six_port.ports["e1"].width), layer=(201,0)))
+# port1.center = (six_port.ports["e1"].center)
+# port1.move((0.05,0))
+
+# port2 = six_port.add_ref(gf.components.rectangle(size=(0.1, six_port.ports["e2"].width), layer=(202,0)))
+# port2.center = (six_port.ports["e2"].center)
+# port2.move((-0.05,0))
+
+# port3 = six_port.add_ref(gf.components.rectangle(size=(six_port.ports["e3"].width, 0.1), layer=(203,0)))
+# port3.center = (six_port.ports["e3"].center)
+# port3.move((0,-0.05))
+
+# port4 = six_port.add_ref(gf.components.rectangle(size=(six_port.ports["e4"].width, 0.1), layer=(204,0)))
+# port4.center = (six_port.ports["e4"].center)
+# port4.move((0,-0.05))
+
+# port5 = six_port.add_ref(gf.components.rectangle(size=(six_port.ports["e5"].width, 0.1), layer=(205,0)))
+# port5.center = (six_port.ports["e5"].center)
+# port5.move((0,0.05))
+
+# port6 = six_port.add_ref(gf.components.rectangle(size=(six_port.ports["e6"].width, 0.1), layer=(206,0)))
+# port6.center = (six_port.ports["e6"].center)
+# port6.move((0,0.05))
+
+# port7 = six_port.add_ref(gf.components.rectangle(size=(0.1, six_port.ports["e7"].width), layer=(207,0)))
+# port7.center = (six_port.ports["e7"].center)
+# port7.move((-0.05,0))
+
+# six_port.show()
+# six_port.pprint_ports()
+
+
+
+# six_port.write_gds("layout/blank_six_port.gds", with_metadata=False)
