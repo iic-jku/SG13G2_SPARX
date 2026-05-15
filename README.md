@@ -100,10 +100,9 @@ The updated IHP-Open-PDK GDSFactory version contains all self-made RF devices an
 
 ## ToDo List
 - [ ] KLayout LVS --> CMIM issues with PWell.block layer: see [IHP Open-PDK issue](https://github.com/IHP-GmbH/IHP-Open-PDK/issues/958)
-- [ ] Clean up private repo and add SPARX as module: @davkel99
 - [ ] Change DBU from 5 nm to 1 nm in code: @davkel99
 - [ ] Update GDSFactory IHP PDK `main` branch from `IHP-TO` branch: @davkel99
-- [ ] Add RF devices Python testbenches and Palace EM simulation targets: @davkel99 & @simi1505
+- [ ] Clean up private repo and add SPARX as module: @davkel99
 - [ ] Add Top-level Six-Port simulation in Xschem: @simi1505
 
 
