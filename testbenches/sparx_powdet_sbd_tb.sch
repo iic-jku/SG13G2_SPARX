@@ -10,7 +10,7 @@ as two ports are required. However, we
 are only interested in S11.} 1000 -340 0 0 0.3 0.3 {}
 T {Ngspice Testbench for SBD-Based Power Detector} 600 -1720 0 0 1 1 {}
 T {SPDX-FileCopyrightText: 2025-2026 The SPARX Team
-SPDX-License-Identifier: Apache-2.0} 1920 -220 0 0 0.4 0.4 {}
+SPDX-License-Identifier: Apache-2.0 WITH SHL-2.1} 1920 -220 0 0 0.4 0.4 {}
 N 800 -400 800 -380 {
 lab=GND}
 N 1080 -480 1240 -480 {lab=rfdummy}
